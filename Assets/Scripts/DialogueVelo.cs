@@ -13,6 +13,8 @@ public class DialogueVelo : MonoBehaviour
     public int heartRate;
     public int distanceTraveled;
     public int cadence;
+
+    public int veloPente=0;
     void Start()
     {
         
@@ -48,7 +50,9 @@ public class DialogueVelo : MonoBehaviour
 
     public void pente(int n)
     {
+        if(n!= veloPente)
         velo.SetTrainerSlope(n);
+        veloPente = n;
     }
 
 }
