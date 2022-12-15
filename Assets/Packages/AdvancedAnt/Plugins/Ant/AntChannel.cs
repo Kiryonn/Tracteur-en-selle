@@ -226,11 +226,11 @@ public class AntChannel : MonoBehaviour
                             case ANT_ReferenceLibrary.ANTEventID.EVENT_TRANSFER_RX_FAILED_0x04: {
                                     Debug.Log("Burst receive has failed");
                                     break;
-                                }
+                                }/*
                             case ANT_ReferenceLibrary.ANTEventID.EVENT_TRANSFER_TX_COMPLETED_0x05: {
                                     Debug.Log("Transfer Completed");
                                     break;
-                                }
+                                }*/
                             case ANT_ReferenceLibrary.ANTEventID.EVENT_TRANSFER_TX_FAILED_0x06: {
                                     Debug.Log("Transfer Failed");
                                     break;
@@ -238,11 +238,11 @@ public class AntChannel : MonoBehaviour
                             case ANT_ReferenceLibrary.ANTEventID.EVENT_CHANNEL_CLOSED_0x07: {
                                     channel.unassignChannel(500);
                                     break;
-                                }
+                                }/*
                             case ANT_ReferenceLibrary.ANTEventID.EVENT_RX_FAIL_GO_TO_SEARCH_0x08: {
                                     Debug.Log("Go to Search");
                                     break;
-                                }
+                                }*/
                             case ANT_ReferenceLibrary.ANTEventID.EVENT_CHANNEL_COLLISION_0x09: {
                                     Debug.Log("Channel Collision");
                                     break;
@@ -252,7 +252,7 @@ public class AntChannel : MonoBehaviour
                                     break;
                                 }
                             default: {
-                                    Debug.Log("Unhandled Channel Event " + response.getChannelEventCode());
+                                   // Debug.Log("Unhandled Channel Event " + response.getChannelEventCode());
                                     break;
                                 }
                         }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class GameManager : MonoBehaviour
 	public DialogueVelo velo;
 	public GameObject player;
 	public int pente;
+	public Slider slider;
 
 	void Start()
 	{
@@ -15,11 +17,16 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-        velo.pente(pente);
 
-        player.transform.position += velo.speed * Time.deltaTime * player.transform.forward;
+        player.transform.position += velo.speed *Time.deltaTime * player.transform.forward;
 
 	}
+
+	public void changeValue()
+	{
+		pente = (int)slider.value;
+        velo.pente(pente);
+    }
 
 
 

@@ -51,7 +51,7 @@ public class DialogueVelo : MonoBehaviour
     public void pente(int n)
     {
         if(n!= veloPente)
-        velo.SetTrainerSlope(n);
+            velo.SetTrainerSlope(n);
         veloPente = n;
     }
 
