@@ -123,69 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
-<<<<<<< Updated upstream
---- !u!1001 &402422382
-=======
 --- !u!1001 &24438457
->>>>>>> Stashed changes
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-<<<<<<< Updated upstream
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 117568, guid: c7b523a939558ef459cd126cd5f73cb5, type: 3}
-      propertyPath: m_Name
-      value: FitnessEquipmentDisplay
-      objectReference: {fileID: 0}
-    - target: {fileID: 407298, guid: c7b523a939558ef459cd126cd5f73cb5, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 407298, guid: c7b523a939558ef459cd126cd5f73cb5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 407298, guid: c7b523a939558ef459cd126cd5f73cb5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 407298, guid: c7b523a939558ef459cd126cd5f73cb5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 407298, guid: c7b523a939558ef459cd126cd5f73cb5, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 407298, guid: c7b523a939558ef459cd126cd5f73cb5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 407298, guid: c7b523a939558ef459cd126cd5f73cb5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 407298, guid: c7b523a939558ef459cd126cd5f73cb5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 407298, guid: c7b523a939558ef459cd126cd5f73cb5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 407298, guid: c7b523a939558ef459cd126cd5f73cb5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 407298, guid: c7b523a939558ef459cd126cd5f73cb5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c7b523a939558ef459cd126cd5f73cb5, type: 3}
-=======
     m_TransformParent: {fileID: 544737897}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: c7a93fc98d3561c4eacb9430f3010a72, type: 3}
@@ -1141,7 +1083,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
->>>>>>> Stashed changes
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
