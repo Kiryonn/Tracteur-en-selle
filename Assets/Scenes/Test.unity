@@ -1701,20 +1701,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< Updated upstream
---- !u!114 &1893321207 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 11453746, guid: c7b523a939558ef459cd126cd5f73cb5, type: 3}
-  m_PrefabInstance: {fileID: 402422382}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e2b93e79b363c542b65ff411c2442a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &2099937238
-=======
 --- !u!1001 &971488361
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1804,7 +1790,6 @@ BoxCollider:
   m_Size: {x: 2.2470336, y: 0.8742113, z: 8.740936}
   m_Center: {x: 0.000091314316, y: 0.33482993, z: 4.370468}
 --- !u!1 &1191780919
->>>>>>> Stashed changes
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1812,62 +1797,20 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< Updated upstream
-  - component: {fileID: 2099937240}
-  - component: {fileID: 2099937239}
-  m_Layer: 0
-  m_Name: GameManger
-=======
   - component: {fileID: 1191780920}
   m_Layer: 0
   m_Name: Road
->>>>>>> Stashed changes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< Updated upstream
---- !u!114 &2099937239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2099937238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba0d0806b5ca3d94281961af0e7bcb6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velo: {fileID: 1893321207}
-  connected: 0
-  instantaneousPower: 0
-  speed: 0
-  elapsedTime: 0
-  heartRate: 0
-  distanceTraveled: 0
-  cadence: 0
---- !u!4 &2099937240
-=======
 --- !u!4 &1191780920
->>>>>>> Stashed changes
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
-  m_GameObject: {fileID: 2099937238}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1076.7487, y: 533.3545, z: -60.90975}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-=======
   m_GameObject: {fileID: 1191780919}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.04834, y: 25.514374, z: 23.509468}
@@ -2853,4 +2796,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.247034, y: 0.8742115, z: 8.740936}
   m_Center: {x: 0.00009131434, y: 0.33483002, z: 4.370468}
->>>>>>> Stashed changes
