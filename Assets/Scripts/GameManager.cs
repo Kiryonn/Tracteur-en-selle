@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
 
 	public DialogueVelo velo;
-	public GameObject player;
+	//public GameObject player;
 	public int pente;
 	public Slider slider;
 
@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 	void Update()
 	{
 
-        player.transform.position += velo.speed *Time.deltaTime * player.transform.forward;
+        //player.transform.position += velo.speed *Time.deltaTime * player.transform.forward;
 
 	}
 
