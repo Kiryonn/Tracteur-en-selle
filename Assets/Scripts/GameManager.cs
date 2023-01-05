@@ -8,9 +8,24 @@ public class GameManager : MonoBehaviour
 	public GameObject player;
 	public int pente;
 	public Slider slider;
+	public GameObject[] MyBatteries;
+
+	private int NumberBatteryAvailable = 0;
+	private int NumberBatteryFull = 0;
+
+	public static GameManager Instance;
+	
 
 	void Start()
 	{
+		if(Instance != null)
+        {
+			Destroy(this);
+        }
+        else
+        {
+			Instance = this;
+        }
 
 	}
 
@@ -18,7 +33,7 @@ public class GameManager : MonoBehaviour
 	void Update()
 	{
 
-        player.transform.position += velo.speed *Time.deltaTime * player.transform.forward;
+        //player.transform.position += velo.speed *Time.deltaTime * player.transform.forward;
 
 	}
 
@@ -27,6 +42,36 @@ public class GameManager : MonoBehaviour
 		pente = (int)slider.value;
         velo.pente(pente);
     }
+
+	public void IncreaseBattery()
+    {
+		if(MyBatteries[NumberBatteryFull].GetComponent<Scrollbar>().size > 0)
+        {
+			NumberBatteryAvailable++;
+        }
+		if (MyBatteries[NumberBatteryFull].GetComponent<Scrollbar>().size < 1)
+		{
+			MyBatteries[NumberBatteryFull].GetComponent<Scrollbar>().size += 0.05f;
+		}
+		else
+		{
+			MyBatteries[NumberBatteryFull + 1].GetComponent<Scrollbar>().size += 0.05f;
+			NumberBatteryFull++;
+		}
+	}
+
+	public void UseBattery()
+	{
+		if (MyBatteries[NumberBatteryFull].GetComponent<Scrollbar>().size < 1)
+		{
+			MyBatteries[NumberBatteryFull].GetComponent<Scrollbar>().size += 0.05f;
+		}
+		else
+		{
+			MyBatteries[NumberBatteryFull + 1].GetComponent<Scrollbar>().size += 0.05f;
+			NumberBatteryFull++;
+		}
+	}
 
 
 
