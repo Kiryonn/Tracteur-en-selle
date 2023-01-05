@@ -28,7 +28,7 @@ public class MovePlayer : MonoBehaviour
         */
 
         //gameObject.transform.position += speed_vector * Time.deltaTime;
-        GetComponent<Rigidbody>().velocity = new Vector3(2, 0, 0);
+        //GetComponent<Rigidbody>().velocity = new Vector3(2, 0, 0);
 
         if (Cc.isGrounded || Input.GetAxis("Vertical") != 0)
         {
