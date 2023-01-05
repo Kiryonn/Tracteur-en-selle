@@ -26,7 +26,7 @@ public class Power : MonoBehaviour
     void Update()
     {
 
-        /*
+        
         if (DialogueVelo.Instance.instantaneousPower > 350f)
         {
             DialogueVelo.Instance.instantaneousPower = 350f;
@@ -47,7 +47,8 @@ public class Power : MonoBehaviour
                 colorPower.normalColor = Color.yellow;
                 JaugePower.colors = colorPower;
                 GameManager.Instance.IncreaseBattery();
-            }*/
+            }
+            /*
         if (Input.GetKey(KeyCode.Tab))
         {
 
@@ -67,7 +68,7 @@ public class Power : MonoBehaviour
                 JaugePower.colors = colorPower;
                 GameManager.Instance.IncreaseBattery();
             }
-        }
+        }*/
 
         JaugePower.size -= 0.04f * Time.deltaTime;
 

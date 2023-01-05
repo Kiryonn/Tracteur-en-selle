@@ -73,8 +73,13 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			MyBatteries[NumberBatteryAvailable - 1].GetComponent<Scrollbar>().size -= 0.05f;
-			NumberBatteryAvailable--;
+
+			if (NumberBatteryAvailable - 1 >= 0)
+            {
+				MyBatteries[NumberBatteryAvailable - 1].GetComponent<Scrollbar>().size -= 0.05f;
+				NumberBatteryAvailable--;
+			}
+				
 		}
 	}
 
