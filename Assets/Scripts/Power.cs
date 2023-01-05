@@ -26,6 +26,28 @@ public class Power : MonoBehaviour
     void Update()
     {
 
+        /*
+        if (DialogueVelo.Instance.instantaneousPower > 350f)
+        {
+            DialogueVelo.Instance.instantaneousPower = 350f;
+        }
+        JaugePower.size = DialogueVelo.Instance.instantaneousPower / 350f;
+        Debug.Log(JaugePower.size);
+
+            if (JaugePower.size > 0.795f)
+            {
+                colorPower = JaugePower.colors;
+                colorPower.normalColor = Color.red;
+                JaugePower.colors = colorPower;
+            }
+
+            if (JaugePower.size > 0.495f && JaugePower.size < 0.795f)
+            {
+                colorPower = JaugePower.colors;
+                colorPower.normalColor = Color.yellow;
+                JaugePower.colors = colorPower;
+                GameManager.Instance.IncreaseBattery();
+            }*/
         if (Input.GetKey(KeyCode.Tab))
         {
 
@@ -46,6 +68,7 @@ public class Power : MonoBehaviour
                 GameManager.Instance.IncreaseBattery();
             }
         }
+
         JaugePower.size -= 0.04f * Time.deltaTime;
 
         if (JaugePower.size < 0.795f)

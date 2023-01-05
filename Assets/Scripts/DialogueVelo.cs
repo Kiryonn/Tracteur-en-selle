@@ -7,17 +7,26 @@ public class DialogueVelo : MonoBehaviour
 
     public FitnessEquipmentDisplay velo;
     public bool connected;
-    public int instantaneousPower;
+    public float instantaneousPower;
     public float speed;
     public float elapsedTime;
     public int heartRate;
     public int distanceTraveled;
     public int cadence;
 
+    public static DialogueVelo Instance;
+
     public int veloPente=0;
     void Start()
     {
-        
+        if (Instance != null)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
     // Update is called once per frame

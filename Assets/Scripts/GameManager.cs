@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			if(NumberBatteryFull + 1 <= MyBatteries.Length)
+			if(NumberBatteryFull + 1 < MyBatteries.Length)
             {
 				MyBatteries[NumberBatteryFull + 1].GetComponent<Scrollbar>().size += 0.05f;
 				NumberBatteryFull++;
@@ -67,14 +67,14 @@ public class GameManager : MonoBehaviour
 
 	public void UseBattery()
 	{
-		if (MyBatteries[NumberBatteryFull].GetComponent<Scrollbar>().size < 1)
+		if (MyBatteries[NumberBatteryAvailable].GetComponent<Scrollbar>().size > 0)
 		{
-			MyBatteries[NumberBatteryFull].GetComponent<Scrollbar>().size += 0.05f;
+			MyBatteries[NumberBatteryAvailable].GetComponent<Scrollbar>().size -= 0.05f;
 		}
 		else
 		{
-			MyBatteries[NumberBatteryFull + 1].GetComponent<Scrollbar>().size += 0.05f;
-			NumberBatteryFull++;
+			MyBatteries[NumberBatteryAvailable - 1].GetComponent<Scrollbar>().size -= 0.05f;
+			NumberBatteryAvailable--;
 		}
 	}
 

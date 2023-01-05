@@ -89,7 +89,7 @@ public class ArduinoConnector : MonoBehaviour {
             if (stream.IsOpen) {
                 stream.ReadTimeout = timeout;
                 try {
-                    Debug.Log (stream.ReadLine ());
+                    //Debug.Log (stream.ReadLine ());
                     return stream.ReadLine ();
 
                 } catch (TimeoutException) {
