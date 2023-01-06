@@ -17,7 +17,7 @@ public class InteractionManager : MonoBehaviour
 
     private Dictionary<string, List<string> > condition; // la condition c et pour les tache de la liste de t
 
-    public Dictionary<string,bool> realiser;
+    public Dictionary<string,bool> realiser; // nom des tache et leur status 
 
 
     private void Start()
@@ -92,7 +92,7 @@ public class InteractionManager : MonoBehaviour
         realiser[name] = true;
         //Debug.Log("realiser Ap" + realiser[name]);
 
-        foreach (string t in condition[name])
+        foreach (string t in condition[name])//verif d'actualisation 
         {
             try
             {
@@ -106,6 +106,24 @@ public class InteractionManager : MonoBehaviour
             
         }
         
+    }
+
+    public void plusBesoin(string[] lsname)
+    {
+        foreach (string t in lsname)//verif d'actualisation 
+        {
+            try
+            {
+                recherche[t].disparition();
+            }
+            catch (Exception)
+            {
+
+                //throw;
+            }
+
+        }
+
     }
 
 
