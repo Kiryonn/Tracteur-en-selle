@@ -662,6 +662,7 @@ GameObject:
   - component: {fileID: 1170331332}
   - component: {fileID: 1170331331}
   - component: {fileID: 1170331330}
+  - component: {fileID: 1170331333}
   m_Layer: 5
   m_Name: Scrollbar
   m_TagString: Untagged
@@ -777,6 +778,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1170331328}
   m_CullTransparentMesh: 1
+--- !u!114 &1170331333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170331328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1043ac796aa9aa4e9ecd4408cfc24eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1266264234
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,6 +802,7 @@ GameObject:
   - component: {fileID: 1266264238}
   - component: {fileID: 1266264237}
   - component: {fileID: 1266264236}
+  - component: {fileID: 1266264239}
   m_Layer: 5
   m_Name: Scrollbar (1)
   m_TagString: Untagged
@@ -904,6 +918,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266264234}
   m_CullTransparentMesh: 1
+--- !u!114 &1266264239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266264234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1043ac796aa9aa4e9ecd4408cfc24eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1315987870
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,6 +1112,7 @@ GameObject:
   - component: {fileID: 1444899221}
   - component: {fileID: 1444899220}
   - component: {fileID: 1444899219}
+  - component: {fileID: 1444899223}
   m_Layer: 5
   m_Name: Scrollbar (3)
   m_TagString: Untagged
@@ -1201,6 +1228,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1444899223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444899218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1043ac796aa9aa4e9ecd4408cfc24eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1506257963
 GameObject:
   m_ObjectHideFlags: 0
@@ -1508,6 +1547,7 @@ GameObject:
   - component: {fileID: 1661643543}
   - component: {fileID: 1661643542}
   - component: {fileID: 1661643541}
+  - component: {fileID: 1661643544}
   m_Layer: 5
   m_Name: Scrollbar (2)
   m_TagString: Untagged
@@ -1623,6 +1663,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1661643539}
   m_CullTransparentMesh: 1
+--- !u!114 &1661643544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661643539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1043ac796aa9aa4e9ecd4408cfc24eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1676354324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1655,7 +1707,11 @@ MonoBehaviour:
   velo: {fileID: 1927643416}
   pente: 188
   slider: {fileID: 0}
-  myBatteries: []
+  myBatteries:
+  - {fileID: 1170331328}
+  - {fileID: 1266264234}
+  - {fileID: 1661643539}
+  - {fileID: 1444899218}
 --- !u!4 &1676354326
 Transform:
   m_ObjectHideFlags: 0
@@ -1865,7 +1921,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3883372770444875155, guid: a5443a67ea444ce4bbb7653e7ddb7549, type: 3}
       propertyPath: port
-      value: COM6
+      value: COM3
       objectReference: {fileID: 0}
     - target: {fileID: 3883372770444875165, guid: a5443a67ea444ce4bbb7653e7ddb7549, type: 3}
       propertyPath: m_Name

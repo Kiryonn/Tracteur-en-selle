@@ -73,19 +73,20 @@ public class ArduinoConnector : MonoBehaviour {
 	}
 
 	public void Update () {
-		/*
+		
 		string x = ReadFromArduino();
-		Debug.Log(x);
 		if (!String.IsNullOrEmpty(x) ) {
+			//Debug.Log("[Debug] Arduino Stream : "+x);
 			string[] ds = x.Split(',');
-			if (!(float.TryParse(ds[0], out float tempDirection) && float.TryParse(ds[1], out float tempSpeed)))
+			
+			if (!(ds.Length>1 && float.TryParse(ds[0], out float tempDirection) && float.TryParse(ds[1], out float tempSpeed)))
 				Debug.LogError("[Error] Wrong information sent from Arduino : " + x +" (variable weren't modified)");
-            else{
+            else if(x[^1] != '\n'){
 				direction = tempDirection;
 				speed = tempSpeed;
             }
 		}
-		*/
+		//&& x.Contains('?')
 	}
 
 	public void OnApplicationQuit () {
