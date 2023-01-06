@@ -12,6 +12,11 @@ public class ZoneAction : MonoBehaviour
     public MeshRenderer meshRenderer;
     private bool actif;
 
+    public int chanceDeReussite = 100;
+    public string[] objetAide;
+    private bool fini=true;
+    public float temps =5f;
+
     //bool aciv;
 
     InteractionManager manager;
@@ -25,7 +30,10 @@ public class ZoneAction : MonoBehaviour
 
         if (condition[0] != "true") { meshRenderer.enabled = false; }
         actif = true;
+
+        
     }
+   
 
     private void OnTriggerEnter(Collider other)
     {
@@ -37,18 +45,47 @@ public class ZoneAction : MonoBehaviour
             if (manager.isgood(condition)) 
             {
                 Debug.Log("condition Valide");
+                
                 action();
             }
         }
     }
 
-
-    void action()
+    
+    private void OnTriggerExit(Collider other)
     {
+        fini = false;
+        StopAllCoroutines();
+        
+    }
+
+    private IEnumerator Wait() 
+    { 
+        yield return new WaitForSeconds(temps);
+        if(fini)
+        fin_action();
+        Debug.Log("fin timer");
+    }
+
+
+   void action()
+    {
+        
+        fini = true;
+        StartCoroutine(Wait());
+
+
+        
+    }
+
+    void fin_action() 
+    {
+        //fini = false;
+        chanceDeReussite = 100 - 40 * manager.nbgood(objetAide);
+
+        if (Random.Range(0, 100) > chanceDeReussite) { }//acident a appéle 
         disparition();
         manager.isRealiser(name);
-        
-
     }
 
     public void manageMe(InteractionManager m) 
