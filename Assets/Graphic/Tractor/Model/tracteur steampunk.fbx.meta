@@ -3,7 +3,27 @@ guid: 32c54a8aa7f41d24c9f39f94c2b4b95a
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cabine
+    second: {fileID: 2100000, guid: af6e6ef9b21a5f64f92ef13d0faf94d3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Copper
+    second: {fileID: 2100000, guid: f725e7f4f00857847b4345f297c0910b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Structure
+    second: {fileID: 2100000, guid: e86b0b85b2a44c541b47c07fe6775749, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tracks
+    second: {fileID: 2100000, guid: 52bae488c60568b4e96ddcfe55dfbdcd, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
