@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2740437404455762328}
   - component: {fileID: 2740437404455762329}
   m_Layer: 0
-  m_Name: zone action (1)
+  m_Name: zone action
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
