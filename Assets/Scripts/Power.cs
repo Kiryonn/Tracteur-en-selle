@@ -10,32 +10,42 @@ public class Power : MonoBehaviour
 	private int _LocationNumber = 0;//if there is multiple spot
 	private float _timeToDestroyObstacle;
 	private Scrollbar JaugePower;
+	private ColorBlock colors;
 
 	//define global attributes
 	void Start() {
 		JaugePower = GetComponent<Scrollbar>();
-		ResetObstacle();
+		ResetPower();
 	}
 
 	void Update() {
 		DialogueVelo dialog = DialogueVelo.Instance;
 
-		JaugePower.size = dialog.speed / dialog.maxSpeed;
+		if (Input.GetKey(KeyCode.Tab))
+		{
+			//JaugePower.size = dialog.speed / dialog.maxSpeed;
+			JaugePower.size += 0.005f;
 
-		if (JaugePower.size > 0.795f) {
-			// high speed
-			ChangeColor(Color.red);
-			GameManager.Instance.IncreaseBattery(40);
+			if (JaugePower.size > 0.795f)
+			{
+				// high speed
+				ChangeColor(Color.red);
+				GameManager.Instance.IncreaseBattery(40);
+			}
+			else if (JaugePower.size > 0.495f)
+			{
+				// medium speed
+				ChangeColor(Color.yellow);
+				GameManager.Instance.IncreaseBattery(20);
+			}
+			else
+			{
+				// low speed
+				ChangeColor(Color.green);
+				//GameManager.Instance.IncreaseBattery(10);
+			}
 		}
-		else if (JaugePower.size > 0.495f) {
-			// medium speed
-			ChangeColor(Color.yellow);
-			GameManager.Instance.IncreaseBattery(20);
-		} else {
-			// low speed
-			ChangeColor(Color.green);
-			GameManager.Instance.IncreaseBattery(10);
-		}
+		JaugePower.size -= 0.04f * Time.deltaTime;
 	}
 
 	public Scrollbar GetJaugeObstacle() {
@@ -43,18 +53,18 @@ public class Power : MonoBehaviour
 	}
 
 	private void ChangeColor(Color newcolor) {
-		var colors = JaugePower.colors;
+		colors = JaugePower.colors;
 		colors.normalColor = newcolor;
 		JaugePower.colors = colors;
 	}
 
 
 	//reset to starting value -> should disappear if not using Instantiate and/or using Destroy
-	public void ResetObstacle() {
-		ColorBlock colors = new ColorBlock();
-		colors.normalColor = Color.green;
-		
+	public void ResetPower() {
+
 		JaugePower.size = 0f;
+		colors = JaugePower.colors;
+		colors.normalColor = Color.green;
 		JaugePower.colors = colors;
 	}
 }

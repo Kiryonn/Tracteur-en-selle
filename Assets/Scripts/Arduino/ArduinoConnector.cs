@@ -18,8 +18,8 @@ public class ArduinoConnector : MonoBehaviour {
 	//SerialPort IO stream
 	private SerialPort stream;
 	public static ArduinoConnector Instance; // singleton
-	public int speed = 0;
-	public int direction = 0;
+	public float speed = 0;
+	public float direction = 0;
 
 	public void Open () {
 		//Open Serial Port
@@ -73,12 +73,19 @@ public class ArduinoConnector : MonoBehaviour {
 	}
 
 	public void Update () {
+		/*
 		string x = ReadFromArduino();
-		if (x != null) {
+		Debug.Log(x);
+		if (!String.IsNullOrEmpty(x) ) {
 			string[] ds = x.Split(',');
-			direction = int.Parse(ds[0]);
-			speed = int.Parse(ds[1]);
+			if (!(float.TryParse(ds[0], out float tempDirection) && float.TryParse(ds[1], out float tempSpeed)))
+				Debug.LogError("[Error] Wrong information sent from Arduino : " + x +" (variable weren't modified)");
+            else{
+				direction = tempDirection;
+				speed = tempSpeed;
+            }
 		}
+		*/
 	}
 
 	public void OnApplicationQuit () {
