@@ -22,7 +22,26 @@ public class InteractionManager : MonoBehaviour
 
     private void Start()
     {
-        idObjetif=new List<string>();
+        GameObject[] objet = GameObject.FindGameObjectsWithTag("objet");
+        GameObject[] tache = GameObject.FindGameObjectsWithTag("tache");
+
+        
+
+        if(objet.Length+ tache.Length!= idObjet.Length) 
+        { Debug.Log("nombre de zone d'action différent de s'elle acivée");
+            Debug.Log("les objet :");
+            foreach (GameObject i in objet)
+            {
+                Debug.Log(i.name);
+            }
+            Debug.Log("les tache");
+            foreach (GameObject i in tache)
+            {
+                Debug.Log(i.name);
+            }
+        }
+
+        idObjetif =new List<string>();
         condition=new Dictionary<string, List<string>>();
         recherche = new Dictionary<string, ZoneAction>();
         foreach (ZoneAction t in idObjet)
@@ -55,10 +74,10 @@ public class InteractionManager : MonoBehaviour
         foreach (string t in idObjetif)
         {
             realiser.Add(t,false);
-        }
+        }/*
         Debug.Log("recherche " + recherche["true"].name);
         Debug.Log("condition " + condition.ToString());
-        Debug.Log("realiser " + realiser.ToString());
+        Debug.Log("realiser " + realiser.ToString());*/
 
     }
 

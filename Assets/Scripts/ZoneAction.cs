@@ -17,7 +17,7 @@ public class ZoneAction : MonoBehaviour
     private bool fini=true;
     public float temps =5f;
 
-    //bool aciv;
+    private bool fin=true;
 
     InteractionManager manager;
 
@@ -33,20 +33,25 @@ public class ZoneAction : MonoBehaviour
 
         
     }
-   
+
 
     private void OnTriggerEnter(Collider other)
     {
-       // Debug.Log("colision");
-       // Debug.Log(other.tag);
-        if (other.tag == "Player") 
+        // Debug.Log("colision");
+        // Debug.Log(other.tag);
+        if (fin)
         {
-            //Debug.Log("Player");
-            if (manager.isgood(condition)) 
+            if (other.tag == "Player")
             {
-                Debug.Log("condition Valide");
-                
-                action();
+                //Debug.Log("Player");
+                if (manager.isgood(condition))
+                {
+                    
+                        Debug.Log("condition Valide");
+
+                        action();
+                    
+                }
             }
         }
     }
@@ -81,11 +86,15 @@ public class ZoneAction : MonoBehaviour
     void fin_action() 
     {
         //fini = false;
-        int chanceDeReussite = 100 - 40 * manager.nbgood(objetAide);
+        int n = manager.nbgood(objetAide);
+        int chanceDeReussite = 100 - 40 * n;
 
-        if (Random.Range(0, 100) > chanceDeReussite) { }//acident a appéle 
+        if (Random.Range(0, 100) > chanceDeReussite) { Debug.Log("acident"); }//acident a appéle 
         disparition();
         manager.isRealiser(name);
+        if (n > 0)
+            manager.plusBesoin(objetAide);
+        
     }
 
     public void manageMe(InteractionManager m) 
@@ -109,8 +118,8 @@ public class ZoneAction : MonoBehaviour
     public void disparition()
     {
 
-
-            meshRenderer.enabled = false;
+        fin = false;
+        meshRenderer.enabled = false;
         
 
     }
