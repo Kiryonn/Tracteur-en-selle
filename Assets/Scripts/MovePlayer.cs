@@ -21,7 +21,7 @@ public class MovePlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
 
         /*
         if (GameManager.Instance.GameIsOver || GameManager.instance.GameIsPaused) return;
@@ -30,19 +30,26 @@ public class MovePlayer : MonoBehaviour
         //gameObject.transform.position += speed_vector * Time.deltaTime;
         //GetComponent<Rigidbody>().velocity = new Vector3(2, 0, 0);
 
-        if (Cc.isGrounded || Input.GetAxis("Vertical") != 0)
+        if (GameManager.Instance.getNumberBatteryAvailable() > 0)
         {
-            Debug.Log(Input.GetAxis("Vertical"));
-            moveDirection = new Vector3(0, 0, Input.GetAxis("Vertical"));
-            moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection *= speed;
+            if (Cc.isGrounded || Input.GetAxis("Vertical") != 0)
+            {
+                Debug.Log(Input.GetAxis("Vertical"));
+                moveDirection = new Vector3(0, 0, Input.GetAxis("Vertical"));
+                moveDirection = transform.TransformDirection(moveDirection);
+                moveDirection *= speed;
+
+                GameManager.Instance.UseBattery();
+            }
+
+            //moveDirection.y -= gravity * Time.deltaTime;
+
+
+            transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * Time.deltaTime * speed * 10);
+            Cc.Move(moveDirection * Time.deltaTime);
+
+
         }
-
-        //moveDirection.y -= gravity * Time.deltaTime;
-
-
-        transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * Time.deltaTime * speed * 10);
-        Cc.Move(moveDirection * Time.deltaTime);
 
         //speed_vector = new Vector3(GameManager.instance.ScrollingSpeed, 0, 0);
 
