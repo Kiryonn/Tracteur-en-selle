@@ -12,7 +12,7 @@ public class ZoneAction : MonoBehaviour
     public MeshRenderer meshRenderer;
     private bool actif;
 
-    public int chanceDeReussite = 100;
+
     public string[] objetAide;
     private bool fini=true;
     public float temps =5f;
@@ -81,7 +81,7 @@ public class ZoneAction : MonoBehaviour
     void fin_action() 
     {
         //fini = false;
-        chanceDeReussite = 100 - 40 * manager.nbgood(objetAide);
+        int chanceDeReussite = 100 - 40 * manager.nbgood(objetAide);
 
         if (Random.Range(0, 100) > chanceDeReussite) { }//acident a appéle 
         disparition();
