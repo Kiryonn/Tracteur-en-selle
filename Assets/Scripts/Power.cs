@@ -11,20 +11,22 @@ public class Power : MonoBehaviour
 	private float _timeToDestroyObstacle;
 	private Scrollbar JaugePower;
 	private ColorBlock colors;
+	private	DialogueVelo dialog;
+	
 
 	//define global attributes
 	void Start() {
 		JaugePower = GetComponent<Scrollbar>();
+		
 		ResetPower();
 	}
 
 	void Update() {
-		DialogueVelo dialog = DialogueVelo.Instance;
 
-		if (Input.GetKey(KeyCode.Tab))
-		{
-			//JaugePower.size = dialog.speed / dialog.maxSpeed;
-			JaugePower.size += 0.005f;
+		dialog = DialogueVelo.Instance;
+
+			JaugePower.size = dialog.speed / dialog.maxSpeed;
+			//JaugePower.size += 0.005f;
 
 			if (JaugePower.size > 0.795f)
 			{
@@ -44,7 +46,11 @@ public class Power : MonoBehaviour
 				ChangeColor(Color.green);
 				//GameManager.Instance.IncreaseBattery(10);
 			}
-		}
+
+
+		
+
+
 		JaugePower.size -= 0.04f * Time.deltaTime;
 	}
 

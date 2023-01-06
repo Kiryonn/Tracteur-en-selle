@@ -46,8 +46,15 @@ public class GameManager : MonoBehaviour
 
 	public void IncreaseBattery(int amount)
     {
+		if(currentBattery == myBatteries.Length)
+        {
+			currentBattery--;
+
+		}
+		Debug.Log(currentBattery);
 		var battery = myBatteries[currentBattery];
-		if(battery.GetComponent<Scrollbar>().size > 0 && !battery.GetComponent<Battery>().IsAvailable)
+		
+		if (battery.GetComponent<Scrollbar>().size > 0 && !battery.GetComponent<Battery>().IsAvailable)
         {
 			numberBatteryAvailable++;
 			battery.GetComponent<Battery>().IsAvailable = true;
@@ -56,9 +63,10 @@ public class GameManager : MonoBehaviour
 		if (battery.GetComponent<Scrollbar>().size < 1)
 			battery.GetComponent<Scrollbar>().size += 0.005f;
 		else {
-			if(currentBattery + 1 < myBatteries.Length) {
-				myBatteries[currentBattery + 1].GetComponent<Scrollbar>().size += 0.005f;
-				currentBattery++;
+			currentBattery++;
+			if (currentBattery < myBatteries.Length) {	
+				myBatteries[currentBattery].GetComponent<Scrollbar>().size += 0.005f;
+				
 			}
 			
 		}
@@ -71,15 +79,19 @@ public class GameManager : MonoBehaviour
 
     public void UseBattery()
 	{
-		Debug.Log(numberBatteryAvailable);
 		var battery = myBatteries[numberBatteryAvailable-1].GetComponent<Scrollbar>();
-		if (battery.size > 0)
+		if (battery.size > 0) { 
 			battery.size -= 0.005f;
+			myBatteries[numberBatteryAvailable - 1].GetComponent<Battery>().IsAvailable = false;
+		}
 		else {
 			if (numberBatteryAvailable - 1 >= 0) {
 				myBatteries[numberBatteryAvailable - 1].GetComponent<Scrollbar>().size -= 0.005f;
+				myBatteries[numberBatteryAvailable - 1].GetComponent<Battery>().IsAvailable = false;
 				numberBatteryAvailable--;
+				currentBattery = Math.Max(0, currentBattery - 1);
 			}
+            
 		}
 	}
 }
