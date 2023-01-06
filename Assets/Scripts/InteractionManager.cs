@@ -19,11 +19,15 @@ public class InteractionManager : MonoBehaviour
 
     public Dictionary<string,bool> realiser; // nom des tache et leur status 
 
+    GameObject[] objet;
+    GameObject[] tache;
+
+    
 
     private void Start()
     {
-        GameObject[] objet = GameObject.FindGameObjectsWithTag("objet");
-        GameObject[] tache = GameObject.FindGameObjectsWithTag("tache");
+        objet = GameObject.FindGameObjectsWithTag("objet");
+        tache = GameObject.FindGameObjectsWithTag("tache");
 
         
 
@@ -145,6 +149,10 @@ public class InteractionManager : MonoBehaviour
 
     }
 
+    public GameObject[] GetTasks()
+    {
+        return tache;
+    }
 
 
 }
