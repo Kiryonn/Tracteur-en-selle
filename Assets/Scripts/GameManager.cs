@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -59,7 +60,12 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	public void UseBattery()
+    public int getNumberBatteryAvailable()
+    {
+        return numberBatteryAvailable;
+    }
+
+    public void UseBattery()
 	{
 		var battery = myBatteries[numberBatteryAvailable].GetComponent<Scrollbar>();
 		if (battery.size > 0)
