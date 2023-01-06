@@ -1,114 +1,60 @@
-using System.Transactions;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Power : MonoBehaviour
 {
-    
-    public float TimeToDestroyObstacle;
 
-    //Parameters
-    private int _LocationNumber = 0;//if there is multiple spot
-    private float _timeToDestroyObstacle;
-    private Scrollbar JaugePower;
-    private ColorBlock colorPower;
+	public float TimeToDestroyObstacle;
 
-    //define global attributes
-    void Start()
-    {
-        JaugePower = GetComponent<Scrollbar>();
-        ResetObstacle();
-    }
+	//Parameters
+	private int _LocationNumber = 0;//if there is multiple spot
+	private float _timeToDestroyObstacle;
+	private Scrollbar JaugePower;
 
-    void Update()
-    {
+	//define global attributes
+	void Start() {
+		JaugePower = GetComponent<Scrollbar>();
+		ResetObstacle();
+	}
 
-        
-        if (DialogueVelo.Instance.instantaneousPower > 350f)
-        {
-            DialogueVelo.Instance.instantaneousPower = 350f;
-        }
-        JaugePower.size = DialogueVelo.Instance.instantaneousPower / 350f;
-        Debug.Log(JaugePower.size);
+	void Update() {
+		DialogueVelo dialog = DialogueVelo.Instance;
 
-            if (JaugePower.size > 0.795f)
-            {
-                colorPower = JaugePower.colors;
-                colorPower.normalColor = Color.red;
-                JaugePower.colors = colorPower;
-            }
+		JaugePower.size = dialog.speed / dialog.maxSpeed;
 
-            if (JaugePower.size > 0.495f && JaugePower.size < 0.795f)
-            {
-                colorPower = JaugePower.colors;
-                colorPower.normalColor = Color.yellow;
-                JaugePower.colors = colorPower;
-                GameManager.Instance.IncreaseBattery();
-            }
-            /*
-        if (Input.GetKey(KeyCode.Tab))
-        {
+		if (JaugePower.size > 0.795f) {
+			// high speed
+			ChangeColor(Color.red);
+			GameManager.Instance.IncreaseBattery(40);
+		}
+		else if (JaugePower.size > 0.495f) {
+			// medium speed
+			ChangeColor(Color.yellow);
+			GameManager.Instance.IncreaseBattery(20);
+		} else {
+			// low speed
+			ChangeColor(Color.green);
+			GameManager.Instance.IncreaseBattery(10);
+		}
+	}
 
-            JaugePower.size += 0.005f;
+	public Scrollbar GetJaugeObstacle() {
+		return JaugePower;
+	}
 
-            if (JaugePower.size > 0.795f)
-            {
-                colorPower = JaugePower.colors;
-                colorPower.normalColor = Color.red;
-                JaugePower.colors = colorPower;
-            }
-
-            if (JaugePower.size > 0.495f && JaugePower.size < 0.795f)
-            {
-                colorPower = JaugePower.colors;
-                colorPower.normalColor = Color.yellow;
-                JaugePower.colors = colorPower;
-                GameManager.Instance.IncreaseBattery();
-            }
-        }*/
-
-        JaugePower.size -= 0.04f * Time.deltaTime;
-
-        if (JaugePower.size < 0.795f)
-        {
-            colorPower = JaugePower.colors;
-            colorPower.normalColor = Color.yellow;
-            JaugePower.colors = colorPower;
-        }
+	private void ChangeColor(Color newcolor) {
+		var colors = JaugePower.colors;
+		colors.normalColor = newcolor;
+		JaugePower.colors = colors;
+	}
 
 
-        if (JaugePower.size < 0.495f)
-        {
-            colorPower = JaugePower.colors;
-            colorPower.normalColor = Color.green;
-            JaugePower.colors = colorPower;
-        }
-
-
-    }
-
-    public Scrollbar GetJaugeObstacle()
-    {
-        return JaugePower;
-    }
-
-    
-
-
-    //reset to starting value -> should disappear if not using Instantiate and/or using Destroy
-    public void ResetObstacle()//called by Tile[resetTile]
-    {
-
-        JaugePower.value = 0;
-        colorPower = JaugePower.colors;
-        colorPower.normalColor = Color.green;
-        JaugePower.colors = colorPower;
-    }
-
-    
-    
-
+	//reset to starting value -> should disappear if not using Instantiate and/or using Destroy
+	public void ResetObstacle() {
+		ColorBlock colors = new ColorBlock();
+		colors.normalColor = Color.green;
+		
+		JaugePower.size = 0f;
+		JaugePower.colors = colors;
+	}
 }

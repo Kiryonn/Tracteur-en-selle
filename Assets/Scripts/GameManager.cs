@@ -8,10 +8,10 @@ public class GameManager : MonoBehaviour
 	//public GameObject player;
 	public int pente;
 	public Slider slider;
-	public GameObject[] MyBatteries;
+	public GameObject[] myBatteries;
 
-	private int NumberBatteryAvailable = 0;
-	private int NumberBatteryFull = 0;
+	private int numberBatteryAvailable = 0;
+	private int currentBattery = 0;
 
 	public static GameManager Instance;
 	
@@ -43,23 +43,17 @@ public class GameManager : MonoBehaviour
         velo.pente(pente);
     }
 
-	public void IncreaseBattery()
+	public void IncreaseBattery(int amount)
     {
-		if(MyBatteries[NumberBatteryFull].GetComponent<Scrollbar>().size > 0)
-        {
-			NumberBatteryAvailable++;
-        }
-
-		if (MyBatteries[NumberBatteryFull].GetComponent<Scrollbar>().size < 1)
-		{
-			MyBatteries[NumberBatteryFull].GetComponent<Scrollbar>().size += 0.05f;
-		}
-		else
-		{
-			if(NumberBatteryFull + 1 < MyBatteries.Length)
-            {
-				MyBatteries[NumberBatteryFull + 1].GetComponent<Scrollbar>().size += 0.05f;
-				NumberBatteryFull++;
+		var battery = myBatteries[currentBattery].GetComponent<Scrollbar>();
+		if(battery.size > 0)
+			numberBatteryAvailable++;
+		if (battery.size < 1)
+			battery.size += 0.05f;
+		else {
+			if(currentBattery + 1 < myBatteries.Length) {
+				myBatteries[currentBattery + 1].GetComponent<Scrollbar>().size += 0.05f;
+				currentBattery++;
 			}
 			
 		}
@@ -67,23 +61,14 @@ public class GameManager : MonoBehaviour
 
 	public void UseBattery()
 	{
-		if (MyBatteries[NumberBatteryAvailable].GetComponent<Scrollbar>().size > 0)
-		{
-			MyBatteries[NumberBatteryAvailable].GetComponent<Scrollbar>().size -= 0.05f;
-		}
-		else
-		{
-
-			if (NumberBatteryAvailable - 1 >= 0)
-            {
-				MyBatteries[NumberBatteryAvailable - 1].GetComponent<Scrollbar>().size -= 0.05f;
-				NumberBatteryAvailable--;
+		var battery = myBatteries[numberBatteryAvailable].GetComponent<Scrollbar>();
+		if (battery.size > 0)
+			battery.size -= 0.05f;
+		else {
+			if (numberBatteryAvailable - 1 >= 0) {
+				myBatteries[numberBatteryAvailable - 1].GetComponent<Scrollbar>().size -= 0.05f;
+				numberBatteryAvailable--;
 			}
-				
 		}
 	}
-
-
-
-
 }
