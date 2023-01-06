@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 	public GameObject[] MyBatteries;
 
 	private int NumberBatteryAvailable = 0;
-	private int NumberBatteryFull = 0;
+	private int currentBattery = 0;
 
 	public static GameManager Instance;
 	
@@ -43,23 +43,21 @@ public class GameManager : MonoBehaviour
         velo.pente(pente);
     }
 
-	public void IncreaseBattery()
+	public void IncreaseBattery(int amount)
     {
-		if(MyBatteries[NumberBatteryFull].GetComponent<Scrollbar>().size > 0)
-        {
+		var battery = MyBatteries[currentBattery].GetComponent<Scrollbar>();
+		if(battery.size > 0)
 			NumberBatteryAvailable++;
-        }
 
-		if (MyBatteries[NumberBatteryFull].GetComponent<Scrollbar>().size < 1)
+		if (battery.size < 1)
 		{
-			MyBatteries[NumberBatteryFull].GetComponent<Scrollbar>().size += 0.05f;
+			battery.size += 0.05f;
 		}
-		else
-		{
-			if(NumberBatteryFull + 1 < MyBatteries.Length)
+		else {
+			if(currentBattery + 1 < MyBatteries.Length)
             {
-				MyBatteries[NumberBatteryFull + 1].GetComponent<Scrollbar>().size += 0.05f;
-				NumberBatteryFull++;
+				MyBatteries[currentBattery + 1].GetComponent<Scrollbar>().size += 0.05f;
+				currentBattery++;
 			}
 			
 		}

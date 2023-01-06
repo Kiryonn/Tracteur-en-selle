@@ -10,47 +10,52 @@ public class Power : MonoBehaviour
 	private int _LocationNumber = 0;//if there is multiple spot
 	private float _timeToDestroyObstacle;
 	private Scrollbar JaugePower;
-	private ColorBlock colorPower;
 
 	//define global attributes
 	void Start() {
 		JaugePower = GetComponent<Scrollbar>();
-		colorPower = JaugePower.colors;
 		ResetObstacle();
 	}
 
 	void Update() {
-		JaugePower.size = DialogueVelo.Instance.speed / 350f;
-		Debug.Log(JaugePower.size);
+		DialogueVelo dialog = DialogueVelo.Instance;
+		ArduinoConnector arduino = ArduinoConnector.Instance;
+
+		JaugePower.size = dialog.speed / dialog.maxSpeed;
 
 		if (JaugePower.size > 0.795f) {
 			// high speed
-			colorPower.normalColor = Color.red;
-			JaugePower.colors = colorPower;
-			GameManager.Instance.IncreaseBattery();
+			ChangeColor(Color.red);
+			GameManager.Instance.IncreaseBattery(40);
 		}
 		else if (JaugePower.size > 0.495f) {
 			// medium speed
-			colorPower.normalColor = Color.yellow;
-			JaugePower.colors = colorPower;
-			GameManager.Instance.IncreaseBattery();
+			ChangeColor(Color.yellow);
+			GameManager.Instance.IncreaseBattery(20);
 		} else {
 			// low speed
-			colorPower.normalColor = Color.green;
-			JaugePower.colors = colorPower;
+			ChangeColor(Color.green);
+			GameManager.Instance.IncreaseBattery(10);
 		}
-		JaugePower.size -= 0.04f * Time.deltaTime;
 	}
 
 	public Scrollbar GetJaugeObstacle() {
 		return JaugePower;
 	}
 
+	private void ChangeColor(Color newcolor) {
+		var colors = JaugePower.colors;
+		colors.normalColor = newcolor;
+		JaugePower.colors = colors;
+	}
+
 
 	//reset to starting value -> should disappear if not using Instantiate and/or using Destroy
 	public void ResetObstacle() {
-		JaugePower.value = 0;
-		colorPower.normalColor = Color.green;
-		JaugePower.colors = colorPower;
+		ColorBlock colors = new ColorBlock();
+		colors.normalColor = Color.green;
+		
+		JaugePower.size = 0f;
+		JaugePower.colors = colors;
 	}
 }
