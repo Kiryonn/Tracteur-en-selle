@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 			currentBattery--;
 
 		}
-		Debug.Log(currentBattery);
+		//Debug.Log(currentBattery);
 		var battery = myBatteries[currentBattery];
 		
 		if (battery.GetComponent<Scrollbar>().size > 0 && !battery.GetComponent<Battery>().IsAvailable)
@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
 
     public void UseBattery()
 	{
+		Debug.Log(numberBatteryAvailable);
 		var battery = myBatteries[numberBatteryAvailable-1].GetComponent<Scrollbar>();
 		if (battery.size > 0) { 
 			battery.size -= 0.005f;

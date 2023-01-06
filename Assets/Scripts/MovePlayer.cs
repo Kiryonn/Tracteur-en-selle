@@ -41,6 +41,12 @@ public class MovePlayer : MonoBehaviour
 
                 GameManager.Instance.UseBattery();
             }
+            else
+            {
+                moveDirection = new Vector3(0, 0, 0);
+                moveDirection = transform.TransformDirection(moveDirection);
+                moveDirection *= speed;
+            }
 
             
 
