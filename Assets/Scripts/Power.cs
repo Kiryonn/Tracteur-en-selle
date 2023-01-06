@@ -19,7 +19,6 @@ public class Power : MonoBehaviour
 
 	void Update() {
 		DialogueVelo dialog = DialogueVelo.Instance;
-		ArduinoConnector arduino = ArduinoConnector.Instance;
 
 		JaugePower.size = dialog.speed / dialog.maxSpeed;
 
