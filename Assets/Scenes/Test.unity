@@ -329,7 +329,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velo: {fileID: 910843010}
-  player: {fileID: 0}
   pente: 188
   slider: {fileID: 467727}
 --- !u!4 &463613471
@@ -656,7 +655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae79e2dc8d23274096d18018a7bb40f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  port: COM3
+  port: COM6
   baudrate: 9600
   timesToLoop: 1
   verif: 

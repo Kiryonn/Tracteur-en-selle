@@ -11,7 +11,7 @@ using UnityEngine;
 public class ArduinoConnector : MonoBehaviour {
     //Serial Port where the Arduino is connected, this changes depending on what COM value the computer assigns the board
     //Change this to function that crawls COM ports and finds the one that returns PONG (or required data), then use that specific COM Port
-    public string port = "COM3";
+    public string port = "COM6";
     //Baudrate of the port, this can change depending on the baudrate of the arduino
     public int baudrate = 9600;
     //Time for Write to Arduino to loop (this is for just testing positive writes to the arduino board)
@@ -32,10 +32,10 @@ public class ArduinoConnector : MonoBehaviour {
         //Open Serial Port
 
         if (SerialPort.GetPortNames ().Length > 0) {
-            Debug.Log ("Open Serial Port " + SerialPort.GetPortNames () [0]);
-            port = SerialPort.GetPortNames () [0];
+            // port = SerialPort.GetPortNames () [0];
+            Debug.Log ("Open Serial Port " + port);
 
-            stream = new SerialPort (SerialPort.GetPortNames () [0], baudrate);
+            stream = new SerialPort (port, baudrate);
             stream.ReadTimeout = 5;
             stream.WriteTimeout = 5;
             try {
@@ -185,16 +185,12 @@ public class ArduinoConnector : MonoBehaviour {
 
     public string verif="";
     public void Update () {
-        
         string x = ReadFromArduino();
         if (x != null) 
         {
             verif = x;
             Debug.Log(verif);
         }
-
-        
-
     }
 
     public void OnApplicationQuit () {
