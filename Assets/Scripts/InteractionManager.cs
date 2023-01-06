@@ -17,7 +17,7 @@ public class InteractionManager : MonoBehaviour
 
     private Dictionary<string, List<string> > condition; // la condition c et reci pour les tache de la liste t
 
-    private Dictionary<string,bool> realiser;
+    public Dictionary<string,bool> realiser;
 
 
     private void Start()
