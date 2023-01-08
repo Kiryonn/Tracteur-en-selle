@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 4821441248135825363}
   - component: {fileID: 8450697732510861430}
   - component: {fileID: 5954356401618992316}
-  - component: {fileID: 5676916659970397526}
   - component: {fileID: 8544941134602308882}
+  - component: {fileID: 8946706865085943885}
+  - component: {fileID: 8751060219901836960}
   m_Layer: 0
-  m_Name: Empty Task
+  m_Name: Empty Task 1
   m_TagString: tache
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,23 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5676916659970397526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5306053904054426985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecfcb096e5d86bb4ab71a34a4fa922ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  name: Hangar
-  condition: []
-  meshRenderer: {fileID: 0}
-  objetAide: []
-  temps: 5
 --- !u!136 &8544941134602308882
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -116,3 +100,34 @@ CapsuleCollider:
   m_Height: 1.9999996
   m_Direction: 1
   m_Center: {x: 0, y: -1.5854541e-15, z: 0.22313279}
+--- !u!114 &8946706865085943885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5306053904054426985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0522eb14c044d34581513d1ed72644a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToInteract: 5
+--- !u!114 &8751060219901836960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5306053904054426985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ecc83dbfec8a314898864451a6793a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Sortir le chien
+  customColorization: 0
+  customColor: {r: 0, g: 0, b: 0, a: 0}
+  requireItem: 0
+  requiredObjects: []
+  sucessChance: 0

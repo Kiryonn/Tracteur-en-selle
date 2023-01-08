@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,9 +16,11 @@ public class GameManager : MonoBehaviour
 	private int currentBattery = 0;
 
 	public static GameManager Instance;
-	
 
-	void Start()
+	public List<Task> remainingTasks = new List<Task>();
+	public List<Task> completedTasks = new List<Task>();
+	public List<Item> collectedItems = new List<Item>();
+	void Awake()
 	{
 		if(Instance != null)
         {
@@ -27,7 +30,6 @@ public class GameManager : MonoBehaviour
         {
 			Instance = this;
         }
-
 	}
 
 	// Update is called once per frame
@@ -95,4 +97,27 @@ public class GameManager : MonoBehaviour
             
 		}
 	}
+
+	public void WinGame()
+    {
+
+    }
+
+	public void CompleteTask(Task task)
+    {
+		remainingTasks.Remove(task);
+		completedTasks.Add(task);
+		if (remainingTasks.Count == 0)
+        {
+			WinGame();
+        }
+    }
+
+	public void CollectItem(Item item)
+    {
+		if (collectedItems.Contains(item))
+        {
+			collectedItems.Add(item);
+		}
+    }
 }
