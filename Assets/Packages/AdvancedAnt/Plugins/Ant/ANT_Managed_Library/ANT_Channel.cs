@@ -205,7 +205,7 @@ namespace ANT_Managed_Library
         }
 
 
-        internal void NotifyDeviceEvent(ANT_Device.DeviceNotificationCode notification, object notificationInfo)
+        internal void NotifyDeviceEvent(ANT_Device.DeviceNotificationCode notification, Object notificationInfo)
         {
             if (DeviceNotification != null)
                 DeviceNotification(notification, notificationInfo);
