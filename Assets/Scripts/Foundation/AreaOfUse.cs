@@ -6,40 +6,38 @@ public class AreaOfUse : MonoBehaviour
 {
     Interactable interactable;
     public float timeToInteract;
-    Material material;
+    bool interacted;
     void Start()
     {
-        material = GetComponent<MeshRenderer>().material;
         interactable = GetComponent<Interactable>();
-        if (interactable.customColorization)
-        {
-            material.SetColor("_Color", interactable.customColor);
-        }
     }
 
     public IEnumerator EnterArea()
     {
         yield return new WaitForSeconds(timeToInteract);
         interactable.Interact();
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && !interacted)
         {
             Debug.Log("Entering zone");
             StartCoroutine("EnterArea");
+            interacted = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && interacted)
         {
             Debug.Log("Exiting zone");
             StopCoroutine("EnterArea");
+            interactable.ExitInteractable();
+            interacted = false;
         }
     }
 }
