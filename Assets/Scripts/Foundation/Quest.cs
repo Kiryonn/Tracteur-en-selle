@@ -13,12 +13,6 @@ public class Quest : Interactable
         GetComponent<Renderer>().material.SetColor("_Color", GameManager.Instance.interactionProperties.taskColor);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public override void Interact()
     {
         base.Interact();
@@ -34,11 +28,12 @@ public class Quest : Interactable
         }
         GameManager.Instance.HideAllObjectsOfType(typeof(Quest));
         GameManager.Instance.remainingTasks = requiredTasks;
+        GameManager.Instance.currentQuest = this;
         HideInteractable();
         NextTask();
     }
 
-    public void CompleteTask(Task task)
+    public virtual void CompleteTask(Task task)
     {
         task.HideInteractable();
         requiredTasks.Remove(task);
@@ -49,6 +44,7 @@ public class Quest : Interactable
         else
         {
             GameManager.Instance.CompleteQuest(this);
+            GameManager.Instance.currentQuest = null;
         }
     }
 
@@ -56,9 +52,13 @@ public class Quest : Interactable
     {
         requiredTasks[0].ShowInteractable();
         requiredTasks[0].SetQuest(this);
-        foreach (var item in requiredTasks[0].requiredObjects)
+        if (requiredTasks[0].requireItem)
         {
-            item.ShowInteractable();
+            foreach (var item in requiredTasks[0].requiredObjects)
+            {
+                item.ShowInteractable();
+            }
         }
+        
     }
 }

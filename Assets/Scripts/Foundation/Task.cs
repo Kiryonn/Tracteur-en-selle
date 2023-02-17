@@ -10,7 +10,7 @@ public class Task : Interactable
     public List<Item> requiredObjects; // Tous les objets qui pourrait être utilisé
     public float sucessChance;
     public Item necessaryItem; // Le meilleur objet
-    Quest quest;
+    protected Quest quest;
     // Start is called before the first frame update
     private void Start()
     {
@@ -50,7 +50,7 @@ public class Task : Interactable
 
     }
 
-    public void SetQuest(Quest q)
+    public virtual void SetQuest(Quest q)
     {
         quest = q;
     }

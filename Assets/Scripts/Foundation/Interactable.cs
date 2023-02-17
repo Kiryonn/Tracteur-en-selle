@@ -21,13 +21,13 @@ public class Interactable : MonoBehaviour
         Debug.Log("Interacting with " + _name);
     }
 
-    public void HideInteractable()
+    public virtual void HideInteractable()
     {
         StartCoroutine(Fade(1.0f, 0f));
         gameObject.GetComponent<Collider>().enabled = false;
     }
 
-    public void ShowInteractable()
+    public virtual void ShowInteractable()
     {
         StartCoroutine(Fade(1.0f, 1.0f));
         gameObject.GetComponent<Collider>().enabled = true;

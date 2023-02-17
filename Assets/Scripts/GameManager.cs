@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 
 
 public class GameManager : MonoBehaviour
@@ -21,6 +20,7 @@ public class GameManager : MonoBehaviour
 
 	public List<Quest> remainingQuests = new List<Quest>();
 	public List<Quest> completedQuests = new List<Quest>();
+	public Quest currentQuest;
 	public List<Task> remainingTasks = new List<Task>();
 	public List<Item> collectedItems = new List<Item>();
 	[HideInInspector]
@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
 
 	public void WinGame()
     {
-
+		Debug.Log("You win");
     }
 
 	public void CompleteTask(Task task)
