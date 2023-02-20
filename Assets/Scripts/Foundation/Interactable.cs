@@ -7,14 +7,11 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     public string _name;
-    Renderer render;
-    private void Awake()
-    {
-        render = GetComponent<Renderer>();
-    }
+    protected Renderer render;
     private void Start()
     {
-        GetComponent<Renderer>().material.SetColor("_Color", GameManager.Instance.interactionProperties.otherColor);
+        render = GetComponent<Renderer>();
+        OnStart();
     }
     public virtual void Interact()
     {
@@ -48,5 +45,10 @@ public class Interactable : MonoBehaviour
     public virtual void ExitInteractable()
     {
         
+    }
+
+    protected virtual void OnStart()
+    {
+        GetComponent<Renderer>().material.SetColor("_Color", GameManager.Instance.interactionProperties.otherColor);
     }
 }

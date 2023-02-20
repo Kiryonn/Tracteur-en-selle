@@ -6,8 +6,7 @@ public class Quest : Interactable
 {
     public List<Task> requiredTasks;
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void OnStart()
     {
         GameManager.Instance.remainingQuests.Add(this);
         GetComponent<Renderer>().material.SetColor("_Color", GameManager.Instance.interactionProperties.taskColor);

@@ -11,11 +11,12 @@ public class Task : Interactable
     public float sucessChance;
     public Item necessaryItem; // Le meilleur objet
     protected Quest quest;
-    // Start is called before the first frame update
-    private void Start()
+
+    protected override void OnStart()
     {
+        base.OnStart();
         GameManager.Instance.remainingTasks.Add(this);
-        GetComponent<Renderer>().material.SetColor("_Color", GameManager.Instance.interactionProperties.taskColor);
+        render.material.SetColor("_Color", GameManager.Instance.interactionProperties.taskColor);
         HideInteractable();
     }
 

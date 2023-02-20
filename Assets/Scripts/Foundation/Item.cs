@@ -5,10 +5,6 @@ using UnityEngine;
 public class Item : Interactable
 {
     public List<Item> linkedItems;
-    private void Start()
-    {
-        OnStart();
-    }
     public override void Interact()
     {
         base.Interact();
@@ -20,7 +16,7 @@ public class Item : Interactable
         }
     }
 
-    public virtual void OnStart()
+    protected override void OnStart()
     {
         GetComponent<MeshRenderer>().material.SetColor("_Color", GameManager.Instance.interactionProperties.itemColor);
         GameManager.Instance.allItems.Add(this);
