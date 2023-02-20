@@ -5,13 +5,13 @@ using UnityEngine;
 public class TailleVigne : Task
 {
     public int vigneResistance;
-    private void Start()
+    protected override void OnStart()
     {
+        base.OnStart();
         GameManager.Instance.remainingTasks.Add(this);
-        GetComponent<Renderer>().material.SetColor("_Color", GameManager.Instance.interactionProperties.taskColor);
+        render.material.SetColor("_Color", GameManager.Instance.interactionProperties.taskColor);
         HideInteractable();
     }
-
     public override void Interact()
     {
         Vigne v = (Vigne)quest;

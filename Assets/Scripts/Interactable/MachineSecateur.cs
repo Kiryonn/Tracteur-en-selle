@@ -7,9 +7,9 @@ public class MachineSecateur : Interactable
     public Vigne vigne;
     public bool affutage;
 
-    private void Start()
+    protected override void OnStart()
     {
-        GetComponent<Renderer>().material.SetColor("_Color", GameManager.Instance.interactionProperties.otherColor);
+        base.OnStart();
         HideInteractable();
     }
 

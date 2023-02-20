@@ -6,12 +6,12 @@ public class Secateur : Item
 {
     public SecateurTypes type;
 
-    public int maxDurability;
+    [SerializeField] int maxDurability;
     public int currentDurability;
 
     public bool affutage;
 
-    public override void OnStart()
+    protected override void OnStart()
     {
         base.OnStart();
         currentDurability = maxDurability;
