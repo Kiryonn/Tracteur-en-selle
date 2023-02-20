@@ -15,15 +15,7 @@ public class DialogueVelo : MonoBehaviour
 	public int cadence;
 	public float maxSpeed = 24f;
 
-	public static DialogueVelo Instance;
-
 	public int veloPente=0;
-	void Start() {
-		if (Instance != null)
-			Destroy(this);
-		else
-			Instance = this;
-	}
 
 	// Update is called once per frame
 	void Update() {

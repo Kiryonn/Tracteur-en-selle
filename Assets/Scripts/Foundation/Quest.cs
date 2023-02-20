@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Quest : Interactable
 {
-    public List<Task> requiredTasks;
-
+    [SerializeField] protected List<Task> requiredTasks;
+    public MSAVision vision;
     protected override void OnStart()
     {
         GameManager.Instance.remainingQuests.Add(this);
+        if (vision) { vision.HideInteractable(); }
         GetComponent<Renderer>().material.SetColor("_Color", GameManager.Instance.interactionProperties.taskColor);
     }
 
@@ -28,6 +29,7 @@ public class Quest : Interactable
         GameManager.Instance.HideAllObjectsOfType(typeof(Quest));
         GameManager.Instance.remainingTasks = requiredTasks;
         GameManager.Instance.currentQuest = this;
+
         HideInteractable();
         NextTask();
     }
@@ -57,7 +59,17 @@ public class Quest : Interactable
             {
                 item.ShowInteractable();
             }
+            if (vision) { vision.ShowInteractable(); }
+        }
+        else
+        {
+            if (vision) { vision.HideInteractable(); }
         }
         
+    }
+
+    public Task GetCurrentTask()
+    {
+        return requiredTasks[0];
     }
 }
