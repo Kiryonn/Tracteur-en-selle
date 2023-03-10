@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using TMPro;
 public static class LeanTweenExt
 {
     //LeanTween.addListener
@@ -183,5 +183,17 @@ public static class LeanTweenExt
     public static Color LeanColor(this Transform transform)
     {
         return transform.GetComponent<Renderer>().material.color;
+    }
+
+    public static LTDescr LeanAlphaText(this TextMeshProUGUI textMesh, float to, float time)
+    {
+        var _color = textMesh.color;
+        var _tween = LeanTween
+            .value(textMesh.gameObject, _color.a, to, time)
+            .setOnUpdate((float _value) => {
+                _color.a = _value;
+                textMesh.color = _color;
+            });
+        return _tween;
     }
 }

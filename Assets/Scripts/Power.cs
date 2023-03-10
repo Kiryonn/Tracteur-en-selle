@@ -31,13 +31,13 @@ public class Power : MonoBehaviour
         {
             // high speed
             ChangeColor(Color.red);
-            GameManager.Instance.IncreaseBattery(40);
+            //GameManager.Instance.IncreaseBattery(40);
         }
         else if (JaugePower.size > 0.495f)
         {
             // medium speed
             ChangeColor(Color.yellow);
-            GameManager.Instance.IncreaseBattery(20);
+            //GameManager.Instance.IncreaseBattery(20);
         }
         else
         {

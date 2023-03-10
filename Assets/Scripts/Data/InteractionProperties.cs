@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Propriétés des intéractions")]  
+[CreateAssetMenu(fileName = "Propriétés des intéractions",menuName = "Data/Propriétés des intéractions")]  
 public class InteractionProperties : ScriptableObject
 {
     [ColorUsage(true,true)]

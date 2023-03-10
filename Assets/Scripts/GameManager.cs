@@ -1,23 +1,34 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
-
+public enum GameState
+{
+	QuestState,
+	ScoreState
+}
 
 public class GameManager : MonoBehaviour
 {
+	public static GameManager Instance;
+	GameState currentState;
+	public Camera cam { get; private set; }
 
+	[Header("Vélo")]
+	[HideInInspector]
 	public DialogueVelo velo;
+	[SerializeField] Drone drone;
 	//public GameObject player;
 	public int pente;
 	public Slider slider;
-	public GameObject[] myBatteries;
+	[SerializeField] Transform spawnPosition;
+	[SerializeField] Transform playerParent;
+	
 
-	private int numberBatteryAvailable = 0;
-	private int currentBattery = 0;
-
-	public static GameManager Instance;
-
+	[Header("Quetes objets et tâches")]
 	public List<Quest> remainingQuests = new List<Quest>();
 	public List<Quest> completedQuests = new List<Quest>();
 	public Quest currentQuest;
@@ -25,8 +36,21 @@ public class GameManager : MonoBehaviour
 	public List<Item> collectedItems = new List<Item>();
 	[HideInInspector]
 	public List<Item> allItems = new List<Item>();
+    int totalQuest = 0;
+	int totalFailedQuests = 0;
 
+	[System.NonSerialized] public UnityEvent<Item> onCollectedItem = new UnityEvent<Item>();
+	[System.NonSerialized] public UnityEvent<Quest,string> onCreatedQuest = new UnityEvent<Quest,string>();
+
+	float timer = 0f;
+	float hasStartedFloat = 1f;
+
+	public PlayerData playerData;
 	public InteractionProperties interactionProperties;
+
+	[Header("UI")]
+
+	public Transform itemUIRoot;
 	void Awake()
 	{
 		if(Instance != null)
@@ -37,89 +61,73 @@ public class GameManager : MonoBehaviour
         {
 			Instance = this;
         }
-
+		UIManager.instance.SetQuestListener();
 		
 	}
-    // Update is called once per frame
-    void Update()
-	{
 
-        //player.transform.position += velo.speed *Time.deltaTime * player.transform.forward;
-
+    private void Start()
+    {
+		itemUIRoot.gameObject.SetActive(false);
+		cam = Camera.main;
+		currentState = GameState.QuestState;
 	}
 
-	public void changeValue()
-	{
-		pente = (int)slider.value;
-        velo.pente(pente);
+    private void Update()
+    {
+        switch (currentState)
+        {
+            case GameState.QuestState:
+				timer += Time.deltaTime;
+                break;
+            case GameState.ScoreState:
+				timer = 0;
+                break;
+            default:
+                break;
+        }
     }
 
-	public void IncreaseBattery(int amount)
+	public void SpawnPlayer()
     {
-		if(currentBattery == myBatteries.Length)
-        {
-			currentBattery--;
-
-		}
-		//Debug.Log(currentBattery);
-		var battery = myBatteries[currentBattery];
-		
-		if (battery.GetComponent<Scrollbar>().size > 0 && !battery.GetComponent<Battery>().IsAvailable)
-        {
-			numberBatteryAvailable++;
-			battery.GetComponent<Battery>().IsAvailable = true;
-		}
-			
-		if (battery.GetComponent<Scrollbar>().size < 1)
-			battery.GetComponent<Scrollbar>().size += 0.005f;
-		else {
-			currentBattery++;
-			if (currentBattery < myBatteries.Length) {	
-				myBatteries[currentBattery].GetComponent<Scrollbar>().size += 0.005f;
-				
-			}
-			
-		}
+		velo.transform.SetParent(playerParent);
+		velo.transform.position = spawnPosition.position;
+		velo.transform.rotation = spawnPosition.rotation;
 	}
 
-    public int getNumberBatteryAvailable()
-    {
-        return numberBatteryAvailable;
-    }
-
-    public void UseBattery()
-	{
-		Debug.Log(numberBatteryAvailable);
-		var battery = myBatteries[numberBatteryAvailable-1].GetComponent<Scrollbar>();
-		if (battery.size > 0) { 
-			battery.size -= 0.005f;
-			myBatteries[numberBatteryAvailable - 1].GetComponent<Battery>().IsAvailable = false;
-		}
-		else {
-			if (numberBatteryAvailable - 1 >= 0) {
-				myBatteries[numberBatteryAvailable - 1].GetComponent<Scrollbar>().size -= 0.005f;
-				myBatteries[numberBatteryAvailable - 1].GetComponent<Battery>().IsAvailable = false;
-				numberBatteryAvailable--;
-				currentBattery = Math.Max(0, currentBattery - 1);
-			}
-            
-		}
-	}
-
-	public void WinGame()
+    public void WinGame()
     {
 		Debug.Log("You win");
+		Debug.Log("Temps passé : " + timer);
+		Debug.Log("Tracteur endommagé à :"+ (100f - velo.GetComponent<DamageController>().health));
+		Debug.Log("Nombre d'échecs : " + totalFailedQuests);
+		Debug.Log("Votre score est de : " + CalculateScore());
+		playerData.score = CalculateScore();
+		float durabilite = velo.gameObject.GetComponent<DamageController>().health;
+		gameObject.GetComponent<TransitionManager>().SetValues(timer, totalFailedQuests, durabilite, CalculateScore());
+		currentState = GameState.ScoreState;
+		totalFailedQuests = 0;
+		//SettingsManager.instance.LoadNextLevel();
     }
 
-	public void CompleteTask(Task task)
+	
+
+	public GameObject UISpawnObject(GameObject item)
     {
-		remainingTasks.Remove(task);
-		//completedTasks.Add(task);
-		task.HideInteractable();
-		if (remainingTasks.Count == 0)
-        {
-			WinGame();
-        }
+		itemUIRoot.gameObject.SetActive(true);
+		GameObject temp = Instantiate(item, itemUIRoot);
+		temp.transform.localPosition = Vector3.zero;
+		return temp;
+    }
+
+	public void HideUIObject(GameObject item)
+    {
+		item.SetActive(false);
+		itemUIRoot.gameObject.SetActive(false);
+    }
+
+	public void FailTask()
+    {
+		totalFailedQuests += 1;
     }
 
 	public void CompleteQuest(Quest quest)
@@ -127,14 +135,25 @@ public class GameManager : MonoBehaviour
 		remainingQuests.Remove(quest);
 		completedQuests.Add(quest);
 		quest.HideInteractable();
-		ShowQuests();
+		onCreatedQuest.Invoke(quest, "");
+		if (remainingQuests.Count == 0)
+        {
+			WinGame();
+        }
+        else
+        {
+			ShowQuests();
+		}
+		
     }
 
 	public void CollectItem(Item item)
     {
 		if (!collectedItems.Contains(item))
         {
+			drone.SummonDrone();
 			collectedItems.Add(item);
+			onCollectedItem.Invoke(item);
 		}
     }
 
@@ -170,5 +189,23 @@ public class GameManager : MonoBehaviour
 			default:
                 break;
         }
+    }
+
+	public void AddQuest(Quest q)
+    {
+		//Debug.Log("Addind "+q._name);
+		remainingQuests.Add(q);
+		onCreatedQuest.Invoke(q,q._name);
+    }
+
+	float CalculateScore()
+    {
+		float life = velo.GetComponent<DamageController>().health;
+		return ((10000 / (timer + 10)) + (life * 10) - (totalFailedQuests * 100)) * 10;
+    }
+
+	public void SwitchState(GameState newGameState)
+    {
+		currentState = newGameState;
     }
 }

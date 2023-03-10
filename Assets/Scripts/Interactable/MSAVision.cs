@@ -22,7 +22,7 @@ public class MSAVision : Interactable
     protected override void OnStart()
     {
         base.OnStart();
-        cam = Camera.main;
+        cam = GameManager.Instance.cam;
     }
 
     public override void Interact()

@@ -17,8 +17,12 @@ public class DialogueVelo : MonoBehaviour
 
 	public int veloPente=0;
 
-	// Update is called once per frame
-	void Update() {
+    private void Start()
+    {
+		GameManager.Instance.velo = this;
+    }
+    // Update is called once per frame
+    void Update() {
 		lectureVelo();
 	}
 
@@ -40,11 +44,11 @@ public class DialogueVelo : MonoBehaviour
 
 
 
-	public void resitance(int n) {
+	public void ChangeResitance(int n) {
 		velo.SetTrainerResistance(n);
 	}
 
-	public void pente(int n) {
+	public void ChangePente(int n) {
 		if(n!= veloPente)
 			velo.SetTrainerSlope(n);
 		veloPente = n;

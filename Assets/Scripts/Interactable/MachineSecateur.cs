@@ -24,7 +24,6 @@ public class MachineSecateur : Interactable
         if (affutage)
         {
             vigne.secateur.Affutage();
-            vigne.secateur.affutage = false;
             Debug.Log("Affutage du secateur " + vigne.secateur.type.ToString());
         }
         else

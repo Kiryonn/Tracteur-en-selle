@@ -15,7 +15,7 @@ public class TailleVigne : Task
     public override void Interact()
     {
         Vigne v = (Vigne)quest;
-        bool b = v.secateur.affutage;
+        bool b = v.secateur.currentDurability < 5;
         Debug.Log("Secating !!!");
         v.secateur.Use(vigneResistance);
         if (b)
@@ -23,14 +23,10 @@ public class TailleVigne : Task
             int r = Random.Range(0, 100);
             if (r > sucessChance)
             {
-                Debug.Log("Task failed sucessfully");
-                quest.CompleteTask(this);
+                HandleFailedTask();
             }
         }
-        else
-        {
-            quest.CompleteTask(this);
-        }
+        quest.CompleteTask(this);
     }
 
     public override void ShowInteractable()
@@ -56,7 +52,6 @@ public class TailleVigne : Task
         au bout de 5000 coups -> affûtage
         10 coups de sécateur par pied
         1000 pieds par jour
-
         */
     }
 }

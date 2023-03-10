@@ -6,9 +6,10 @@ public class Quest : Interactable
 {
     [SerializeField] protected List<Task> requiredTasks;
     public MSAVision vision;
+    
     protected override void OnStart()
     {
-        GameManager.Instance.remainingQuests.Add(this);
+        GameManager.Instance.AddQuest(this);
         if (vision) { vision.HideInteractable(); }
         GetComponent<Renderer>().material.SetColor("_Color", GameManager.Instance.interactionProperties.taskColor);
     }
@@ -19,7 +20,7 @@ public class Quest : Interactable
         StartQuest();
     }
 
-    public void StartQuest()
+    protected virtual void StartQuest()
     {
         if (requiredTasks.Count <= 0)
         {
@@ -49,7 +50,7 @@ public class Quest : Interactable
         }
     }
 
-    void NextTask()
+    protected virtual void NextTask()
     {
         requiredTasks[0].ShowInteractable();
         requiredTasks[0].SetQuest(this);
@@ -71,5 +72,10 @@ public class Quest : Interactable
     public Task GetCurrentTask()
     {
         return requiredTasks[0];
+    }
+
+    public bool isFinished()
+    {
+        return requiredTasks.Count <= 0;
     }
 }
