@@ -23,7 +23,7 @@ public class MovePlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        /*
         if (GameManager.Instance.getNumberBatteryAvailable() > 0)
         {
            
@@ -47,10 +47,6 @@ public class MovePlayer : MonoBehaviour
                 moveDirection = transform.TransformDirection(moveDirection);
                 moveDirection *= speed;
             }
-
-            
-
-
         }
         float directionToGo = 0;
 
@@ -91,11 +87,4 @@ public class MovePlayer : MonoBehaviour
         Cc.Move(moveDirection * Time.deltaTime);
         */
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(collision.gameObject.name); //nom de l'objet qu'on collisione
-    }
-
-    
 }

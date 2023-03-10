@@ -4,5 +4,26 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: 51cff9dd42268d2448e7ec6f3482e085
+  - enabled: 1
+    path: Assets/Scenes/PersistantGameLevel.unity
+    guid: 77ab8d31f3f8c4b43bd77b859c0d12d8
+  - enabled: 1
+    path: Assets/Scenes/Levels/Garage.unity
+    guid: 4592b703ffdc5dc4b8989a86a60be705
+  - enabled: 1
+    path: Assets/Scenes/Levels/Grande_Culture.unity
+    guid: 7d9e1099fa0025b42a5ca6501486a1ec
+  - enabled: 1
+    path: Assets/Scenes/Levels/JEV.unity
+    guid: 0c079d0d82604294c84b0a361fdeb90f
+  - enabled: 1
+    path: Assets/Scenes/Levels/Viticulture.unity
+    guid: 9ece0bcf2621a9246931a31dd82f0968
+  - enabled: 1
+    path: Assets/Scenes/Levels/Elevage.unity
+    guid: 690e0a9242582f74c99148c19a2c1301
   m_configObjects: {}

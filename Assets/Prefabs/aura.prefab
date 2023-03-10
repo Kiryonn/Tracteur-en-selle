@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 5009283768044854340}
   - component: {fileID: 8226764383938581473}
   - component: {fileID: 6183338759693428523}
-  - component: {fileID: 5306871835390152385}
   - component: {fileID: 8212319411816945285}
+  - component: {fileID: 488430369759773740}
   m_Layer: 0
   m_Name: aura
   m_TagString: tache
@@ -51,7 +51,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5678860628853376766}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -85,23 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5306871835390152385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5678860628853376766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecfcb096e5d86bb4ab71a34a4fa922ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  name: Hangar
-  condition: []
-  meshRenderer: {fileID: 0}
-  objetAide: []
-  temps: 5
 --- !u!136 &8212319411816945285
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -110,9 +93,22 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5678860628853376766}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 1
   m_Height: 1.9999996
   m_Direction: 1
   m_Center: {x: 0, y: -1.5854541e-15, z: 0.22313279}
+--- !u!114 &488430369759773740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5678860628853376766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0522eb14c044d34581513d1ed72644a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToInteract: 5

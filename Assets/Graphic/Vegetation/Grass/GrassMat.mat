@@ -150,7 +150,7 @@ Material:
     - _ReceiveShadows: 1
     - _Roughness_Multiplier: 0
     - _SampleGI: 0
-    - _Shadows: 3.3
+    - _Shadows: 1.18
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -159,13 +159,13 @@ Material:
     - _Voronoi_Agitation: 2.08
     - _Voronoi_Power: 6.2
     - _Voronoi_Scale: 5.28
-    - _Wind_Noise: 0.44
-    - _Wind_Strength: 1.31
+    - _Wind_Noise: 0.47
+    - _Wind_Strength: 0.44
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.051645547, g: 0.1981132, b: 0.04186542, a: 1}
+    - _Color: {r: 0, g: 0.4433962, b: 0.0079299165, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

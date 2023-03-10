@@ -6,6 +6,7 @@ TagManager:
   tags:
   - tache
   - objet
+  - Hazard
   layers:
   - Default
   - TransparentFX
@@ -13,9 +14,9 @@ TagManager:
   - Floor
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Player
+  - Obstacles
+  - RecapUI
   - 
   - 
   - 
