@@ -42,6 +42,7 @@ public class Drone : MonoBehaviour
         else
         {
             box.SetParent(transform);
+            player.canMove = true;
             //SetTranform(box, grabPosition);
         }
         grabbed = !grabbed;
@@ -98,6 +99,7 @@ public class Drone : MonoBehaviour
     public void SummonDrone()
     {
         anim.SetTrigger("Deliver");
+        player.canMove = false;
     }
 
     void SetTranform(Transform from, Transform to)

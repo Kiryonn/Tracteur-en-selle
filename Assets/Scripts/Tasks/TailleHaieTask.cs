@@ -40,11 +40,12 @@ public class TailleHaieTask : Task
             necessaryItem.HideInteractable();
         }
 
-        nav.enabled = true;
+        /*nav.enabled = true;
         playerController.canMove = false;
         nav.transform.LookAt(endOfLine);
         nav.SetDestination(endOfLine.position);
-        Debug.Log(nav.pathStatus);
+        Debug.Log(nav.pathStatus);*/
+        playerController.ForceDestination(endOfLine.position,1f);
     }
 
     private void Update()

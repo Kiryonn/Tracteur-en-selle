@@ -71,8 +71,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _Blend: 0
-    - _BlendMode: 0
-    - _Exposure: 1
+    - _BlendMode: 5
+    - _Exposure: 0.5
     - _InvertColors: 0
     - _Rotation: 0
     m_Colors:

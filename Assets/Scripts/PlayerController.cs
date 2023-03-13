@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    float modifier = 1f; // float to control speed with like mud or stop the car
     [SerializeField] float speed = 1f;
     [SerializeField] float rotationSpeed;
     ResourceController resourceController;
@@ -24,8 +25,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform frontLeftWheel;
     [SerializeField] Transform backRightWheel;
     [SerializeField] Transform backLeftWheel;
+
+    // Automatic control values
+
+    Vector3 destinationPoint;
+    float minDistance;
+
+    enum NavState
+    {
+        PlayerControl,
+        Forced,
+        Stopped
+    }
+
+    NavState navState;
     private void Start()
     {
+        navState = NavState.PlayerControl;
         rb = GetComponent<Rigidbody>();
         resourceController = GetComponent<ResourceController>();
     }
@@ -39,8 +55,33 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HandleMotor();
-        HandleSteering();
+        switch (navState)
+        {
+            case NavState.PlayerControl:
+                if (canMove && resourceController.SuffisantEnergy())
+                {
+                    modifier = 1f;
+                    if (movement >= 0.1f)
+                    {
+                        resourceController.UseEnergy(energyRequired);
+                    }
+                }
+                else
+                {
+                    modifier = 0f;
+                }
+                HandleMotor();
+                HandleSteering();
+                break;
+            case NavState.Forced:
+                HandleAutomatic();
+                break;
+            case NavState.Stopped:
+                break;
+            default:
+                break;
+        }
+        
             /*
         if (canMove && movement.magnitude >=0.1f && resourceController.SuffisantEnergy())
         {
@@ -54,8 +95,8 @@ public class PlayerController : MonoBehaviour
 
     void HandleMotor()
     {
-        frontLeftWheelCollider.motorTorque = movement * speed;
-        frontRightWheelCollider.motorTorque = movement * speed;
+        frontLeftWheelCollider.motorTorque = movement * speed * modifier;
+        frontRightWheelCollider.motorTorque = movement * speed * modifier;
         //backLeftWheelCollider.motorTorque = movement * speed;
         //backRightWheelCollider.motorTorque = movement * speed;
     }
@@ -67,13 +108,10 @@ public class PlayerController : MonoBehaviour
         frontLeftWheelCollider.steerAngle = turnAngle;
         frontRightWheelCollider.steerAngle = turnAngle;
 
-        UpdateWheels(frontLeftWheelCollider, frontLeftWheel);
-        UpdateWheels(frontRightWheelCollider, frontRightWheel);
-        UpdateWheels(backLeftWheelCollider, backLeftWheel);
-        UpdateWheels(backRightWheelCollider, backRightWheel);
+        UpdateWheels();
     }
 
-    void UpdateWheels(WheelCollider col, Transform trans)
+    void UpdateWheel(WheelCollider col, Transform trans)
     {
         Vector3 position;
         Quaternion rotation;
@@ -82,5 +120,46 @@ public class PlayerController : MonoBehaviour
         trans.position = position;
         trans.rotation = rotation;
     }
-    
+
+    public void ForceDestination(Vector3 targetPoint, float minDist)
+    {
+        destinationPoint = targetPoint;
+        minDistance = minDist;
+        navState = NavState.Forced;
+    }
+
+    void HandleAutomatic()
+    {
+        Debug.Log("Tractor going to :" + destinationPoint + " from :" + transform.position);
+        float distanceToTarget = Vector3.Distance(transform.position, destinationPoint);
+        if (distanceToTarget > minDistance)
+        {
+            Vector3 targetDirection = (destinationPoint - transform.position).normalized;
+            float steeringAngle = Vector3.Angle(targetDirection, transform.forward);
+            if (steeringAngle > 5f)
+            {
+                float rotationDirection = Vector3.Cross(targetDirection, transform.forward).y;
+                float steerDirection = Mathf.Sign(rotationDirection);
+                float steerAmount = Mathf.Clamp(steeringAngle / maxAngle, 0f, 1f) * steerDirection;
+                frontLeftWheelCollider.steerAngle = maxAngle * steerAmount;
+                frontRightWheelCollider.steerAngle = maxAngle * steerAmount;
+            }
+            frontLeftWheelCollider.motorTorque = speed;
+            frontRightWheelCollider.motorTorque = speed;
+
+            UpdateWheels();
+        }
+        else
+        {
+            navState = NavState.PlayerControl;
+        }
+    }
+
+    void UpdateWheels()
+    {
+        UpdateWheel(frontLeftWheelCollider, frontLeftWheel);
+        UpdateWheel(frontRightWheelCollider, frontRightWheel);
+        UpdateWheel(backLeftWheelCollider, backLeftWheel);
+        UpdateWheel(backRightWheelCollider, backRightWheel);
+    }
 }

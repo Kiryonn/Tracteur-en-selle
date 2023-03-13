@@ -257,27 +257,27 @@ PrefabInstance:
     - target: {fileID: 5911765111970877705, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: lameSprite.Array.data[0]
       value: 
-      objectReference: {fileID: 1897834643, guid: bfa46ada677ec3c43a70d8c046db791f, type: 3}
+      objectReference: {fileID: 21300000, guid: 6f1cd8715432b9b4c988db99f93f27f8, type: 3}
     - target: {fileID: 5911765111970877705, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: lameSprite.Array.data[1]
       value: 
-      objectReference: {fileID: -911239349, guid: bfa46ada677ec3c43a70d8c046db791f, type: 3}
+      objectReference: {fileID: 21300000, guid: 0891834402eb93143a7f24c97f44ce4b, type: 3}
     - target: {fileID: 5911765111970877705, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: lameSprite.Array.data[2]
       value: 
-      objectReference: {fileID: 397849731, guid: bfa46ada677ec3c43a70d8c046db791f, type: 3}
+      objectReference: {fileID: 21300000, guid: b6003a22864bd4746a8a2589d199ef78, type: 3}
     - target: {fileID: 5911765111970877705, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: lameSprite.Array.data[3]
       value: 
-      objectReference: {fileID: -1488111724, guid: bfa46ada677ec3c43a70d8c046db791f, type: 3}
+      objectReference: {fileID: 21300000, guid: c13c7779a48c2424191b456b4e0cfa03, type: 3}
     - target: {fileID: 5911765111970877705, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: lameSprite.Array.data[4]
       value: 
-      objectReference: {fileID: -58078713, guid: bfa46ada677ec3c43a70d8c046db791f, type: 3}
+      objectReference: {fileID: 21300000, guid: 415d072e50896574db3fbace6c514be7, type: 3}
     - target: {fileID: 5911765111970877705, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: lameSprite.Array.data[5]
       value: 
-      objectReference: {fileID: 1763182036, guid: bfa46ada677ec3c43a70d8c046db791f, type: 3}
+      objectReference: {fileID: 21300000, guid: 8ec261265af84e542bf450915c401a1b, type: 3}
     - target: {fileID: 6808871208095350898, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: bodyDamage
       value: 1

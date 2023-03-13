@@ -62,13 +62,13 @@ public class GameManager : MonoBehaviour
 			Instance = this;
         }
 		UIManager.instance.SetQuestListener();
-		
+		cam = Camera.main;
 	}
 
     private void Start()
     {
 		itemUIRoot.gameObject.SetActive(false);
-		cam = Camera.main;
+		
 		currentState = GameState.QuestState;
 	}
 
