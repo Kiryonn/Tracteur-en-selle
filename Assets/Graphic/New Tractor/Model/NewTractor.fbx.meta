@@ -18,72 +18,77 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: AttelageMecha
-    second: {fileID: 2100000, guid: 25d271600a50f0b42841bb9259353180, type: 2}
+    second: {fileID: 2100000, guid: 0a90b813ad035b945b74070c2c96ac28, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Attele
-    second: {fileID: 2100000, guid: e0d619fde072ae64894f538839b99d55, type: 2}
+    second: {fileID: 2100000, guid: 9d41bfb4eead3444ea47bf19980effc8, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Battery
-    second: {fileID: 2100000, guid: 35715ec2bb3771740951cbec366e6072, type: 2}
+    second: {fileID: 2100000, guid: 782455126e1bf2f478dbebf448ad8b56, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Cabin
-    second: {fileID: 2100000, guid: 463fc479b91677444899908c05b5a4d2, type: 2}
+    second: {fileID: 2100000, guid: b178ef957aec06c4fbc5c9f2fc5366e4, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Cable
-    second: {fileID: 2100000, guid: 112e4f9d6c7d27c43a75fd885ff8926b, type: 2}
+    second: {fileID: 2100000, guid: 35065e07ce23ea44e83947f29e301722, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Chassis
-    second: {fileID: 2100000, guid: 45a06ac431986d34db18edb6c108b9f0, type: 2}
+    second: {fileID: 2100000, guid: 286aefffd26014e438df9cc782cfda9f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: GuardeBoue
-    second: {fileID: 2100000, guid: b0944ce9fc2c8c94bbae28fb34e1dba5, type: 2}
+    second: {fileID: 2100000, guid: 0d8766ba61607364495929ab1ddcd62a, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Lamp
-    second: {fileID: 2100000, guid: c01303b7198aa9044bb6edc4c02e0180, type: 2}
+    second: {fileID: 2100000, guid: 7239a811e95b2254bb5a964dd9d20a30, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Light
+    second: {fileID: 2100000, guid: 1d536323ff8282041b2fd0329356542c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: MetalBlue
-    second: {fileID: 2100000, guid: bd12ad382da22c34696c1511cbccb754, type: 2}
+    second: {fileID: 2100000, guid: f5b126111456c654c97899136c083fcf, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Misc
-    second: {fileID: 2100000, guid: d9b1a876fd274bd478488c1cab4fd17a, type: 2}
+    second: {fileID: 2100000, guid: 6ef4eff4bf5174949a951abb067e6ff3, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: MotorFront
-    second: {fileID: 2100000, guid: c983f3d0b1e3a7548bb5d7e57a4b285f, type: 2}
+    second: {fileID: 2100000, guid: 3cddff1894900b54ea1bde5e6f2bac3c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Pad
-    second: {fileID: 2100000, guid: b68a6253fc7aefd469cb075013ffd89a, type: 2}
+    second: {fileID: 2100000, guid: 587fef9926f367d44a8ad77596a48b66, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Toit
-    second: {fileID: 2100000, guid: 4f9615afe47f2304d92b193716609fb5, type: 2}
+    second: {fileID: 2100000, guid: c32cd787a154755438ed16b750d5685a, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Wheel
-    second: {fileID: 2100000, guid: 8ff77af7446a93e42bea05a6ac2300bb, type: 2}
+    second: {fileID: 2100000, guid: e507e39bfbe02714780458448b836f0f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
