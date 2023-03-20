@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
+
 public class BillBoardPin : MonoBehaviour
 {
     Transform target;
+    public enum BillBoardType { LookAtCamera, CameraForward};
+    [SerializeField] BillBoardType billBoardType;
 
     // Start is called before the first frame update
     void Start()
@@ -14,8 +16,19 @@ public class BillBoardPin : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        transform.LookAt(target);
+        switch (billBoardType)
+        {
+            case BillBoardType.LookAtCamera:
+                transform.LookAt(target.position, Vector3.up);
+                break;
+            case BillBoardType.CameraForward:
+                transform.forward = target.forward;
+                break;
+            default:
+                break;
+        }
+        
     }
 }

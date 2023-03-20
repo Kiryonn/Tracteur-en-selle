@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Movement")]
+
     float modifier = 1f; // float to control speed with like mud or stop the car
     [SerializeField] float speed = 1f;
     [SerializeField] float rotationSpeed;
@@ -30,6 +32,12 @@ public class PlayerController : MonoBehaviour
 
     Vector3 destinationPoint;
     float minDistance;
+    public bool destinationReached { get; private set; }
+
+    [Header("Specific Equipement")]
+
+    public Animator tractorAnim;
+    public Animator secateurAnimator;
 
     enum NavState
     {
@@ -58,6 +66,7 @@ public class PlayerController : MonoBehaviour
         switch (navState)
         {
             case NavState.PlayerControl:
+                destinationReached = false;
                 if (canMove && resourceController.SuffisantEnergy())
                 {
                     modifier = 1f;
@@ -77,6 +86,7 @@ public class PlayerController : MonoBehaviour
                 HandleAutomatic();
                 break;
             case NavState.Stopped:
+                destinationReached = false;
                 break;
             default:
                 break;
@@ -121,29 +131,44 @@ public class PlayerController : MonoBehaviour
         trans.rotation = rotation;
     }
 
-    public void ForceDestination(Vector3 targetPoint, float minDist)
+    public void ForceDestination(Vector3 startPoint, Vector3 targetPoint, float minDist)
     {
+        transform.position = startPoint;
+        transform.LookAt(targetPoint);
         destinationPoint = targetPoint;
+        frontLeftWheelCollider.steerAngle = 0f;
+        frontRightWheelCollider.steerAngle = 0f;
         minDistance = minDist;
         navState = NavState.Forced;
     }
 
     void HandleAutomatic()
     {
-        Debug.Log("Tractor going to :" + destinationPoint + " from :" + transform.position);
+        
         float distanceToTarget = Vector3.Distance(transform.position, destinationPoint);
+        //Debug.Log("Distance restante : " + distanceToTarget);
         if (distanceToTarget > minDistance)
         {
+            /*
             Vector3 targetDirection = (destinationPoint - transform.position).normalized;
             float steeringAngle = Vector3.Angle(targetDirection, transform.forward);
-            if (steeringAngle > 5f)
+            Debug.Log("Angle = " + steeringAngle);
+            if (steeringAngle > 15f)
             {
                 float rotationDirection = Vector3.Cross(targetDirection, transform.forward).y;
                 float steerDirection = Mathf.Sign(rotationDirection);
                 float steerAmount = Mathf.Clamp(steeringAngle / maxAngle, 0f, 1f) * steerDirection;
+                //float steerAmount = steeringAngle / maxAngle;
+                Debug.Log("Clamp : " + Mathf.Clamp(steeringAngle / maxAngle, 0f, 1f));
                 frontLeftWheelCollider.steerAngle = maxAngle * steerAmount;
                 frontRightWheelCollider.steerAngle = maxAngle * steerAmount;
             }
+            else
+            {
+                frontLeftWheelCollider.steerAngle = 0f;
+                frontRightWheelCollider.steerAngle = 0f;
+            }
+            */
             frontLeftWheelCollider.motorTorque = speed;
             frontRightWheelCollider.motorTorque = speed;
 
@@ -152,6 +177,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             navState = NavState.PlayerControl;
+            destinationReached = true;
         }
     }
 
@@ -161,5 +187,18 @@ public class PlayerController : MonoBehaviour
         UpdateWheel(frontRightWheelCollider, frontRightWheel);
         UpdateWheel(backLeftWheelCollider, backLeftWheel);
         UpdateWheel(backRightWheelCollider, backRightWheel);
+    }
+
+    public void StopTractor()
+    {
+        frontLeftWheelCollider.brakeTorque = 10000f;
+        frontRightWheelCollider.brakeTorque = 10000f;
+        Invoke("ReleaseTractor", 1f);
+    }
+
+    void ReleaseTractor()
+    {
+        frontLeftWheelCollider.brakeTorque = 0f;
+        frontRightWheelCollider.brakeTorque = 0f;
     }
 }

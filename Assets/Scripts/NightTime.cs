@@ -67,4 +67,15 @@ public class NightTime : MonoBehaviour
         }
     }
 
+    public void SetDayTime(bool yn)
+    {
+        if (yn)
+        {
+            StopAllCoroutines();
+            spotLight.SetActive(false);
+            lightSource.intensity = 1f;
+            skyboxBlender.blend = 0f;
+        }
+    }
+
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class TailleVigne : Task
 {
     public int vigneResistance;
+    Vigne v;
     protected override void OnStart()
     {
         base.OnStart();
@@ -54,4 +55,6 @@ public class TailleVigne : Task
         1000 pieds par jour
         */
     }
+
+    
 }

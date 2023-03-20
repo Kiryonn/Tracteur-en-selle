@@ -97,4 +97,10 @@ public class Secateur : Item
         lameIndex = 4;
         v.UpdateSecateurSprite(4);
     }
+
+    protected override void ItemDeliveredTrigger()
+    {
+        base.ItemDeliveredTrigger();
+        GameManager.Instance.player.tractorAnim.SetTrigger("OpenTrap");
+    }
 }

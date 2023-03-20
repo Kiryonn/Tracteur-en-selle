@@ -10,8 +10,11 @@ public class GarageQuest : Quest
         foreach (var item in requiredTasks)
         {
             item.ShowInteractable();
-            item.necessaryItem.ShowInteractable();
-            item.SetQuest(this);
+            for(int i=0; i< item.necessaryItem.Length; i++)
+            {
+                item.necessaryItem[i].ShowInteractable();
+                item.SetQuest(this);
+            }
         }
     }
 

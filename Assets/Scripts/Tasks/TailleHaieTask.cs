@@ -8,6 +8,7 @@ public class TailleHaieTask : Task
     NavMeshAgent nav;
     [SerializeField] Transform endOfLine;
     PlayerController playerController;
+    bool destinationReached;
     protected override void OnStart()
     {
         base.OnStart();
@@ -16,7 +17,31 @@ public class TailleHaieTask : Task
     }
     public override void Interact()
     {
-        if (GameManager.Instance.collectedItems.Contains(necessaryItem))
+        
+
+        /*nav.enabled = true;
+        playerController.canMove = false;
+        nav.transform.LookAt(endOfLine);
+        nav.SetDestination(endOfLine.position);
+        Debug.Log(nav.pathStatus);*/
+        playerController.ForceDestination(transform.position,endOfLine.position,1f);
+        StartCoroutine("WaitForDestination");
+    }
+
+    IEnumerator WaitForDestination()
+    {
+        while (!destinationReached)
+        {
+            destinationReached = playerController.destinationReached;
+            yield return null;
+        }
+        
+        Complete();
+    }
+
+    void Complete()
+    {
+        if (CheckNecessaryItem())
         {
             quest.CompleteTask(this);
         }
@@ -37,23 +62,9 @@ public class TailleHaieTask : Task
 
         if (quest.isFinished() == this)
         {
-            necessaryItem.HideInteractable();
+            HideAllNecessaryItems();
+            
         }
 
-        /*nav.enabled = true;
-        playerController.canMove = false;
-        nav.transform.LookAt(endOfLine);
-        nav.SetDestination(endOfLine.position);
-        Debug.Log(nav.pathStatus);*/
-        playerController.ForceDestination(endOfLine.position,1f);
-    }
-
-    private void Update()
-    {
-        if (nav.enabled && Vector3.Distance(nav.transform.position,nav.destination)<= 1f)
-        {
-            nav.enabled = false;
-            playerController.canMove = true;
-        }
     }
 }

@@ -107,6 +107,9 @@ public class TransitionManager : MonoBehaviour
             img.gameObject.SetActive(true);
         }
     }
+        
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -356,5 +359,47 @@ public class TransitionManager : MonoBehaviour
         ptsText.Reset();
 
         schemaHumain.Reset();
+    }
+
+    public void FadeTransition(float speed, float duration)
+    {
+        StartCoroutine(FadeScreenBounce(1f, speed, duration, false));
+    }
+
+    IEnumerator FadeScreenBounce(float endAlpha, float speed, float duration, bool hideGameobject)
+    {
+        float a = fadeScreenImage.color.a;
+        Color c = fadeScreenImage.color;
+
+        if (!hideGameobject)
+        {
+            fadeScreenImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            fadeScreenImage.gameObject.SetActive(false);
+        }
+
+        for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / speed)
+        {
+            c.a = Mathf.Lerp(a, endAlpha, i);
+            fadeScreenImage.color = c;
+            yield return null;
+        }
+
+        c.a = endAlpha;
+        fadeScreenImage.color = c;
+        yield return new WaitForSeconds(duration);
+
+        a = fadeScreenImage.color.a;
+        c = fadeScreenImage.color;
+        for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / speed)
+        {
+            c.a = Mathf.Lerp(a, 1-endAlpha, i);
+            fadeScreenImage.color = c;
+            yield return null;
+        }
+        c.a = 1-endAlpha;
+        fadeScreenImage.color = c;
     }
 }

@@ -20,7 +20,8 @@ public class GameManager : MonoBehaviour
 	[Header("Vélo")]
 	[HideInInspector]
 	public DialogueVelo velo;
-	[SerializeField] Drone drone;
+	public PlayerController player { get; private set; }
+	public Drone drone;
 	//public GameObject player;
 	public int pente;
 	public Slider slider;
@@ -68,7 +69,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
 		itemUIRoot.gameObject.SetActive(false);
-		
+		player = velo.GetComponent<PlayerController>();
 		currentState = GameState.QuestState;
 	}
 

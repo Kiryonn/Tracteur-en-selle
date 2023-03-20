@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Vigne : Quest
 {
     public Secateur secateur;
+    public Animator secaAnim { get; private set; }
     public List<MachineSecateur> machines;
     [SerializeField] Sprite[] lameSprite;
     Image secateurImage;
@@ -21,12 +22,14 @@ public class Vigne : Quest
             item.ShowInteractable();
             item.vigne = this;
         }
+        secaAnim = GameManager.Instance.velo.GetComponent<PlayerController>().secateurAnimator;
     }
 
     public override void CompleteTask(Task task)
     {
         
         base.CompleteTask(task);
+        secaAnim.SetTrigger("Cut"); // Déclenche l'animation de coupure de vigne
         if (requiredTasks.Count <= 0)
         {
             foreach (var item in machines)
@@ -34,11 +37,22 @@ public class Vigne : Quest
                 item.HideInteractable();
             }
             GameManager.Instance.HideUIObject(secateurImage.gameObject);
+            secaAnim.SetTrigger("Close");
         }
     }
 
     public void UpdateSecateurSprite(int index)
     {
         secateurImage.sprite = lameSprite[index];
+    }
+
+    protected override void ItemDeliveredTrigger()
+    {
+        if (GameManager.Instance.currentQuest == this)
+        {
+            secaAnim.SetTrigger("Open");
+        }
+        base.ItemDeliveredTrigger();
+        
     }
 }

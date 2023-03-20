@@ -45,6 +45,10 @@ public class Quest : Interactable
         }
         else
         {
+            if (vision)
+            {
+                vision.HideInteractable();
+            }
             GameManager.Instance.CompleteQuest(this);
             GameManager.Instance.currentQuest = null;
         }

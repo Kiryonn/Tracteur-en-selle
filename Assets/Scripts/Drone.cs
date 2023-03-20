@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Drone : MonoBehaviour
 {
@@ -19,12 +20,20 @@ public class Drone : MonoBehaviour
     [SerializeField] Transform grabPosition;
     [SerializeField] Transform box;
     [SerializeField] bool grabbed;
+
+    [System.NonSerialized] public UnityEvent deliveryEvent;
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
-        player = GameManager.Instance.velo.GetComponent<PlayerController>();
+        if (GameManager.Instance) player = GameManager.Instance.velo.GetComponent<PlayerController>();
+
         grabbed = true;
+        if (deliveryEvent == null)
+        {
+            deliveryEvent = new UnityEvent();
+        }
+        
     }
 
     // Update is called once per frame
@@ -107,5 +116,15 @@ public class Drone : MonoBehaviour
         from.position = to.position;
         from.rotation = to.rotation;
         from.localScale = to.localScale;
+    }
+
+    public void Deliver()
+    {
+        deliveryEvent.Invoke();
+    }
+
+    public void ToggleTrap()
+    {
+        player.GetComponent<Animator>().SetTrigger("");
     }
 }

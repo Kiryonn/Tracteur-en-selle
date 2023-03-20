@@ -26,7 +26,7 @@ public class GarageTask : Task
 
     void CheckItem(Item i)
     {
-        if (i == necessaryItem)
+        if (CheckNecessaryItem())
         {
             check = true;
             ShowInteractable();

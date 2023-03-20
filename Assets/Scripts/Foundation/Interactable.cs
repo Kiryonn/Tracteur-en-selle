@@ -8,10 +8,13 @@ public class Interactable : MonoBehaviour
 {
     public string _name;
     protected Renderer render;
+    Drone drone;
     private void Start()
     {
         render = GetComponent<Renderer>();
         OnStart();
+        drone = GameManager.Instance.drone;
+        drone.deliveryEvent.AddListener(ItemDeliveredTrigger);
     }
     public virtual void Interact()
     {
@@ -50,5 +53,10 @@ public class Interactable : MonoBehaviour
     protected virtual void OnStart()
     {
         GetComponent<Renderer>().material.SetColor("_Color", GameManager.Instance.interactionProperties.otherColor);
+    }
+
+    protected virtual void ItemDeliveredTrigger()
+    {
+        //Debug.Log("An item got delivered");
     }
 }
