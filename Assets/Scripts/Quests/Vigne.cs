@@ -46,13 +46,13 @@ public class Vigne : Quest
         secateurImage.sprite = lameSprite[index];
     }
 
-    protected override void ItemDeliveredTrigger()
+    protected override void ItemDeliveredTrigger(Item item)
     {
         if (GameManager.Instance.currentQuest == this)
         {
             secaAnim.SetTrigger("Open");
         }
-        base.ItemDeliveredTrigger();
+        base.ItemDeliveredTrigger(item);
         
     }
 }

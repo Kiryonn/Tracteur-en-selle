@@ -8,11 +8,18 @@ public class Plots : Item
     [SerializeField] GameObject plotPrefab;
     Transform[] plots;
 
+    protected override void OnStart()
+    {
+        base.OnStart();
+        plots = new Transform[plotsPosition.Length];
+    }
+
     public override void Interact()
     {
         base.Interact();
         for (int i = 0; i<plotsPosition.Length; i++)
         {
+            Debug.Log("i = " + i);
             plots[i] = Instantiate(plotPrefab).transform;
             plots[i].position = plotsPosition[i].position;
         }

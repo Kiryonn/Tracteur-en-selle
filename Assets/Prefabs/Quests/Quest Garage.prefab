@@ -127,6 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Lance Patate
   linkedItems: []
+  pin: {fileID: 0}
 --- !u!1 &545122210950291274
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +156,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 545122210950291274}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: 14.807091, y: -0.52291155, z: 11.989822}
   m_LocalScale: {x: 3.21, y: 3.21, z: 3.21}
   m_ConstrainProportionsScale: 1
@@ -165,7 +166,7 @@ Transform:
   - {fileID: 1761396681571870832}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!33 &4284228343959734869
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -255,7 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db2ec5ca46ed52479ceafe61105fd20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Quete du garage
+  _name: Reparer le tracteur
   requiredTasks:
   - {fileID: 6526351982823032130}
   - {fileID: 6258366122322442097}
@@ -387,11 +388,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Repare le moteur
+  customColor: {r: 0, g: 0, b: 0, a: 0}
+  customizeColor: 0
   requireItem: 1
   requiredObjects:
   - {fileID: 5376527899229824325}
   sucessChance: 0
-  necessaryItem: {fileID: 5376527899229824325}
+  necessaryItem:
+  - {fileID: 5376527899229824325}
 --- !u!1 &6233989668504063907
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,11 +588,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: ' C''est la suspension'
+  customColor: {r: 0, g: 0, b: 0, a: 0}
+  customizeColor: 0
   requireItem: 1
   requiredObjects:
   - {fileID: 5566594990470051038}
   sucessChance: 0
-  necessaryItem: {fileID: 5566594990470051038}
+  necessaryItem:
+  - {fileID: 5566594990470051038}
 --- !u!1 &7909911694694410253
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,3 +754,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Cle de 12
   linkedItems: []
+  pin: {fileID: 0}

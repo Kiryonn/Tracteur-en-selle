@@ -10,7 +10,7 @@ public class NightTime : MonoBehaviour
     public float dayTimer;
     public float nightTimer;
     public float transitionSpeed;
-    [SerializeField] GameObject spotLight;
+    [SerializeField] GameObject[] spotLights;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,18 +19,18 @@ public class NightTime : MonoBehaviour
         StartCoroutine("WaitForNight");
     }
 
-    IEnumerator WaitForNight()
+    public IEnumerator WaitForNight()
     {
         yield return new WaitForSeconds(dayTimer * 60f);
-        spotLight.SetActive(true);
+        TurnSpotlights(true);
         StartCoroutine(ChangeDayTime(transitionSpeed, 0f));
         
     }
 
-    IEnumerator WaitForDay()
+    public IEnumerator WaitForDay()
     {
         yield return new WaitForSeconds(nightTimer * 60f);
-        spotLight.SetActive(false);
+        TurnSpotlights(false);
         StartCoroutine(ChangeDayTime(transitionSpeed, 1f));
         
     }
@@ -72,10 +72,17 @@ public class NightTime : MonoBehaviour
         if (yn)
         {
             StopAllCoroutines();
-            spotLight.SetActive(false);
+            TurnSpotlights(false);
             lightSource.intensity = 1f;
             skyboxBlender.blend = 0f;
         }
     }
 
+    void TurnSpotlights(bool on)
+    {
+        for (int i = 0; i < spotLights.Length; i++)
+        {
+            spotLights[i].GetComponent<DroneLight>().activated = on;
+        }
+    }
 }

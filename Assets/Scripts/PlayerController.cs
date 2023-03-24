@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform backRightWheel;
     [SerializeField] Transform backLeftWheel;
 
+    [Header("Shaders")]
+    public Renderer cabin;
+
     // Automatic control values
 
     Vector3 destinationPoint;
@@ -39,14 +42,14 @@ public class PlayerController : MonoBehaviour
     public Animator tractorAnim;
     public Animator secateurAnimator;
 
-    enum NavState
+    public enum NavState 
     {
         PlayerControl,
         Forced,
         Stopped
     }
 
-    NavState navState;
+    public NavState navState { get; private set; }
     private void Start()
     {
         navState = NavState.PlayerControl;
@@ -66,7 +69,6 @@ public class PlayerController : MonoBehaviour
         switch (navState)
         {
             case NavState.PlayerControl:
-                destinationReached = false;
                 if (canMove && resourceController.SuffisantEnergy())
                 {
                     modifier = 1f;
@@ -83,10 +85,10 @@ public class PlayerController : MonoBehaviour
                 HandleSteering();
                 break;
             case NavState.Forced:
+                destinationReached = false;
                 HandleAutomatic();
                 break;
             case NavState.Stopped:
-                destinationReached = false;
                 break;
             default:
                 break;
@@ -201,4 +203,6 @@ public class PlayerController : MonoBehaviour
         frontLeftWheelCollider.brakeTorque = 0f;
         frontRightWheelCollider.brakeTorque = 0f;
     }
+
+
 }

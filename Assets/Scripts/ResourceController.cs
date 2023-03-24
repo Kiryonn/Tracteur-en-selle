@@ -9,7 +9,7 @@ public class ResourceController : MonoBehaviour
     [SerializeField] float maxEnergy;
     [SerializeField] float energy;
 
-    [SerializeField] float energyFillSpeed;
+    [SerializeField] float[] energyFillSpeed;
     [SerializeField] float speedMultiplier;
     DialogueVelo dialogueVelo;
 
@@ -18,6 +18,11 @@ public class ResourceController : MonoBehaviour
 
     [System.NonSerialized] public UnityEvent<PlayerUI, float> energyChangeEvent;
     [System.NonSerialized] public UnityEvent<PlayerUI, float> speedChangeEvent;
+
+    [SerializeField] Renderer batteryRenderer;
+    [SerializeField] [ColorUsage(true, true)] Color lowBatteryColor;
+    [SerializeField] [ColorUsage(true, true)] Color maxBatteryColor;
+    Color batteryColor;
     private void Start()
     {
         dialogueVelo = GetComponent<DialogueVelo>();
@@ -63,21 +68,25 @@ public class ResourceController : MonoBehaviour
     }
     void FillEnergy()
     {
+        float currentFill;
         if (tempS < 6)
         {
-            energyFillSpeed = -1f;
+            currentFill = energyFillSpeed[0];
         }else if (tempS < 18)
         {
-            energyFillSpeed = 1f;
+            currentFill = energyFillSpeed[1];
         }
         else
         {
-            energyFillSpeed = 2f;
+            currentFill = energyFillSpeed[2];
         }
 
-        energy += energyFillSpeed * Time.deltaTime;
+        energy += currentFill * Time.deltaTime;
         if (energy > maxEnergy) energy = maxEnergy;
         if (energy < 0) energy = 0;
+
+        batteryColor = Color.Lerp(lowBatteryColor, maxBatteryColor, energy / maxEnergy);
+        batteryRenderer.material.SetColor("_PowerColor", batteryColor);
 
         energyChangeEvent.Invoke(playerUI, energy/maxEnergy);
     }

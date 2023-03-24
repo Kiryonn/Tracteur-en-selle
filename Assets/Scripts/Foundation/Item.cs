@@ -6,6 +6,7 @@ public class Item : Interactable
 {
     public List<Item> linkedItems;
     [SerializeField] Transform pin;
+    public bool noDroneRequest;
     public override void Interact()
     {
         base.Interact();

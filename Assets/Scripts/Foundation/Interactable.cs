@@ -55,7 +55,7 @@ public class Interactable : MonoBehaviour
         GetComponent<Renderer>().material.SetColor("_Color", GameManager.Instance.interactionProperties.otherColor);
     }
 
-    protected virtual void ItemDeliveredTrigger()
+    protected virtual void ItemDeliveredTrigger(Item item)
     {
         //Debug.Log("An item got delivered");
     }

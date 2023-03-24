@@ -233,10 +233,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Quest Garage
       objectReference: {fileID: 0}
-    - target: {fileID: 545122210950291274, guid: 1bfc0cdc10596464eb21357e62e96c20, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 926467668761789936, guid: 1bfc0cdc10596464eb21357e62e96c20, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -280,10 +276,6 @@ PrefabInstance:
     - target: {fileID: 926467668761789936, guid: 1bfc0cdc10596464eb21357e62e96c20, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2058239257137495710, guid: 1bfc0cdc10596464eb21357e62e96c20, type: 3}
-      propertyPath: _name
-      value: Reparer le tracteur
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bfc0cdc10596464eb21357e62e96c20, type: 3}

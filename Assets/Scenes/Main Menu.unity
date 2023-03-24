@@ -4232,6 +4232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a87f086fb6328724c8d9e99b1260b624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hideDroneAtStart: 0
   propellers:
   - {fileID: 9148967527650709970}
   - {fileID: 2387445189230633318}

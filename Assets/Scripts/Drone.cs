@@ -6,7 +6,8 @@ using UnityEngine.Events;
 public class Drone : MonoBehaviour
 {
     PlayerController player;
-
+    bool openedPad;
+    [SerializeField] bool hideDroneAtStart;
     [Header("Drone related")]
     [SerializeField] Transform[] propellers;
     [SerializeField] float propellersSpeed;
@@ -21,7 +22,9 @@ public class Drone : MonoBehaviour
     [SerializeField] Transform box;
     [SerializeField] bool grabbed;
 
-    [System.NonSerialized] public UnityEvent deliveryEvent;
+    [System.NonSerialized] public UnityEvent<Item> deliveryEvent;
+
+    Item transportedItem;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,9 +34,9 @@ public class Drone : MonoBehaviour
         grabbed = true;
         if (deliveryEvent == null)
         {
-            deliveryEvent = new UnityEvent();
+            deliveryEvent = new UnityEvent<Item>();
         }
-        
+        if (hideDroneAtStart) gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -52,6 +55,7 @@ public class Drone : MonoBehaviour
         {
             box.SetParent(transform);
             player.canMove = true;
+            Invoke("HideDrone", 5f);
             //SetTranform(box, grabPosition);
         }
         grabbed = !grabbed;
@@ -105,10 +109,12 @@ public class Drone : MonoBehaviour
         anim.SetTrigger("Take");
     }
 
-    public void SummonDrone()
+    public void SummonDrone(Item deliveryItem)
     {
+        gameObject.SetActive(true);
         anim.SetTrigger("Deliver");
         player.canMove = false;
+        transportedItem = deliveryItem;
     }
 
     void SetTranform(Transform from, Transform to)
@@ -120,11 +126,25 @@ public class Drone : MonoBehaviour
 
     public void Deliver()
     {
-        deliveryEvent.Invoke();
+        deliveryEvent.Invoke(transportedItem);
+        transportedItem = null;
     }
 
     public void ToggleTrap()
     {
-        player.GetComponent<Animator>().SetTrigger("");
+        if (!openedPad)
+        {
+            player.GetComponentInChildren<Animator>().SetTrigger("OpenPad");
+        }
+        else
+        {
+            player.GetComponentInChildren<Animator>().SetTrigger("ClosePad");
+        }
+        openedPad = !openedPad;
+    }
+
+    void HideDrone()
+    {
+        gameObject.SetActive(false);
     }
 }

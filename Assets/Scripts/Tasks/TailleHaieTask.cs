@@ -30,9 +30,8 @@ public class TailleHaieTask : Task
 
     IEnumerator WaitForDestination()
     {
-        while (!destinationReached)
+        while (playerController.navState == PlayerController.NavState.Forced)
         {
-            destinationReached = playerController.destinationReached;
             yield return null;
         }
         

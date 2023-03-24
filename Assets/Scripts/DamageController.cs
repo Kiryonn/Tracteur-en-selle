@@ -7,6 +7,8 @@ public class DamageController : MonoBehaviour
     public float health { get; private set; }
     [SerializeField] float maxHealth;
     Rigidbody rb;
+
+    [SerializeField] SkinnedMeshRenderer[] damageableParts;
     private void Start()
     {
         health = maxHealth;
@@ -18,7 +20,7 @@ public class DamageController : MonoBehaviour
         //Debug.Log("It's colliding with : "+collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Hazard"))
         {
-            DamageTractor(1f);
+            DamageTractor(5f);
         }
     }
 
@@ -26,11 +28,22 @@ public class DamageController : MonoBehaviour
     {
         health -= amount;
         Debug.Log("Endommagement "+rb.velocity);
+        UpdateVisualDamage();
     }
 
     public void HealTractor(float amount)
     {
         health += amount;
         if (health > maxHealth) health = maxHealth;
+        UpdateVisualDamage();
+    }
+
+    void UpdateVisualDamage()
+    {
+        for (int i = 0; i<damageableParts.Length; i++)
+        {
+            Debug.Log("Setting blendshape values to "+ (1 - health / maxHealth) * 100);
+            damageableParts[i].SetBlendShapeWeight(0, (1 - health / maxHealth) * 100);
+        }
     }
 }

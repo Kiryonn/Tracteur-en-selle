@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance;
 	GameState currentState;
+	NightTime nTime;
 	public Camera cam { get; private set; }
 
 	[Header("Vélo")]
@@ -68,6 +69,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+		
+		nTime = GetComponent<NightTime>();
 		itemUIRoot.gameObject.SetActive(false);
 		player = velo.GetComponent<PlayerController>();
 		currentState = GameState.QuestState;
@@ -93,6 +96,7 @@ public class GameManager : MonoBehaviour
 		velo.transform.SetParent(playerParent);
 		velo.transform.position = spawnPosition.position;
 		velo.transform.rotation = spawnPosition.rotation;
+		StartCoroutine(nTime.WaitForNight());
 	}
 
     public void WinGame()
@@ -106,6 +110,9 @@ public class GameManager : MonoBehaviour
 		float durabilite = velo.gameObject.GetComponent<DamageController>().health;
 		gameObject.GetComponent<TransitionManager>().SetValues(timer, totalFailedQuests, durabilite, CalculateScore());
 		currentState = GameState.ScoreState;
+
+		
+		nTime.SetDayTime(true);
 		totalFailedQuests = 0;
 		//SettingsManager.instance.LoadNextLevel();
     }
@@ -152,7 +159,7 @@ public class GameManager : MonoBehaviour
     {
 		if (!collectedItems.Contains(item))
         {
-			drone.SummonDrone();
+			if (!item.noDroneRequest) drone.SummonDrone(item);
 			collectedItems.Add(item);
 			onCollectedItem.Invoke(item);
 		}

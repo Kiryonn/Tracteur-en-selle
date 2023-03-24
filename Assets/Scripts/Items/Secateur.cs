@@ -98,9 +98,13 @@ public class Secateur : Item
         v.UpdateSecateurSprite(4);
     }
 
-    protected override void ItemDeliveredTrigger()
+    protected override void ItemDeliveredTrigger(Item item)
     {
-        base.ItemDeliveredTrigger();
-        GameManager.Instance.player.tractorAnim.SetTrigger("OpenTrap");
+        base.ItemDeliveredTrigger(item);
+        if (item == this)
+        {
+            GameManager.Instance.player.tractorAnim.SetTrigger("OpenTrap");
+        }
+        
     }
 }
