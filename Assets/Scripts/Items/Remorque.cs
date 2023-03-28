@@ -93,8 +93,8 @@ public class Remorque : Task
     void ConnectHingeJoint()
     {
         trailerJoint = remorque.gameObject.AddComponent<HingeJoint>();
-        trailerJoint.autoConfigureConnectedAnchor = false;
-        trailerJoint.anchor = anchorValues;
+        trailerJoint.autoConfigureConnectedAnchor = true;
+        //trailerJoint.anchor = anchorValues;
         trailerJoint.axis = Vector3.up;
 
         trailerJoint.useLimits = true;
