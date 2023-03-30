@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] Canvas canva;
     [SerializeField] Transform questRoot;
     Dictionary<Quest, TextMeshProUGUI> questDico;
+    [SerializeField] Image progressBar;
+    [SerializeField] CanvasGroup progressRoot;
+    bool fading;
     private void Awake()
     {
         if (instance == null)
@@ -28,6 +32,25 @@ public class UIManager : MonoBehaviour
     {
         res.energyChangeEvent.AddListener(UpdateEnergy);
         res.speedChangeEvent.AddListener(UpdateSpeed);
+    }
+
+    public void SetProgressListener(AreaOfUse area)
+    {
+        area.onProgressChanged.AddListener(UpdateProgress);
+        
+        StartCoroutine(FadeProgress(1f,1f));
+    }
+
+    public void RemoveProgressListener(AreaOfUse area)
+    {
+        area.onProgressChanged.RemoveListener(UpdateProgress);
+        if (!fading) StartCoroutine(FadeProgress(0f, 1f));
+    }
+
+    void UpdateProgress(float amount)
+    {
+        progressBar.fillAmount = amount;
+        if (amount == 1f) StartCoroutine(FadeProgress(0f, 2f));
     }
 
     public void SetQuestListener()
@@ -59,5 +82,17 @@ public class UIManager : MonoBehaviour
             text.text = "- " + txt;
             questDico.TryAdd(q, text);
         }
+    }
+
+    IEnumerator FadeProgress(float endAlpha, float duration)
+    {
+        fading = true;
+        for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / duration)
+        {
+            progressRoot.alpha = Mathf.Lerp(1-endAlpha, endAlpha, i);
+            yield return null;
+        }
+        progressRoot.alpha = endAlpha;
+        fading = false;
     }
 }

@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AreaOfUse : MonoBehaviour
 {
     Interactable interactable;
     public float timeToInteract;
     bool interacted;
+    [System.NonSerialized] public UnityEvent<float> onProgressChanged = new UnityEvent<float>();
+    [SerializeField] bool dontShowProgressBar;
     void Start()
     {
         interactable = GetComponent<Interactable>();
@@ -14,7 +17,12 @@ public class AreaOfUse : MonoBehaviour
 
     public IEnumerator EnterArea()
     {
-        yield return new WaitForSeconds(timeToInteract);
+        for(float i = 0; i < 1f; i+=Time.deltaTime/timeToInteract)
+        {
+            onProgressChanged.Invoke(i);
+            yield return null;
+        }
+        onProgressChanged.Invoke(1f);
         interactable.Interact();
         //gameObject.SetActive(false);
     }
@@ -25,6 +33,7 @@ public class AreaOfUse : MonoBehaviour
         if (other.gameObject.tag == "Player" && !interacted)
         {
             Debug.Log("Entering zone");
+            if (!dontShowProgressBar) UIManager.instance.SetProgressListener(this);
             StartCoroutine("EnterArea");
             interacted = true;
         }
@@ -35,6 +44,7 @@ public class AreaOfUse : MonoBehaviour
         if (other.gameObject.tag == "Player" && interacted)
         {
             Debug.Log("Exiting zone");
+            if (!dontShowProgressBar) UIManager.instance.RemoveProgressListener(this);
             StopCoroutine("EnterArea");
             interactable.ExitInteractable();
             interacted = false;
