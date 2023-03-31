@@ -64,11 +64,33 @@ public class SettingsManager : MonoBehaviour
     }
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
-        SceneManager.LoadScene("Garage", LoadSceneMode.Additive);
+        try
+        {
+            LoadingScreenTips.instance.StartLoading();
+        }
+        catch (System.Exception)
+        {
+            Debug.Log("Missing Component");
+            throw;
+        }
+        StartCoroutine(LoadSceneAsyncScreen(1));
+        
         nextIsGarage = false;
         loadedLevel = SceneManager.GetSceneByName("Garage");
         //LoadNextLevel();
+    }
+
+    IEnumerator LoadSceneAsyncScreen(int sceneId)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(1);
+        AsyncOperation operation2 = SceneManager.LoadSceneAsync("Garage", LoadSceneMode.Additive);
+
+        while (!operation.isDone)
+        {
+            LoadingScreenTips.instance.loadgingBarFill.fillAmount = Mathf.Clamp01(operation.progress / 0.9f);
+            yield return null;
+        }
+        
     }
 
     public void LoadNextLevel()

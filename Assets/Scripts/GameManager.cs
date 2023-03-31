@@ -63,13 +63,13 @@ public class GameManager : MonoBehaviour
         {
 			Instance = this;
         }
-		UIManager.instance.SetQuestListener();
+		
 		cam = Camera.main;
 	}
 
     private void Start()
     {
-		
+		UIManager.instance.SetQuestListener();
 		nTime = GetComponent<NightTime>();
 		itemUIRoot.gameObject.SetActive(false);
 		player = velo.GetComponent<PlayerController>();
