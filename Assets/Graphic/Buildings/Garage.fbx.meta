@@ -3,7 +3,92 @@ guid: d9c2ff602677e7d4bbad1f748582c9dd
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bars
+    second: {fileID: 2100000, guid: 05f67e7a7b1ffb941bf821777c54230c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Base
+    second: {fileID: 2100000, guid: b0cdea6e4d40eac4980faf7007ae74ca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cables
+    second: {fileID: 2100000, guid: 03f1f74ccca0ae04b9b5bf769b92eab6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: 13baa89839b164046bb6aeaf68eae665, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lamp
+    second: {fileID: 2100000, guid: 260af5a04eaaa8f40bc697eb71580211, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pneu
+    second: {fileID: 2100000, guid: 7ed205db33405ee4e9aec4e1f1dd22e7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Poutre
+    second: {fileID: 2100000, guid: 4deedadfb46fd794d9d0764d31752995, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ReposeTuyau
+    second: {fileID: 2100000, guid: 430001e78b846244f90e519bcbe5e19e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Robinet
+    second: {fileID: 2100000, guid: 2f3ff45ee8e04d14db9c221737418e3b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roof
+    second: {fileID: 2100000, guid: 288e244335ff29645aa68c4f8c6b98b1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Support
+    second: {fileID: 2100000, guid: b57172fc4ae3fdf468e9a81fb11865f6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Switch
+    second: {fileID: 2100000, guid: 334231a0198990a4cb202987677f71e9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tonneau
+    second: {fileID: 2100000, guid: c041c1b30e2c90b4180961c4947adfe0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tuyau
+    second: {fileID: 2100000, guid: 4048735cf433b3c45936eff34e46135e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TuyauCable
+    second: {fileID: 2100000, guid: 54f4ccc9eb5471341bab47d4624bf670, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Window
+    second: {fileID: 2100000, guid: 554f5f71284f95d40a3e1cbed31d7ab7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WorkBench
+    second: {fileID: 2100000, guid: fcede3be72225b647b4fd3ad5b5e68b3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
