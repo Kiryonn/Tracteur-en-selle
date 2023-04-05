@@ -14,7 +14,7 @@ public class RecupEpareuse : Task
     {
         base.Interact();
         GameManager.Instance.player.canMove = false;
-        GameManager.Instance.GetComponent<TransitionManager>().FadeTransition(3f, 1f);
+        GameManager.Instance.GetComponent<TransitionManager>().FadeTransition(1f,3f, 1f);
         Invoke("AttachEpareuse", 3f);
     }
 
@@ -31,7 +31,7 @@ public class RecupEpareuse : Task
     public void DetachEpareuse()
     {
         instanciatedEpareuse.SetTrigger("Close");
-        GameManager.Instance.GetComponent<TransitionManager>().FadeTransition(1.5f, 0.5f);
+        GameManager.Instance.GetComponent<TransitionManager>().FadeTransition(1,1.5f, 0.5f);
         Destroy(instanciatedEpareuse.gameObject, 1.5f);
     }
 }

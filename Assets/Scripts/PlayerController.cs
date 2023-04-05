@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement")]
+    public bool isCharacterControlled;
+    [Header("Tractor Movement")]
 
     float modifier = 1f; // float to control speed with like mud or stop the car
     [SerializeField] float speed = 1f;
@@ -27,6 +28,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform frontLeftWheel;
     [SerializeField] Transform backRightWheel;
     [SerializeField] Transform backLeftWheel;
+
+    [SerializeField] GameObject tractorGraphics;
+
+    [Header("Character Movement")]
+
+    [SerializeField] float charaSpeed;
+    [SerializeField] float gravity;
+    [SerializeField] float turnSpeed;
+    Vector3 currentDirection = Vector3.forward;
+    Vector3 currentVelocity;
+    CharacterController characterController;
+    [SerializeField] GameObject charaGraphics;
 
     [Header("Shaders")]
     public Renderer cabin;
@@ -55,6 +68,9 @@ public class PlayerController : MonoBehaviour
         navState = NavState.PlayerControl;
         rb = GetComponent<Rigidbody>();
         resourceController = GetComponent<ResourceController>();
+        characterController = GetComponent<CharacterController>();
+        if (isCharacterControlled) SwitchControls("Character");
+        if (!isCharacterControlled) SwitchControls("Tractor");
     }
 
     private void Update()
@@ -66,33 +82,42 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        switch (navState)
+        if (!isCharacterControlled)
         {
-            case NavState.PlayerControl:
-                if (canMove && resourceController.SuffisantEnergy())
-                {
-                    modifier = 1f;
-                    if (movement >= 0.1f)
+            switch (navState)
+            {
+                case NavState.PlayerControl:
+                    if (canMove && resourceController.SuffisantEnergy())
                     {
-                        resourceController.UseEnergy(energyRequired);
+                        modifier = 1f;
+                        if (movement >= 0.1f)
+                        {
+                            resourceController.UseEnergy(energyRequired);
+                        }
                     }
-                }
-                else
-                {
-                    modifier = 0f;
-                }
-                HandleMotor();
-                HandleSteering();
-                break;
-            case NavState.Forced:
-                destinationReached = false;
-                HandleAutomatic();
-                break;
-            case NavState.Stopped:
-                break;
-            default:
-                break;
+                    else
+                    {
+                        modifier = 0f;
+                    }
+                    HandleMotor();
+                    HandleSteering();
+                    break;
+                case NavState.Forced:
+                    destinationReached = false;
+                    HandleAutomatic();
+                    break;
+                case NavState.Stopped:
+                    break;
+                default:
+                    break;
+            }
         }
+        else
+        {
+            Vector3 direction = transform.TransformDirection(new Vector3(rotation, 0f, movement));
+            HandleMovement(direction);
+        }
+        
         
             /*
         if (canMove && movement.magnitude >=0.1f && resourceController.SuffisantEnergy())
@@ -103,6 +128,29 @@ public class PlayerController : MonoBehaviour
             rb.MoveRotation(rb.rotation * deltaRotation);
         }
         */
+    }
+
+    void HandleMovement(Vector3 direction)
+    {
+        
+        if (direction.magnitude >= 0.1f)
+        {
+            if (movement >= 0)
+            {
+                currentDirection = Vector3.SmoothDamp(currentDirection, direction, ref currentVelocity, turnSpeed);
+                transform.rotation = Quaternion.LookRotation(currentDirection);
+            }
+            characterController.Move(direction * charaSpeed * Time.deltaTime);
+        }
+        
+    }
+
+    void HandleRotation(Vector3 direction)
+    {
+        if (direction.magnitude > 0f)
+        {
+            
+        }
     }
 
     void HandleMotor()
@@ -204,5 +252,23 @@ public class PlayerController : MonoBehaviour
         frontRightWheelCollider.brakeTorque = 0f;
     }
 
-
+    public void SwitchControls(string To)
+    {
+        if (To == "Character")
+        {
+            rb.isKinematic = true;
+            characterController.enabled = true;
+            isCharacterControlled = true;
+            charaGraphics.SetActive(true);
+            tractorGraphics.SetActive(false);
+        }
+        else
+        {
+            rb.isKinematic = false;
+            characterController.enabled = false;
+            isCharacterControlled = false;
+            charaGraphics.SetActive(false);
+            tractorGraphics.SetActive(true);
+        }
+    }
 }

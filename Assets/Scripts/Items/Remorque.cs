@@ -39,7 +39,7 @@ public class Remorque : Task
     {
         base.Interact();
         GameManager.Instance.player.canMove = false;
-        GameManager.Instance.GetComponent<TransitionManager>().FadeTransition(3f, 1f);
+        GameManager.Instance.GetComponent<TransitionManager>().FadeTransition(1f,3f, 1f);
         Invoke("AttachRemorque",3f);
     }
 

@@ -361,9 +361,9 @@ public class TransitionManager : MonoBehaviour
         schemaHumain.Reset();
     }
 
-    public void FadeTransition(float speed, float duration)
+    public void FadeTransition(float endAlpha, float speed, float duration)
     {
-        StartCoroutine(FadeScreenBounce(1f, speed, duration, false));
+        StartCoroutine(FadeScreenBounce(endAlpha, speed, duration, false));
     }
 
     IEnumerator FadeScreenBounce(float endAlpha, float speed, float duration, bool hideGameobject)
