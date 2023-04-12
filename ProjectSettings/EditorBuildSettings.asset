@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Elevage.unity
     guid: 690e0a9242582f74c99148c19a2c1301
+  - enabled: 1
+    path: Assets/Scenes/Levels/Tutorial.unity
+    guid: 223b2d9e116f9b040863d544af5c16a3
   m_configObjects: {}

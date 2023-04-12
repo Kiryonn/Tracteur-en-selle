@@ -6,10 +6,13 @@ using UnityEngine.Experimental.GlobalIllumination;
 public class NightTime : MonoBehaviour
 {
     [SerializeField] Light lightSource;
+    public bool dayNightCycle;
     SkyboxBlender skyboxBlender;
+    float timer;
     public float dayTimer;
     public float nightTimer;
     public float transitionSpeed;
+    bool day;
     [SerializeField] GameObject[] spotLights;
     // Start is called before the first frame update
     void Start()
@@ -17,6 +20,34 @@ public class NightTime : MonoBehaviour
         skyboxBlender = GetComponent<SkyboxBlender>();
         skyboxBlender.blend = 0f;
         StartCoroutine("WaitForNight");
+    }
+
+    private void Update()
+    {
+        if (dayNightCycle)
+        {
+            timer += Time.deltaTime;
+        }
+        else
+        {
+            timer = 0f;
+        }
+        
+        if (day && timer >= dayTimer*60f)
+        {
+            timer = 0;
+            TurnSpotlights(true);
+            StartCoroutine(ChangeDayTime(transitionSpeed, 0f));
+            day = false;
+        }
+
+        if (!day && timer >= nightTimer*60f)
+        {
+            timer = 0;
+            TurnSpotlights(false);
+            StartCoroutine(ChangeDayTime(transitionSpeed, 1f));
+            day = true;
+        }
     }
 
     public IEnumerator WaitForNight()
@@ -75,6 +106,7 @@ public class NightTime : MonoBehaviour
             TurnSpotlights(false);
             lightSource.intensity = 1f;
             skyboxBlender.blend = 0f;
+            timer = 0f;
         }
     }
 

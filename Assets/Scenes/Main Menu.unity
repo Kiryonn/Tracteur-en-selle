@@ -1682,6 +1682,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theme: 1
+  isTut: 0
 --- !u!114 &126912632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7307,6 +7308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theme: 0
+  isTut: 0
 --- !u!1001 &431165616
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18999,6 +19001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theme: 0
+  isTut: 0
 --- !u!1 &1115856232
 GameObject:
   m_ObjectHideFlags: 0
@@ -28650,6 +28653,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theme: 2
+  isTut: 0
 --- !u!114 &1677737135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34369,6 +34373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theme: 0
+  isTut: 1
 --- !u!114 &1964533925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34418,7 +34423,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1964533924}
         m_TargetAssemblyTypeName: CustomSettingsButton, Assembly-CSharp
-        m_MethodName: OnClick
+        m_MethodName: OnClickTut
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -36111,6 +36116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theme: 3
+  isTut: 0
 --- !u!114 &2082515029
 MonoBehaviour:
   m_ObjectHideFlags: 0

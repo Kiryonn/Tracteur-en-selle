@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     Vector3 currentVelocity;
     CharacterController characterController;
     [SerializeField] GameObject charaGraphics;
+    [SerializeField] Animator playerAnim;
 
     [Header("Shaders")]
     public Renderer cabin;
@@ -69,8 +70,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         resourceController = GetComponent<ResourceController>();
         characterController = GetComponent<CharacterController>();
-        if (isCharacterControlled) SwitchControls("Character");
-        if (!isCharacterControlled) SwitchControls("Tractor");
+        if (isCharacterControlled) StartCoroutine(SwitchControls("Character"));
+        if (!isCharacterControlled) StartCoroutine(SwitchControls("Tractor"));
     }
 
     private void Update()
@@ -114,8 +115,11 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Vector3 direction = transform.TransformDirection(new Vector3(rotation, 0f, movement));
-            HandleMovement(direction);
+            if (canMove)
+            {
+                Vector3 direction = transform.TransformDirection(new Vector3(rotation, 0f, movement));
+                HandleMovement(direction);
+            }
         }
         
         
@@ -137,11 +141,19 @@ public class PlayerController : MonoBehaviour
         {
             if (movement >= 0)
             {
-                currentDirection = Vector3.SmoothDamp(currentDirection, direction, ref currentVelocity, turnSpeed);
-                transform.rotation = Quaternion.LookRotation(currentDirection);
+                //currentDirection = Vector3.SmoothDamp(currentDirection, direction, ref currentVelocity, turnSpeed);
+                //transform.rotation = Quaternion.LookRotation(currentDirection);
+                transform.Rotate(Vector3.up * rotation * turnSpeed * Time.deltaTime);
+
             }
-            characterController.Move(direction * charaSpeed * Time.deltaTime);
+            else
+            {
+                transform.Rotate(Vector3.up * -rotation * turnSpeed * Time.deltaTime);
+            }
+            
+            characterController.Move(characterController.transform.forward * movement * charaSpeed * Time.deltaTime);
         }
+        playerAnim.SetFloat("Blend", movement);
         
     }
 
@@ -252,7 +264,7 @@ public class PlayerController : MonoBehaviour
         frontRightWheelCollider.brakeTorque = 0f;
     }
 
-    public void SwitchControls(string To)
+    public void SwitchControl(string To)
     {
         if (To == "Character")
         {
@@ -270,5 +282,12 @@ public class PlayerController : MonoBehaviour
             charaGraphics.SetActive(false);
             tractorGraphics.SetActive(true);
         }
+    }
+
+    public IEnumerator SwitchControls(string to)
+    {
+        GameManager.Instance.GetComponent<TransitionManager>().FadeTransition(1f, 3f, 1f);
+        yield return new WaitForSeconds(3f);
+        SwitchControl(to);
     }
 }

@@ -11,6 +11,7 @@ public class Settings : ScriptableObject
     public List<LevelDesc> levelDescs;
     public List<Theme> allowedThemes;
     public Theme currentTheme;
+    public bool enableTutorial;
 
 
     [System.Serializable]

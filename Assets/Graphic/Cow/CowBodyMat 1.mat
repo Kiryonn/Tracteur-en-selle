@@ -30,7 +30,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CoverageAlbedo:
-        m_Texture: {fileID: 2800000, guid: 9c954b6d1a1e61e4c8b00b369a9daf23, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7828751bd7eaedb408cdde425f02f7a7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CoverageMask:
@@ -38,7 +38,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CoverageNormal:
-        m_Texture: {fileID: 2800000, guid: d19b2e942f5af8042955143e91187e9e, type: 3}
+        m_Texture: {fileID: 2800000, guid: e7a6580e76c14de4eba0047e100136d8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -78,11 +78,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SurfaceAlbedo:
-        m_Texture: {fileID: 2800000, guid: 9c954b6d1a1e61e4c8b00b369a9daf23, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7828751bd7eaedb408cdde425f02f7a7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SurfaceNormal:
-        m_Texture: {fileID: 2800000, guid: d19b2e942f5af8042955143e91187e9e, type: 3}
+        m_Texture: {fileID: 2800000, guid: e7a6580e76c14de4eba0047e100136d8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:

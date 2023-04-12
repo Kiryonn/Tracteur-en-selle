@@ -2,16 +2,23 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AN_Broadleaf_Leaves_1
   m_Shader: {fileID: 4800000, guid: 0154318cd2c5a3747a66420b5d885dd5, type: 3}
-  m_ShaderKeywords: _COLOR2ENABLE_ON _COLOR2OVERLAYTYPE_VERTEX_POSITION_BASED _COLOR2_ON
-    _ENABLECOLOR2_ON _KEYWORD0_ON _SNOWOVERLAYTYPE_WORLD_NORMAL_BASED _TREETYPE_BROADLEAF
-    _WIND_ON
+  m_ValidKeywords:
+  - _COLOR2ENABLE_ON
+  - _COLOR2OVERLAYTYPE_VERTEX_POSITION_BASED
+  - _SNOWOVERLAYTYPE_WORLD_NORMAL_BASED
+  - _WIND_ON
+  m_InvalidKeywords:
+  - _COLOR2_ON
+  - _ENABLECOLOR2_ON
+  - _KEYWORD0_ON
+  - _TREETYPE_BROADLEAF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -130,10 +137,10 @@ Material:
     - _COLOR2: 1
     - _Color2: 0
     - _Color2Enable: 1
-    - _Color2Fade: -0.21
+    - _Color2Fade: -0.06
     - _Color2Int: 0.15
     - _Color2Intensity: 0.1
-    - _Color2Level: -8.07
+    - _Color2Level: -9.98
     - _Color2OverlayType: 0
     - _Color2Power: 0.975
     - _Color2__________: 0

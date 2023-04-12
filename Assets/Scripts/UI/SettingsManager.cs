@@ -38,6 +38,11 @@ public class SettingsManager : MonoBehaviour
         
     }
 
+    public void UpdateTutorial(bool b)
+    {
+        settings.enableTutorial = b;
+    }
+
     public void UpdateTheme(Theme t, bool b)
     {
         if (b)
@@ -75,15 +80,27 @@ public class SettingsManager : MonoBehaviour
         }
         StartCoroutine(LoadSceneAsyncScreen(1));
         
-        nextIsGarage = false;
-        loadedLevel = SceneManager.GetSceneByName("Garage");
+        //nextIsGarage = false;
+        //loadedLevel = SceneManager.GetSceneByName("Garage");
         //LoadNextLevel();
     }
 
     IEnumerator LoadSceneAsyncScreen(int sceneId)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(1);
-        AsyncOperation operation2 = SceneManager.LoadSceneAsync("Garage", LoadSceneMode.Additive);
+        AsyncOperation operation2;
+        if (settings.enableTutorial)
+        {
+            operation2 = SceneManager.LoadSceneAsync("Tutorial", LoadSceneMode.Additive);
+            loadedLevel = SceneManager.GetSceneByName("Tutorial");
+            nextIsGarage = true;
+        }
+        else
+        {
+            operation2 = SceneManager.LoadSceneAsync("Garage", LoadSceneMode.Additive);
+            loadedLevel = SceneManager.GetSceneByName("Garage");
+            nextIsGarage = false;
+        }
 
         while (!operation.isDone)
         {
