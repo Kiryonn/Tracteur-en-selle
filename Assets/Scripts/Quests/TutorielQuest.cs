@@ -9,7 +9,7 @@ public class TutorielQuest : Quest
     protected override void OnStart()
     {
         base.OnStart();
-        GameManager.Instance.player.SwitchControls("Character");
+        GameManager.Instance.player.SwitchControls("Character",false);
         client = new ClientData();
         client.ID = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
     }
@@ -32,7 +32,7 @@ public class TutorielQuest : Quest
             GameManager.Instance.currentQuest = null;
 
             DataManager.instance.UpdateVisiteurData(client);
-            StartCoroutine(GameManager.Instance.player.SwitchControls("Tractor"));
+            StartCoroutine(GameManager.Instance.player.SwitchControls("Tractor",true));
         }
     }
 }

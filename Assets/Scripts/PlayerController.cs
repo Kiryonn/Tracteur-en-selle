@@ -70,8 +70,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         resourceController = GetComponent<ResourceController>();
         characterController = GetComponent<CharacterController>();
-        if (isCharacterControlled) StartCoroutine(SwitchControls("Character"));
-        if (!isCharacterControlled) StartCoroutine(SwitchControls("Tractor"));
+        if (isCharacterControlled) StartCoroutine(SwitchControls("Character",false));
+        if (!isCharacterControlled) StartCoroutine(SwitchControls("Tractor",false));
     }
 
     private void Update()
@@ -284,10 +284,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public IEnumerator SwitchControls(string to)
+    public IEnumerator SwitchControls(string to, bool transition)
     {
-        GameManager.Instance.GetComponent<TransitionManager>().FadeTransition(1f, 3f, 1f);
-        yield return new WaitForSeconds(3f);
+        if (transition)
+        {
+            GameManager.Instance.GetComponent<TransitionManager>().FadeTransition(1f, 3f, 1f);
+            yield return new WaitForSeconds(3f);
+        }
         SwitchControl(to);
     }
 }

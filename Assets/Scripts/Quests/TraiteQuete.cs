@@ -10,7 +10,7 @@ public class TraiteQuete : Quest
     {
         base.StartQuest();
         levier.ShowInteractable();
-        StartCoroutine(GameManager.Instance.player.SwitchControls("Character"));
+        StartCoroutine(GameManager.Instance.player.SwitchControls("Character",true));
     }
 
     public override void CompleteTask(Task task)
@@ -25,7 +25,7 @@ public class TraiteQuete : Quest
         {
             levier.HideInteractable();
             GameManager.Instance.CompleteQuest(this);
-            StartCoroutine(GameManager.Instance.player.SwitchControls("Tractor"));
+            StartCoroutine(GameManager.Instance.player.SwitchControls("Tractor",true));
             GameManager.Instance.currentQuest = null;
         }
     }
