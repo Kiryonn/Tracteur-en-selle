@@ -8,7 +8,7 @@ public class NightTime : MonoBehaviour
     [SerializeField] Light lightSource;
     public bool dayNightCycle;
     SkyboxBlender skyboxBlender;
-    float timer;
+    [SerializeField] float timer;
     public float dayTimer;
     public float nightTimer;
     public float transitionSpeed;
@@ -19,7 +19,7 @@ public class NightTime : MonoBehaviour
     {
         skyboxBlender = GetComponent<SkyboxBlender>();
         skyboxBlender.blend = 0f;
-        StartCoroutine("WaitForNight");
+        //StartCoroutine("WaitForNight");
     }
 
     private void Update()

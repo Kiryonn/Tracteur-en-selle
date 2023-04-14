@@ -120,6 +120,10 @@ public class PlayerController : MonoBehaviour
                 Vector3 direction = transform.TransformDirection(new Vector3(rotation, 0f, movement));
                 HandleMovement(direction);
             }
+            else
+            {
+                playerAnim.SetFloat("Blend", 0f);
+            }
         }
         
         
@@ -136,7 +140,12 @@ public class PlayerController : MonoBehaviour
 
     void HandleMovement(Vector3 direction)
     {
-        
+        if (!characterController.isGrounded)
+        {
+            Vector3 velocity = Vector3.zero;
+            velocity.y += gravity * Time.deltaTime;
+            characterController.Move(velocity * Time.deltaTime);
+        }
         if (direction.magnitude >= 0.1f)
         {
             if (movement >= 0)
@@ -288,8 +297,10 @@ public class PlayerController : MonoBehaviour
     {
         if (transition)
         {
+            canMove = false;
             GameManager.Instance.GetComponent<TransitionManager>().FadeTransition(1f, 3f, 1f);
             yield return new WaitForSeconds(3f);
+            canMove = true;
         }
         SwitchControl(to);
     }
