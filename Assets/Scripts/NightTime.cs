@@ -19,6 +19,7 @@ public class NightTime : MonoBehaviour
     {
         skyboxBlender = GetComponent<SkyboxBlender>();
         skyboxBlender.blend = 0f;
+        day = true;
         //StartCoroutine("WaitForNight");
     }
 
@@ -50,22 +51,6 @@ public class NightTime : MonoBehaviour
         }
     }
 
-    public IEnumerator WaitForNight()
-    {
-        yield return new WaitForSeconds(dayTimer * 60f);
-        TurnSpotlights(true);
-        StartCoroutine(ChangeDayTime(transitionSpeed, 0f));
-        
-    }
-
-    public IEnumerator WaitForDay()
-    {
-        yield return new WaitForSeconds(nightTimer * 60f);
-        TurnSpotlights(false);
-        StartCoroutine(ChangeDayTime(transitionSpeed, 1f));
-        
-    }
-
 
     // aValue = 1 -> transition vers le jour
     IEnumerator ChangeDayTime(float aTime, float aValue)
@@ -88,14 +73,15 @@ public class NightTime : MonoBehaviour
         lightSource.intensity = aValue;
         skyboxBlender.blend = 1-aValue;
 
-        if (aValue == 1f)
+        if (aValue == 1)
         {
-            StartCoroutine("WaitForNight");
+            day = true;
         }
         else
         {
-            StartCoroutine("WaitForDay");
+            day = false;
         }
+        
     }
 
     public void SetDayTime(bool yn)
@@ -104,9 +90,11 @@ public class NightTime : MonoBehaviour
         {
             StopAllCoroutines();
             TurnSpotlights(false);
-            lightSource.intensity = 1f;
-            skyboxBlender.blend = 0f;
+            StartCoroutine(ChangeDayTime(3f, 1f));
+            //lightSource.intensity = 1f;
+            //skyboxBlender.blend = 0f;
             timer = 0f;
+            
         }
     }
 

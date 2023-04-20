@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 [System.Serializable]
@@ -9,6 +10,8 @@ public class Interactable : MonoBehaviour
     public string _name;
     protected Renderer render;
     [SerializeField] Transform pin;
+    [System.NonSerialized] public UnityEvent<Interactable> OnInteract = new UnityEvent<Interactable>();
+
     Drone drone;
     private void Start()
     {
@@ -17,14 +20,17 @@ public class Interactable : MonoBehaviour
         {
             pin.localScale = Vector3.zero;
         }
+        //OnInteract = new UnityEvent<Interactable>();
         OnStart();
         drone = GameManager.Instance.drone;
         drone.deliveryEvent.AddListener(ItemDeliveredTrigger);
+        
     }
     public virtual void Interact()
     {
         Debug.Log("Interacting with " + _name);
         if (pin) HidePin(1.5f);
+        OnInteract.Invoke(this);
     }
 
     public virtual void HideInteractable()

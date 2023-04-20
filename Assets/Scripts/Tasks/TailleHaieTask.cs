@@ -50,7 +50,8 @@ public class TailleHaieTask : Task
             if (r > sucessChance)
             {
                 HandleFailedTask();
-                RecapManager.instance.medicalRecap.AddInjurie(Parts.Dos, 1f);
+                RecapManager.instance.medicalRecap.AddInjurie(Parts.Torse, 2f);
+                RecapManager.instance.medicalRecap.AddInjurie(Parts.Tete, 1f);
             }
             else
             {

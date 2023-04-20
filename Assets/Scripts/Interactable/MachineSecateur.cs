@@ -27,7 +27,6 @@ public class MachineSecateur : Interactable
         base.Interact();
         Use();
     }
-
     public void Use()
     {
         if (affutage)
@@ -49,6 +48,7 @@ public class MachineSecateur : Interactable
         Quaternion endRot = Quaternion.Euler(rotationOffset);
         Vector3 startPos = playerTransform.localPosition;
         Quaternion startRot = playerTransform.localRotation;
+        GameManager.Instance.SwitchCam(CamTypes.Cinematic);
         for (float i = 0.0f; i< 1.0f; i +=  Time.deltaTime / duration)
         {
             playerTransform.localPosition = Vector3.Lerp(startPos, locationOffset, i);
@@ -64,7 +64,12 @@ public class MachineSecateur : Interactable
         {
             affutageAnim.SetTrigger("Open");
         }
+        else
+        {
+            affilageAnim.SetTrigger("Open");
+        }
         yield return new WaitForSeconds(usingDuration);
+        GameManager.Instance.SwitchCam(CamTypes.Tractor);
         vigne.secaAnim.SetBool("Repairing", false);
         GameManager.Instance.player.canMove = true;
     }

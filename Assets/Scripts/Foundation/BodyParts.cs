@@ -18,6 +18,7 @@ public enum Parts
     Epaule,
     Coude,
     Main,
-    Doigt,
-    Poignet
+    Torse,
+    Jambe,
+    Tete
 }

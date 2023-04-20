@@ -16,5 +16,5 @@ MonoBehaviour:
   scoreDisplay: 2
   scoreNumberDuration: 4.8
   scoreDuration: 7
-  medicalRecapSpeed: 2
+  medicalRecapSpeed: 1.5
   medicalRecapDuraction: 10

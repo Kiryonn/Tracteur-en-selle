@@ -5,15 +5,18 @@ using UnityEngine;
 [System.Serializable]
 public class CowBlend
 {
-    public float blendValue;
+    public int animIndex;
     public float percentage;
     public bool troll;
 }
 
 public class Cow : MonoBehaviour
 {
+
+
     [SerializeField] CowBlend[] cowBlendValues;
-    int selectedAnim;
+    [SerializeField] bool randomizeAnim;
+    [SerializeField] int selectedAnim;
     Animator anim;
     [SerializeField] Vector2 timeBetweenChanges;
     float currentTimer;
@@ -22,20 +25,31 @@ public class Cow : MonoBehaviour
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
-        ChangeAnimation();
+        if (randomizeAnim)
+        {
+            ChangeAnimation();
+        }
+        else
+        {
+            anim.SetInteger("AnimIndex", selectedAnim);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        currentTimer += Time.deltaTime;
-        if (currentTimer > maxTimer)
+        if (randomizeAnim)
         {
-            ChangeAnimation();
+            currentTimer += Time.deltaTime;
+            if (currentTimer > maxTimer)
+            {
+                ChangeAnimation();
+            }
         }
+        
     }
 
-    Vector2 RandomSelect()
+    int RandomSelect()
     {
         int index = Random.Range(0, cowBlendValues.Length);
         CowBlend selectedBlend = cowBlendValues[index];
@@ -44,7 +58,7 @@ public class Cow : MonoBehaviour
             float f = Random.Range(0, 100);
             if (selectedBlend.percentage > f)
             {
-                return new Vector2(selectedBlend.blendValue,index);
+                return selectedBlend.animIndex;
             }
             else
             {
@@ -53,7 +67,7 @@ public class Cow : MonoBehaviour
         }
         else
         {
-            return new Vector2(selectedBlend.blendValue,index);
+            return selectedBlend.animIndex;
         }
     }
 
@@ -71,11 +85,7 @@ public class Cow : MonoBehaviour
     {
         currentTimer = 0f;
         maxTimer = Random.Range(timeBetweenChanges.x, timeBetweenChanges.y);
-
-        float currentBlend = cowBlendValues[selectedAnim].blendValue;
-        Vector2 temp = RandomSelect();
-        float nextBlend = temp.x;
-        selectedAnim = (int)temp.y;
-        StartCoroutine(LerpAnimation(2f, currentBlend, nextBlend));
+        anim.SetTrigger("ChangeAnim");
+        anim.SetInteger("AnimIndex", RandomSelect());
     }
 }

@@ -29,7 +29,7 @@ public class Secateur : Item
                 RecapManager.instance.medicalRecap.AddInjurie(Parts.Epaule, bodyDamage);
                 break;
             case SecateurTypes.Rotatif:
-                RecapManager.instance.medicalRecap.AddInjurie(Parts.Doigt, bodyDamage);
+                RecapManager.instance.medicalRecap.AddInjurie(Parts.Main, bodyDamage);
                 break;
             case SecateurTypes.Normal:
                 RecapManager.instance.medicalRecap.AddInjurie(Parts.Main, bodyDamage);

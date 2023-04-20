@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float turnSpeed;
     Vector3 currentDirection = Vector3.forward;
     Vector3 currentVelocity;
-    CharacterController characterController;
+    public CharacterController characterController { get; private set; }
     [SerializeField] GameObject charaGraphics;
     [SerializeField] Animator playerAnim;
 
@@ -70,8 +70,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         resourceController = GetComponent<ResourceController>();
         characterController = GetComponent<CharacterController>();
-        if (isCharacterControlled) StartCoroutine(SwitchControls("Character",false));
-        if (!isCharacterControlled) StartCoroutine(SwitchControls("Tractor",false));
+        
     }
 
     private void Update()
@@ -115,6 +114,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            playerAnim.SetFloat("AnimSpeed",charaSpeed/3f);
             if (canMove)
             {
                 Vector3 direction = transform.TransformDirection(new Vector3(rotation, 0f, movement));
@@ -273,7 +273,7 @@ public class PlayerController : MonoBehaviour
         frontRightWheelCollider.brakeTorque = 0f;
     }
 
-    public void SwitchControl(string To)
+    void SwitchControl(string To)
     {
         if (To == "Character")
         {
@@ -282,6 +282,7 @@ public class PlayerController : MonoBehaviour
             isCharacterControlled = true;
             charaGraphics.SetActive(true);
             tractorGraphics.SetActive(false);
+            GameManager.Instance.SwitchCam(CamTypes.Character);
         }
         else
         {
@@ -290,6 +291,7 @@ public class PlayerController : MonoBehaviour
             isCharacterControlled = false;
             charaGraphics.SetActive(false);
             tractorGraphics.SetActive(true);
+            GameManager.Instance.SwitchCam(CamTypes.Tractor);
         }
     }
 

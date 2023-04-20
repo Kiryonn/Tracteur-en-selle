@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.Events;
 
 public class Remorque : Task
 {
@@ -11,6 +12,8 @@ public class Remorque : Task
     [SerializeField] Vector3 positionOffset;
     [SerializeField] float scaleOffset;
     HingeJoint trailerJoint;
+    CustomJoint trailer;
+    [System.NonSerialized] UnityEvent<bool> OnAttach = new UnityEvent<bool>();
 
     [Header("Hinge joints parameters")]
     float minLimit;
@@ -28,11 +31,13 @@ public class Remorque : Task
 
         remorqueBody = remorque.gameObject.GetComponent<Rigidbody>();
         remorqueBody.isKinematic = true;
-        trailerJoint = remorque.gameObject.GetComponent<HingeJoint>();
-        minLimit = trailerJoint.limits.min;
+        //trailerJoint = remorque.gameObject.GetComponent<HingeJoint>();
+        trailer = remorque.gameObject.GetComponent<CustomJoint>();
+        OnAttach.AddListener(trailer.UpdateJoint);
+        /*minLimit = trailerJoint.limits.min;
         maxLimit = trailerJoint.limits.max;
         anchorValues = trailerJoint.anchor;
-        Destroy(trailerJoint);
+        Destroy(trailerJoint);*/
     }
 
     public override void Interact()
@@ -51,6 +56,7 @@ public class Remorque : Task
 
     void AttachRemorque()
     {
+        
         Transform parent;
         parent = GameManager.Instance.player.transform;
 
@@ -58,16 +64,25 @@ public class Remorque : Task
         remorque.localPosition = positionOffset;
         remorque.localScale = Vector3.one * scaleOffset;
         remorque.localRotation = Quaternion.identity;
-        ConnectHingeJoint();
-        trailerJoint.connectedBody = parent.GetComponent<Rigidbody>();
+
+        remorque.parent = parent.parent;
+        trailer.SetTracteur(parent);
+        OnAttach.Invoke(true);
+        remorqueBody.isKinematic = false;
+        
+
+        //ConnectHingeJoint();
+        //trailerJoint.connectedBody = parent.GetComponent<Rigidbody>();
         UpdateCameraDistance(cameraOffsetDistance);
         GameManager.Instance.player.canMove = true;
     }
 
     public void DetachRemorque()
     {
-        RemoveHingeJoint();
+        OnAttach.Invoke(false);
+        //RemoveHingeJoint();
         remorque.parent = transform;
+        remorqueBody.isKinematic = true;
         UpdateCameraDistance(baseCameraDistance);
     }
 
@@ -93,8 +108,8 @@ public class Remorque : Task
     void ConnectHingeJoint()
     {
         trailerJoint = remorque.gameObject.AddComponent<HingeJoint>();
-        trailerJoint.autoConfigureConnectedAnchor = true;
-        //trailerJoint.anchor = anchorValues;
+        trailerJoint.autoConfigureConnectedAnchor = false;
+        trailerJoint.anchor = anchorValues;
         trailerJoint.axis = Vector3.up;
 
         trailerJoint.useLimits = true;

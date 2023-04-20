@@ -5,7 +5,7 @@ using UnityEngine;
 public class DamageController : MonoBehaviour
 {
     public float health { get; private set; }
-    [SerializeField] float maxHealth;
+    public float maxHealth;
     Rigidbody rb;
 
     [SerializeField] SkinnedMeshRenderer[] damageableParts;
@@ -21,6 +21,11 @@ public class DamageController : MonoBehaviour
         if (collision.gameObject.CompareTag("Hazard"))
         {
             DamageTractor(5f);
+        }
+
+        if (collision.gameObject.layer == 7)
+        {
+            DamageTractor(25f);
         }
     }
 

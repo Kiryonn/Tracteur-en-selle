@@ -11,8 +11,17 @@ public enum GameState
 	ScoreState
 }
 
+public enum CamTypes
+{
+	Tractor,
+	Character,
+	Cinematic
+}
+
 public class GameManager : MonoBehaviour
 {
+
+
 	public static GameManager Instance;
 	GameState currentState;
 	NightTime nTime;
@@ -53,6 +62,11 @@ public class GameManager : MonoBehaviour
 	[Header("UI")]
 
 	public Transform itemUIRoot;
+
+	[Header("Cameras")]
+	[SerializeField] GameObject TractorCm;
+	[SerializeField] GameObject CharaCm;
+	[SerializeField] GameObject CineCm;
 	void Awake()
 	{
 		if(Instance != null)
@@ -74,6 +88,7 @@ public class GameManager : MonoBehaviour
 		itemUIRoot.gameObject.SetActive(false);
 		player = velo.GetComponent<PlayerController>();
 		currentState = GameState.QuestState;
+		SpawnPlayer();
 	}
 
     private void Update()
@@ -91,12 +106,39 @@ public class GameManager : MonoBehaviour
         }
     }
 
+	public void SwitchCam(CamTypes camType)
+    {
+        switch (camType)
+        {
+            case CamTypes.Tractor:
+				CharaCm.SetActive(false);
+				CineCm.SetActive(false);
+				TractorCm.SetActive(true);
+				break;
+            case CamTypes.Character:
+				TractorCm.SetActive(false);
+				CineCm.SetActive(false);
+				CharaCm.SetActive(true);
+				break;
+            case CamTypes.Cinematic:
+				TractorCm.SetActive(false);
+				CharaCm.SetActive(false);
+				CineCm.SetActive(true);
+				break;
+            default:
+                break;
+        }
+    }
+
 	public void SpawnPlayer()
     {
 		velo.transform.SetParent(playerParent);
+		player.characterController.enabled = false;
 		velo.transform.position = spawnPosition.position;
 		velo.transform.rotation = spawnPosition.rotation;
-		StartCoroutine(nTime.WaitForNight());
+		Debug.Log("Setting up player position");
+		if (player.isCharacterControlled) StartCoroutine(player.SwitchControls("Character", false));
+		if (!player.isCharacterControlled) StartCoroutine(player.SwitchControls("Tractor", false));
 	}
 
     public void WinGame()
