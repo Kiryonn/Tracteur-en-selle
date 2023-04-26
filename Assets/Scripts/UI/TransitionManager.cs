@@ -174,6 +174,7 @@ public class TransitionManager : MonoBehaviour
 
         // Setting the player position and rotation
 
+        GameManager.Instance.player.canMove = false;
         GameObject player = GameManager.Instance.velo.gameObject;
         player.GetComponent<Rigidbody>().isKinematic = true;
         player.transform.SetParent(tractorPosition);
@@ -189,6 +190,7 @@ public class TransitionManager : MonoBehaviour
 
     public void RenderWhite()
     {
+        SettingsManager.instance.LoadMainMenu();
         cam.enabled = true;
         RenderSettings.reflectionIntensity = 1f;
         RenderSettings.ambientLight = Color.white;
@@ -329,7 +331,6 @@ public class TransitionManager : MonoBehaviour
 
     void ResetScene()
     {
-        
         StartCoroutine(FadeScreen(1f, fadeDuration, false));
         ResetUIData();
         Invoke("RenderWhite", fadeDuration + 2f);

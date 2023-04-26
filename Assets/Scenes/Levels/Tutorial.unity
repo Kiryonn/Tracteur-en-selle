@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1316,7 +1316,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 309139684}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.389984, y: 0, z: 1.6499939}
+  m_LocalPosition: {x: 6.76, y: 0, z: 1.6499939}
   m_LocalScale: {x: 12.24, y: 12.24, z: 12.24}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2775,7 +2775,9 @@ MonoBehaviour:
   requiredObjects: []
   sucessChance: 0
   necessaryItem: []
-  objectToRemove: {fileID: 2032131458}
+  switchPlayer: 0
+  targetChange: 
+  objectToRemove: {fileID: 1725246308}
   switchToTractor: 1
 --- !u!1 &770519487
 GameObject:
@@ -3097,7 +3099,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitingTime: 3
-  delay: 0
+  delay: 3
   fadeSpeed: 2
   allowMovement: 0
   activated: 0
@@ -3176,7 +3178,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 865641708}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -8.62, y: 0, z: 0}
   m_LocalScale: {x: 12.24, y: 12.24, z: 12.24}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3723,7 +3725,7 @@ Transform:
   - {fileID: 322656980}
   - {fileID: 1439740496}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1205309737 stripped
 Transform:
@@ -4201,7 +4203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitingTime: 3
-  delay: 6
+  delay: 8
   fadeSpeed: 2
   allowMovement: 0
   activated: 0
@@ -4846,6 +4848,8 @@ MonoBehaviour:
   requiredObjects: []
   sucessChance: 0
   necessaryItem: []
+  switchPlayer: 0
+  targetChange: 
 --- !u!114 &1572644520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5755,6 +5759,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1710410682}
   m_CullTransparentMesh: 1
+--- !u!1 &1725246308 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 670d38743a36d49499248dfcdf3c59a5, type: 3}
+  m_PrefabInstance: {fileID: 2032131457}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1725246309
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725246308}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.6641107, y: 3.6184525, z: 5.9803686}
+  m_Center: {x: -0.0000035132548, y: -1.3092198, z: 3.0779505}
+--- !u!65 &1725246310
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725246308}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.0088196, y: 6.6716967, z: 5.5326037}
+  m_Center: {x: -0.0000017566889, y: 0.0000009948591, z: -2.0333533}
 --- !u!1001 &1798912038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6568,7 +6603,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 670d38743a36d49499248dfcdf3c59a5, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 670d38743a36d49499248dfcdf3c59a5, type: 3}
       propertyPath: m_LocalScale.x
@@ -6740,31 +6775,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 670d38743a36d49499248dfcdf3c59a5, type: 3}
---- !u!1 &2032131458 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 670d38743a36d49499248dfcdf3c59a5, type: 3}
-  m_PrefabInstance: {fileID: 2032131457}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &2032131459
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2032131458}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a298f96fecbd50447adebe74de5ad728, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &2070428915
 GameObject:
   m_ObjectHideFlags: 0
@@ -6903,6 +6913,8 @@ MonoBehaviour:
   - {fileID: 662276227}
   sucessChance: 0
   necessaryItem: []
+  switchPlayer: 0
+  targetChange: 
 --- !u!1 &2114309646
 GameObject:
   m_ObjectHideFlags: 0
@@ -7615,6 +7627,8 @@ MonoBehaviour:
   requiredObjects: []
   sucessChance: 0
   necessaryItem: []
+  switchPlayer: 0
+  targetChange: 
   objectToRemove: {fileID: 1202077975}
   switchToTractor: 0
 --- !u!4 &5161610388189367876
@@ -7812,6 +7826,8 @@ MonoBehaviour:
   - {fileID: 1470593078}
   sucessChance: 0
   necessaryItem: []
+  switchPlayer: 0
+  targetChange: 
 --- !u!114 &8757003635170989674
 MonoBehaviour:
   m_ObjectHideFlags: 0

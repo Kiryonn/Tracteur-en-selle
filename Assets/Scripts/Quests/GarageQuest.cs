@@ -5,7 +5,7 @@ using UnityEngine;
 public class GarageQuest : Quest
 {
     public float tractorDamage;
-
+    [SerializeField] GameObject damagedTractor;
     protected override void OnStart()
     {
         base.OnStart();
@@ -21,8 +21,8 @@ public class GarageQuest : Quest
             for(int i=0; i< item.necessaryItem.Length; i++)
             {
                 item.necessaryItem[i].ShowInteractable();
-                item.SetQuest(this);
             }
+            item.SetQuest(this);
         }
     }
 
@@ -30,12 +30,25 @@ public class GarageQuest : Quest
     {
         task.HideInteractable();
         requiredTasks.Remove(task);
+
+        if (requiredTasks.Count == 1)
+        {
+            StartCoroutine(GameManager.Instance.player.SwitchControls("Tractor", true));
+            requiredTasks[requiredTasks.Count-1].ShowInteractable();
+            Invoke("HideTractor", 3f);
+        }
+
         if (requiredTasks.Count <= 0)
         {
             GameManager.Instance.CompleteQuest(this);
             GameManager.Instance.currentQuest = null;
-            StartCoroutine(GameManager.Instance.player.SwitchControls("Character", true));
-            
+            GameManager.Instance.player.isCharacterControlled = false;
+
         }
+    }
+
+    void HideTractor()
+    {
+        damagedTractor.SetActive(false);
     }
 }

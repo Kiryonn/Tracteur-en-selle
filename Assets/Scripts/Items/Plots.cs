@@ -29,7 +29,10 @@ public class Plots : Item
     {
         for (int i = 0; i<plots.Length; i++)
         {
-            Destroy(plots[i].gameObject,1.5f);
+            if (plots[i])
+            {
+                Destroy(plots[i].gameObject, 1.5f);
+            }
         }
     }
 }

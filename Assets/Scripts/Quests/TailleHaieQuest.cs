@@ -12,7 +12,10 @@ public class TailleHaieQuest : Quest
         if (requiredTasks.Count <= 0)
         {
             epareuse.DetachEpareuse();
-            pl.RemovePlots();
+            if (pl)
+            {
+                pl.RemovePlots();
+            }
         }
     }
 }

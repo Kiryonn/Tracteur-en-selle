@@ -16,6 +16,11 @@ public class Task : Interactable
     public float sucessChance;
     public Item[] necessaryItem; // Le meilleur objet
     protected Quest quest;
+
+    [Header("Switching")]
+    [SerializeField] bool switchPlayer;
+    [SerializeField] string targetChange;
+
     protected override void OnStart()
     {
         base.OnStart();

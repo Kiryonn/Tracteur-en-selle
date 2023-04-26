@@ -7,5 +7,7 @@ public enum Theme
     Viticulture,
     Grande_Culture,
     Elevage,
-    JEV
+    JEV,
+    None,
+    Garage
 }

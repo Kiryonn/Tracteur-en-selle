@@ -55,17 +55,18 @@ public class NightTime : MonoBehaviour
     // aValue = 1 -> transition vers le jour
     IEnumerator ChangeDayTime(float aTime, float aValue)
     {
-
+        float currentIntensity = lightSource.intensity;
+        float currentBlend = skyboxBlender.blend;
         for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / aTime)
         {
-            skyboxBlender.blend = Mathf.Abs(aValue-i);
+            skyboxBlender.blend = Mathf.Lerp(currentBlend, 1 - aValue, i);
             if (aValue == 1f)
             {
-                lightSource.intensity = i;
+                lightSource.intensity = Mathf.Lerp(currentIntensity, 1f, i);
             }
             else
             {
-                lightSource.intensity = 1-i;
+                lightSource.intensity = Mathf.Lerp(currentIntensity, 0f, i);
             }
             
             yield return null;
@@ -94,7 +95,6 @@ public class NightTime : MonoBehaviour
             //lightSource.intensity = 1f;
             //skyboxBlender.blend = 0f;
             timer = 0f;
-            
         }
     }
 

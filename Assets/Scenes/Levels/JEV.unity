@@ -579,10 +579,12 @@ MonoBehaviour:
   customizeColor: 0
   requireItem: 1
   requiredObjects: []
-  sucessChance: 50
+  sucessChance: 10
   necessaryItem:
   - {fileID: 998483391}
   - {fileID: 3191387942012642028}
+  switchPlayer: 0
+  targetChange: 
   endOfLine: {fileID: 1433320297}
 --- !u!114 &305185643
 MonoBehaviour:
@@ -735,6 +737,8 @@ MonoBehaviour:
   sucessChance: 1.74
   necessaryItem:
   - {fileID: 436717342}
+  switchPlayer: 0
+  targetChange: 
 --- !u!1001 &416085625
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1382,10 +1386,12 @@ MonoBehaviour:
   customizeColor: 0
   requireItem: 1
   requiredObjects: []
-  sucessChance: 50
+  sucessChance: 10
   necessaryItem:
   - {fileID: 998483391}
   - {fileID: 3191387942012642028}
+  switchPlayer: 0
+  targetChange: 
   endOfLine: {fileID: 85865420}
 --- !u!114 &1133004854
 MonoBehaviour:
@@ -2599,6 +2605,8 @@ MonoBehaviour:
   requiredObjects: []
   sucessChance: 0
   necessaryItem: []
+  switchPlayer: 0
+  targetChange: 
   epareuse: {fileID: 3136418837886509775, guid: 461be7ea560846c41acc812baf504d0b, type: 3}
   pos: {x: -0.07498, y: 3.661111, z: -7.097223}
   rot: {x: 0, y: 90, z: 0}
@@ -2930,10 +2938,12 @@ MonoBehaviour:
   requiredObjects:
   - {fileID: 998483391}
   - {fileID: 3191387942012642028}
-  sucessChance: 50
+  sucessChance: 10
   necessaryItem:
   - {fileID: 998483391}
   - {fileID: 3191387942012642028}
+  switchPlayer: 0
+  targetChange: 
   endOfLine: {fileID: 61568896}
 --- !u!23 &8991050272009896250
 MeshRenderer:

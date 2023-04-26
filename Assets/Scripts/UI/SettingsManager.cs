@@ -88,6 +88,13 @@ public class SettingsManager : MonoBehaviour
     IEnumerator LoadSceneAsyncScreen(int sceneId)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(1);
+
+        while (!operation.isDone)
+        {
+            LoadingScreenTips.instance.loadgingBarFill.fillAmount = Mathf.Clamp01(operation.progress / 0.9f);
+            yield return null;
+        }
+
         AsyncOperation operation2;
         if (settings.enableTutorial)
         {
@@ -102,12 +109,12 @@ public class SettingsManager : MonoBehaviour
             nextIsGarage = false;
         }
 
-        while (!operation.isDone)
+        while (!operation2.isDone)
         {
-            LoadingScreenTips.instance.loadgingBarFill.fillAmount = Mathf.Clamp01(operation.progress / 0.9f);
+            LoadingScreenTips.instance.loadgingBarFill.fillAmount = Mathf.Clamp01(operation2.progress / 0.9f);
             yield return null;
         }
-        
+
     }
 
     public void LoadNextLevel()
@@ -116,12 +123,8 @@ public class SettingsManager : MonoBehaviour
 
         if (settings.allowedThemes.Count <= 0)
         {
-            foreach (var item in settings.levelDescs)
-            {
-                settings.allowedThemes.Add(item.th);
-            }
-            Debug.Log("Reloading all levels");
-            SceneManager.LoadScene("Main Menu");
+            Debug.Log("No more level");
+            settings.currentTheme = Theme.None;
         }
         else
         {
@@ -130,12 +133,14 @@ public class SettingsManager : MonoBehaviour
                 SceneManager.LoadScene("Garage", LoadSceneMode.Additive);
                 nextIsGarage = false;
                 loadedLevel = SceneManager.GetSceneByName("Garage");
+                settings.currentTheme = Theme.Garage;
             }
             else
             {
                 int r = Random.Range(0, settings.allowedThemes.Count);
                 SceneManager.LoadScene(dicoThemes[settings.allowedThemes[r]],LoadSceneMode.Additive);
                 loadedLevel = SceneManager.GetSceneByName(dicoThemes[settings.allowedThemes[r]]);
+                settings.currentTheme = settings.allowedThemes[r];
                 settings.allowedThemes.Remove(settings.allowedThemes[r]);
                 
                 nextIsGarage = true;
@@ -144,5 +149,16 @@ public class SettingsManager : MonoBehaviour
         
     }
 
-
+    public void LoadMainMenu()
+    {
+        if (settings.currentTheme == Theme.None)
+        {
+            foreach (var item in settings.levelDescs)
+            {
+                settings.allowedThemes.Add(item.th);
+            }
+            Debug.Log("Reloading all levels");
+            SceneManager.LoadScene("Main Menu");
+        }
+    }
 }

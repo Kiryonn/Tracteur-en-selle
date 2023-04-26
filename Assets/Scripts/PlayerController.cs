@@ -5,6 +5,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public bool isCharacterControlled;
+
+    //Controllers arduino or smth
+    ArduinoConnector arduino;
+    float arduinoMovementNormalized;
+    float arduinoRotationNormalized;
     [Header("Tractor Movement")]
 
     float modifier = 1f; // float to control speed with like mud or stop the car
@@ -33,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Character Movement")]
 
-    [SerializeField] float charaSpeed;
+    public float charaSpeed;
     [SerializeField] float gravity;
     [SerializeField] float turnSpeed;
     Vector3 currentDirection = Vector3.forward;
@@ -56,6 +61,14 @@ public class PlayerController : MonoBehaviour
     public Animator tractorAnim;
     public Animator secateurAnimator;
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        resourceController = GetComponent<ResourceController>();
+        characterController = GetComponent<CharacterController>();
+        arduino = GetComponentInChildren<ArduinoConnector>();
+    }
+
     public enum NavState 
     {
         PlayerControl,
@@ -67,15 +80,14 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         navState = NavState.PlayerControl;
-        rb = GetComponent<Rigidbody>();
-        resourceController = GetComponent<ResourceController>();
-        characterController = GetComponent<CharacterController>();
-        
     }
 
     private void Update()
     {
-        movement = Input.GetAxis("Vertical");
+        arduinoMovementNormalized = arduino.speed / 1000;
+        //arduinoRotationNormalized = arduino.direction / 1000;
+
+        movement = (Mathf.Abs(Input.GetAxis("Vertical")) > Mathf.Abs(arduinoMovementNormalized)) ? Input.GetAxis("Vertical") : arduinoMovementNormalized;
         rotation = Input.GetAxis("Horizontal");
         
     }
@@ -87,20 +99,30 @@ public class PlayerController : MonoBehaviour
             switch (navState)
             {
                 case NavState.PlayerControl:
-                    if (canMove && resourceController.SuffisantEnergy())
+                    if (canMove)
                     {
-                        modifier = 1f;
-                        if (movement >= 0.1f)
+                        if (resourceController.SuffisantEnergy())
                         {
-                            resourceController.UseEnergy(energyRequired);
+                            modifier = 1f;
+                            if (movement >= 0.1f)
+                            {
+                                resourceController.UseEnergy(energyRequired);
+                            }
                         }
+                        else
+                        {
+                            modifier = 0f;
+                        }
+
                     }
                     else
                     {
-                        modifier = 0f;
+                        rotation = 0f;
+                        movement = 0f;
                     }
                     HandleMotor();
                     HandleSteering();
+
                     break;
                 case NavState.Forced:
                     destinationReached = false;
@@ -306,4 +328,6 @@ public class PlayerController : MonoBehaviour
         }
         SwitchControl(to);
     }
+
+
 }

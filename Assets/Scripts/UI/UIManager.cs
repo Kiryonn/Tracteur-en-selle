@@ -37,14 +37,15 @@ public class UIManager : MonoBehaviour
     public void SetProgressListener(AreaOfUse area)
     {
         area.onProgressChanged.AddListener(UpdateProgress);
-        
+        StopCoroutine("FadeProgress");
         StartCoroutine(FadeProgress(1f,1f));
     }
 
     public void RemoveProgressListener(AreaOfUse area)
     {
         area.onProgressChanged.RemoveListener(UpdateProgress);
-        if (!fading) StartCoroutine(FadeProgress(0f, 1f));
+        StopCoroutine("FadeProgress");
+        StartCoroutine(FadeProgress(0f, 1f));
     }
 
     void UpdateProgress(float amount)

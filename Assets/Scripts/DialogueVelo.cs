@@ -16,11 +16,6 @@ public class DialogueVelo : MonoBehaviour
 	public float maxSpeed = 24f;
 
 	public int veloPente=0;
-
-    private void Start()
-    {
-		GameManager.Instance.velo = this;
-    }
     // Update is called once per frame
     void Update() {
 		lectureVelo();

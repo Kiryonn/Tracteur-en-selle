@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
 	public Camera cam { get; private set; }
 
 	[Header("Vélo")]
-	[HideInInspector]
 	public DialogueVelo velo;
 	public PlayerController player { get; private set; }
 	public Drone drone;
@@ -86,7 +85,7 @@ public class GameManager : MonoBehaviour
 		UIManager.instance.SetQuestListener();
 		nTime = GetComponent<NightTime>();
 		itemUIRoot.gameObject.SetActive(false);
-		player = velo.GetComponent<PlayerController>();
+		player = velo.gameObject.GetComponent<PlayerController>();
 		currentState = GameState.QuestState;
 		SpawnPlayer();
 	}
@@ -99,6 +98,7 @@ public class GameManager : MonoBehaviour
 				timer += Time.deltaTime;
                 break;
             case GameState.ScoreState:
+				
 				timer = 0;
                 break;
             default:
@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour
 		Debug.Log("Setting up player position");
 		if (player.isCharacterControlled) StartCoroutine(player.SwitchControls("Character", false));
 		if (!player.isCharacterControlled) StartCoroutine(player.SwitchControls("Tractor", false));
+		player.canMove = true;
 	}
 
     public void WinGame()
@@ -152,9 +153,9 @@ public class GameManager : MonoBehaviour
 		float durabilite = velo.gameObject.GetComponent<DamageController>().health;
 		gameObject.GetComponent<TransitionManager>().SetValues(timer, totalFailedQuests, durabilite, CalculateScore());
 		currentState = GameState.ScoreState;
-
 		
 		nTime.SetDayTime(true);
+		nTime.dayNightCycle = false;
 		totalFailedQuests = 0;
 		//SettingsManager.instance.LoadNextLevel();
     }

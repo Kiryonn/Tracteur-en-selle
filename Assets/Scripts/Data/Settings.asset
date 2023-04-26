@@ -25,3 +25,5 @@ MonoBehaviour:
   - th: 3
     sceneName: JEV
   allowedThemes: 00000000010000000200000003000000
+  currentTheme: 4
+  enableTutorial: 1

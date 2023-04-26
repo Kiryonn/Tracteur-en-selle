@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class TraiteTask : Task
 {
+    [SerializeField] Transform griffeTransform;
+    Vector3 positionOffset;
+    Quaternion rotationOffset;
+    [SerializeField] Vector3 scaleOffset;
+
     public override void Interact()
     {
         TraiteQuete tq = (TraiteQuete)quest;
+
+        positionOffset = griffeTransform.GetChild(0).transform.position;
+        rotationOffset = griffeTransform.GetChild(0).transform.rotation;
+
+        SetPositionAndRotation(griffeTransform, positionOffset, rotationOffset);
+
         if (tq.levier.activated)
         {
             quest.CompleteTask(this);
@@ -24,5 +35,17 @@ public class TraiteTask : Task
             }
             quest.CompleteTask(this);
         }
+    }
+
+    protected override void HandleFailedTask()
+    {
+        base.HandleFailedTask();
+        RecapManager.instance.medicalRecap.AddInjurie(Parts.Dos, 0.5f);
+    }
+
+    void SetPositionAndRotation(Transform start, Vector3 position, Quaternion rotation)
+    {
+        start.position = position;
+        start.rotation = rotation;
     }
 }
