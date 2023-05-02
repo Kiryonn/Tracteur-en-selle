@@ -14,8 +14,16 @@ public enum GameState
 public enum CamTypes
 {
 	Tractor,
+	Equipments,
 	Character,
 	Cinematic
+}
+
+[System.Serializable]
+public class CameraObjects
+{
+	public GameObject camera;
+	public CamTypes camTypes;
 }
 
 public class GameManager : MonoBehaviour
@@ -63,6 +71,7 @@ public class GameManager : MonoBehaviour
 	public Transform itemUIRoot;
 
 	[Header("Cameras")]
+	[SerializeField] List<CameraObjects> cameras;
 	[SerializeField] GameObject TractorCm;
 	[SerializeField] GameObject CharaCm;
 	[SerializeField] GameObject CineCm;
@@ -108,6 +117,18 @@ public class GameManager : MonoBehaviour
 
 	public void SwitchCam(CamTypes camType)
     {
+        foreach (var item in cameras)
+        {
+			if (item.camTypes == camType)
+            {
+				item.camera.SetActive(true);
+            }
+            else
+            {
+				item.camera.SetActive(false);
+			}
+        }
+		/*
         switch (camType)
         {
             case CamTypes.Tractor:
@@ -128,6 +149,7 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
+		*/
     }
 
 	public void SpawnPlayer()
@@ -157,6 +179,7 @@ public class GameManager : MonoBehaviour
 		nTime.SetDayTime(true);
 		nTime.dayNightCycle = false;
 		totalFailedQuests = 0;
+		collectedItems = new List<Item>();
 		//SettingsManager.instance.LoadNextLevel();
     }
 

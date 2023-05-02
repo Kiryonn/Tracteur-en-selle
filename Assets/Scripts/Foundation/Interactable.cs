@@ -24,7 +24,7 @@ public class Interactable : MonoBehaviour
         OnStart();
         drone = GameManager.Instance.drone;
         drone.deliveryEvent.AddListener(ItemDeliveredTrigger);
-        
+        GameManager.Instance.onCollectedItem.AddListener(ItemCollectedTrigger);
     }
     public virtual void Interact()
     {
@@ -82,5 +82,10 @@ public class Interactable : MonoBehaviour
     public void HidePin(float duration)
     {
         LeanTween.scale(pin.gameObject, Vector3.zero, duration * 0.8f).setEaseInBounce();
+    }
+
+    protected virtual void ItemCollectedTrigger(Item item)
+    {
+
     }
 }

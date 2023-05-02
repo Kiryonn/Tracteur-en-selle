@@ -18,6 +18,11 @@ public class TraiteTask : Task
 
         SetPositionAndRotation(griffeTransform, positionOffset, rotationOffset);
 
+
+        RecapManager.instance.medicalRecap.AddInjurie(Parts.Epaule, 0.5f);
+        RecapManager.instance.medicalRecap.AddInjurie(Parts.Main, 0.5f);
+        RecapManager.instance.medicalRecap.AddInjurie(Parts.Coude, 0.2f);
+
         if (tq.levier.activated)
         {
             quest.CompleteTask(this);

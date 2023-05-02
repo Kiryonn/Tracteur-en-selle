@@ -6,7 +6,7 @@ public class Quest : Interactable
 {
     [SerializeField] protected List<Task> requiredTasks;
     public MSAVision vision;
-    
+    public bool isStarted { get { return (this == GameManager.Instance.currentQuest); } }
     protected override void OnStart()
     {
         GameManager.Instance.AddQuest(this);
