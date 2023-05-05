@@ -72,9 +72,7 @@ public class GameManager : MonoBehaviour
 
 	[Header("Cameras")]
 	[SerializeField] List<CameraObjects> cameras;
-	[SerializeField] GameObject TractorCm;
-	[SerializeField] GameObject CharaCm;
-	[SerializeField] GameObject CineCm;
+	GameObject currentCamera;
 	void Awake()
 	{
 		if(Instance != null)
@@ -115,19 +113,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
-	public void SwitchCam(CamTypes camType)
+	public void SwitchCam(CamTypes camType = CamTypes.Tractor, GameObject specialCamera = null)
     {
-        foreach (var item in cameras)
+		if (specialCamera && currentCamera != specialCamera)
         {
-			if (item.camTypes == camType)
-            {
-				item.camera.SetActive(true);
-            }
-            else
-            {
+			specialCamera.SetActive(true);
+			foreach (var item in cameras)
+			{
 				item.camera.SetActive(false);
 			}
-        }
+			currentCamera = specialCamera;
+		}
+        else
+        {
+			foreach (var item in cameras)
+			{
+				if (item.camTypes == camType)
+				{
+					item.camera.SetActive(true);
+					currentCamera = item.camera;
+				}
+				else
+				{
+					item.camera.SetActive(false);
+				}
+			}
+		}
 		/*
         switch (camType)
         {

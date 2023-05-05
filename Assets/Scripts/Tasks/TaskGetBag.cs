@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TaskGetBag : Task
 {
-    [SerializeField] Offset offset;
-    [SerializeField] GameObject bagPrefab;
+
+    [SerializeField] GameObject graphic;
 
     bool canShow;
 
@@ -20,11 +20,15 @@ public class TaskGetBag : Task
     public override void Interact()
     {
         base.Interact();
-        EquipmentRecup equip = (EquipmentRecup)GameManager.Instance.collectedItems[GameManager.Instance.collectedItems.Count - 1];
-        GameObject obj = Instantiate(bagPrefab,equip.equipment.transform);
+        PorteBB equip = (PorteBB)GameManager.Instance.collectedItems[GameManager.Instance.collectedItems.Count - 1];
+        GameObject obj = Instantiate(equip.bagPrefab,equip.equipment.transform);
 
-        offset.SetOffset(obj.transform);
-        HingeJoint joint = obj.GetComponent<Bag>().startRope;
+        equip.bagOffset.SetOffset(obj.transform);
+        Bag b = obj.GetComponent<Bag>();
+        BigBagQuest bq = (BigBagQuest)quest;
+        bq.bigBag = b;
+        b.bigBagAnchor.SetParent(equip.bigBagSupport.rotationCrochetPivot);
+        graphic.SetActive(false);
         //joint.connectedBody = 
     }
 

@@ -32,7 +32,7 @@ public class AreaOfUse : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" && !interacted)
         {
-            Debug.Log("Entering zone");
+            //Debug.Log("Entering zone");
             if (!dontShowProgressBar) UIManager.instance.SetProgressListener(this);
             StartCoroutine("EnterArea");
             interacted = true;
@@ -43,7 +43,7 @@ public class AreaOfUse : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" && interacted)
         {
-            Debug.Log("Exiting zone");
+            //Debug.Log("Exiting zone");
             if (!dontShowProgressBar) UIManager.instance.RemoveProgressListener(this);
             StopCoroutine("EnterArea");
             interactable.ExitInteractable();

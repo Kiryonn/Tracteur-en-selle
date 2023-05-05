@@ -14,6 +14,8 @@ public class ResourceController : MonoBehaviour
     DialogueVelo dialogueVelo;
 
     [SerializeField] float tempS;
+    [SerializeField] float cadenceMax;
+    [SerializeField] float cadenceFillSpeed;
     [SerializeField] float speedDecay;
 
     [System.NonSerialized] public UnityEvent<PlayerUI, float> energyChangeEvent;
@@ -43,36 +45,47 @@ public class ResourceController : MonoBehaviour
 
     private void Update()
     {
+        UpdateFakeSpeed();
         if (Input.GetKey(KeyCode.Space))
         {
-            UpdateFakeSpeed();
+            tempS = dialogueVelo.maxSpeed;
         }
-        tempS -= speedDecay * Time.deltaTime;
+        /*tempS -= speedDecay * Time.deltaTime;
         if (tempS <= 0)
         {
             tempS = 0;
         }
         //energyFillSpeed = dialogueVelo.speed
-        speedChangeEvent.Invoke(playerUI, tempS / 24f);
+        */
+        speedChangeEvent.Invoke(playerUI, tempS / dialogueVelo.maxSpeed);
         FillEnergy();
     }
     void UpdateFakeSpeed()
     {
-        tempS += speedMultiplier * Time.deltaTime;
-        if (tempS >= 24)
+        if (tempS < dialogueVelo.speed * speedMultiplier)
         {
-            tempS = 24;
+            tempS += cadenceFillSpeed * Time.deltaTime;
         }
-        
-        
+        else
+        {
+            tempS -= cadenceFillSpeed * Time.deltaTime;
+        } 
+        //tempS += speedMultiplier * Time.deltaTime;
+        if (tempS >= dialogueVelo.maxSpeed)
+        {
+            tempS = dialogueVelo.maxSpeed;
+        }else if (tempS < 0)
+        {
+            tempS = 0;
+        }
     }
     void FillEnergy()
     {
         float currentFill;
-        if (tempS < 6)
+        if (tempS < dialogueVelo.maxSpeed / 3)
         {
             currentFill = energyFillSpeed[0];
-        }else if (tempS < 18)
+        }else if (tempS < dialogueVelo.maxSpeed - (dialogueVelo.maxSpeed / 3))
         {
             currentFill = energyFillSpeed[1];
         }

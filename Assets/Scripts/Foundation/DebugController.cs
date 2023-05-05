@@ -10,6 +10,7 @@ public class DebugController : MonoBehaviour
     public static DebugCommand<float> SET_PLAYER_SPEED;
     public static DebugCommand RESPAWN;
     public static DebugCommand SWITCH_CHARACTER;
+    public static DebugCommand<float> SET_PENTE;
     public List<object> commandList;
     // Start is called before the first frame update
     void Awake()
@@ -36,11 +37,17 @@ public class DebugController : MonoBehaviour
             }
         });
 
+        SET_PENTE = new DebugCommand<float>("/set_pente", "Change la pente du velo", "/set_pente <value>", (x) =>
+         {
+             GameManager.Instance.velo.ChangePente((int)x);
+         });
+
         commandList = new List<object>
         {
             SET_PLAYER_SPEED,
             RESPAWN,
-            SWITCH_CHARACTER
+            SWITCH_CHARACTER,
+            SET_PENTE
         };
     }
 

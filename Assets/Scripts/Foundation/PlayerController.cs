@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform backRightWheel;
     [SerializeField] Transform backLeftWheel;
 
-    [SerializeField] GameObject tractorGraphics;
+    public GameObject tractorGraphics;
 
     [Header("Character Movement")]
 
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
     public EquipmentRecup equipment;
     public bool isEquipped { get { return equipment != null; } }
-
+    GameObject duplicate;
 
 
     private void Awake()
@@ -92,10 +92,14 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         arduinoMovementNormalized = arduino.direction / 1000;
-        //arduinoRotationNormalized = arduino.direction / 1000;
+        arduinoRotationNormalized = arduino.speed / 1000;
 
         movement = (Mathf.Abs(Input.GetAxis("Vertical")) > Mathf.Abs(arduinoMovementNormalized)) ? Input.GetAxis("Vertical") : arduinoMovementNormalized;
-        rotation = Input.GetAxis("Horizontal");
+
+        arduinoRotationNormalized = Mathf.Lerp(-1, 1, arduinoRotationNormalized);
+
+        rotation = (Mathf.Abs(Input.GetAxis("Horizontal")) > Mathf.Abs(arduinoRotationNormalized)) ? Input.GetAxis("Horizontal") : arduinoRotationNormalized;
+        //rotation = Input.GetAxis("Horizontal");
         
     }
 
@@ -303,7 +307,7 @@ public class PlayerController : MonoBehaviour
         frontRightWheelCollider.brakeTorque = 0f;
     }
 
-    void SwitchControl(string To)
+    void SwitchControl(string To, bool keep)
     {
         if (To == "Character")
         {
@@ -311,11 +315,25 @@ public class PlayerController : MonoBehaviour
             characterController.enabled = true;
             isCharacterControlled = true;
             charaGraphics.SetActive(true);
+            if (keep)
+            {
+                GameObject empty = new GameObject();
+                empty = Instantiate(empty);
+                empty.transform.position = tractorGraphics.transform.position;
+                empty.transform.rotation = tractorGraphics.transform.rotation;
+                empty.transform.localScale = tractorGraphics.transform.lossyScale;
+                duplicate = Instantiate(tractorGraphics, empty.transform);
+            }
+            LeanTween.moveX(gameObject, transform.position.x + 10f, 0f);
             tractorGraphics.SetActive(false);
             GameManager.Instance.SwitchCam(CamTypes.Character);
         }
         else
         {
+            if (duplicate)
+            {
+                Destroy(duplicate);
+            }
             rb.isKinematic = false;
             characterController.enabled = false;
             isCharacterControlled = false;
@@ -325,7 +343,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public IEnumerator SwitchControls(string to, bool transition)
+    public IEnumerator SwitchControls(string to, bool transition, bool keepGraphic = false)
     {
         if (transition)
         {
@@ -334,16 +352,30 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(3f);
             canMove = true;
         }
-        SwitchControl(to);
+        SwitchControl(to,keepGraphic);
     }
 
     public void SetEquipment(EquipmentRecup _equipment)
     {
-        if (equipment)
+        if (equipment != null)
         {
             equipment.RemoveEquipment();
         }
         equipment = _equipment;
         GameManager.Instance.SwitchCam(CamTypes.Equipments);
+    }
+
+    public void StopAllMovements(bool yesOrNo)
+    {
+        if (yesOrNo)
+        {
+            canMove = false;
+            rb.isKinematic = true;
+        }
+        else
+        {
+            canMove = true;
+            rb.isKinematic = false;
+        }
     }
 }
