@@ -34,6 +34,7 @@ public class AreaOfUse : MonoBehaviour
         {
             //Debug.Log("Entering zone");
             if (!dontShowProgressBar) UIManager.instance.SetProgressListener(this);
+            
             StartCoroutine("EnterArea");
             interacted = true;
         }
@@ -46,6 +47,7 @@ public class AreaOfUse : MonoBehaviour
             //Debug.Log("Exiting zone");
             if (!dontShowProgressBar) UIManager.instance.RemoveProgressListener(this);
             StopCoroutine("EnterArea");
+            onProgressChanged.Invoke(0f);
             interactable.ExitInteractable();
             interacted = false;
         }

@@ -7,6 +7,12 @@ public class Bag : MonoBehaviour
     public HingeJoint startRope;
     public Transform bigBagAnchor;
     public ParticleSystem seeds;
+    int layerMask = 3;
+    [SerializeField] float minFloorDistance = 1.5f;
+    [SerializeField] GameObject recupBagInteractable;
+    bool onTheGround;
+    [SerializeField] GameObject obj;
+
 
     private void Start()
     {
@@ -17,12 +23,23 @@ public class Bag : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void Update()
     {
-        if (collision.gameObject.GetComponent<Terrain>() != null)
+        //Debug.Log("Layermask is : " + LayerMask.LayerToName(layerMask));
+        RaycastHit hit;
+        if (Physics.Raycast(bigBagAnchor.transform.position, transform.TransformDirection(Vector3.down), out hit))
         {
-            Debug.Log("I hit the ground");
+            Debug.DrawRay(bigBagAnchor.transform.position, transform.TransformDirection(Vector3.down) * hit.distance, Color.red);
+            
+            if (hit.distance < minFloorDistance && !onTheGround)
+            {
+                Debug.Log("Raycast hit : "+hit.collider.gameObject.name);
+                onTheGround = true;
+                obj = Instantiate(recupBagInteractable);
+                obj.transform.position = new Vector3(transform.position.x,obj.transform.position.y,transform.position.z);
+                obj.GetComponent<RecupBag>().bag = this;
+                GameManager.Instance.currentQuest.GetCurrentTask().HideInteractable();
+            }
         }
-        Debug.Log("I collided with : " + collision.gameObject.name);
     }
 }

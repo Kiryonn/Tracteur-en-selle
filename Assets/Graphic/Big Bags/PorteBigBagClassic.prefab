@@ -1662,7 +1662,7 @@ GameObject:
   m_Component:
   - component: {fileID: 983998369228606994}
   - component: {fileID: 7432416268827294867}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Ronde
   m_TagString: Untagged
   m_Icon: {fileID: 0}

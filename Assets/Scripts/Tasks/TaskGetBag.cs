@@ -20,15 +20,23 @@ public class TaskGetBag : Task
     public override void Interact()
     {
         base.Interact();
-        PorteBB equip = (PorteBB)GameManager.Instance.collectedItems[GameManager.Instance.collectedItems.Count - 1];
+        PorteBB equip = (PorteBB)GameManager.Instance.player.equipment;
         GameObject obj = Instantiate(equip.bagPrefab,equip.equipment.transform);
 
         equip.bagOffset.SetOffset(obj.transform);
         Bag b = obj.GetComponent<Bag>();
         BigBagQuest bq = (BigBagQuest)quest;
         bq.bigBag = b;
-        b.bigBagAnchor.SetParent(equip.bigBagSupport.rotationCrochetPivot);
-        graphic.SetActive(false);
+        if (equip.porteBBType == PorteBBType.Crochet)
+        {
+            b.bigBagAnchor.SetParent(equip.bigBagSupport.rotationCrochetPivot);
+        }
+        else
+        {
+            b.bigBagAnchor.SetParent(null);
+        }
+        
+        //graphic.SetActive(false);
         //joint.connectedBody = 
     }
 

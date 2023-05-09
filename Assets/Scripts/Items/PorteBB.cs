@@ -12,7 +12,7 @@ public enum PorteBBType
 public class PorteBB : EquipmentRecup
 {
     [Header("Bag related")]
-    [SerializeField] PorteBBType porteBBType;
+    public PorteBBType porteBBType;
     public PorteBBReferences bigBagSupport { get; private set; }
     public GameObject bagPrefab;
     public Offset bagOffset;

@@ -8,6 +8,17 @@ public class PrepareBagTask : Task
     {
         base.Interact();
         PorteBB porteBB = (PorteBB)GameManager.Instance.player.equipment;
+        BigBagQuest bq = (BigBagQuest)quest;
+
+        if (porteBB.porteBBType == PorteBBType.Crochet)
+        {
+            bq.bigBag.bigBagAnchor.SetParent(porteBB.bigBagSupport.rotationCrochetPivot);
+        }
+        else
+        {
+            bq.bigBag.bigBagAnchor.SetParent(porteBB.bigBagSupport.elevationClassPivot);
+        }
+        
         porteBB.Use_1();
     }
     

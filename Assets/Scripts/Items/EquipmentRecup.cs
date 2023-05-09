@@ -30,10 +30,10 @@ public class EquipmentRecup : Item
 
     public void RemoveEquipment()
     {
-        equipment.transform.parent = null;
-        float height = transform.position.y;
-        Vector3 playerPosition = GameManager.Instance.player.transform.position;
-        transform.position = new Vector3(playerPosition.x+20f, height, playerPosition.z);
+        //equipment.transform.parent = null;
+        //float height = transform.position.y;
+        //Vector3 playerPosition = GameManager.Instance.player.transform.position;
+        //transform.position = new Vector3(playerPosition.x+20f, height, playerPosition.z);
         ShowInteractable();
         Destroy(equipment);
     }
