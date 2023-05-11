@@ -31,8 +31,9 @@ public class DamageController : MonoBehaviour
 
     public void DamageTractor(float amount)
     {
-        health -= amount;
-        Debug.Log("Endommagement "+rb.velocity);
+        health -= amount * rb.velocity.magnitude;
+        if (health < 0)  health = 0;
+        //Debug.Log("Endommagement "+rb.velocity.magnitude);
         UpdateVisualDamage();
     }
 
@@ -47,8 +48,9 @@ public class DamageController : MonoBehaviour
     {
         for (int i = 0; i<damageableParts.Length; i++)
         {
-            Debug.Log("Setting blendshape values to "+ (1 - health / maxHealth) * 100);
+            //Debug.Log("Setting blendshape values to "+ (1 - health / maxHealth) * 100);
             damageableParts[i].SetBlendShapeWeight(0, (1 - health / maxHealth) * 100);
+            //Debug.Log("Blendshape values are : " + damageableParts[i].GetBlendShapeWeight(0));
         }
     }
 }

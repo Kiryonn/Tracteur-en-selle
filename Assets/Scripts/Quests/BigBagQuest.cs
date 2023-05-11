@@ -9,7 +9,7 @@ public class BigBagQuest : Quest
     public Transform particleColliders;
     public Transform seedPlane;
     [SerializeField] float fillSpeed;
-
+    public bool lostTheBag;
     public void FillSemoir()
     {
         seedPlane.position = new Vector3(seedPlane.position.x, seedPlane.position.y+fillSpeed, seedPlane.position.z);

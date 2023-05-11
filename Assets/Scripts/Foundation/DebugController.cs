@@ -78,7 +78,6 @@ public class DebugController : MonoBehaviour
         GUI.Box(new Rect(0, y, Screen.width, 30), "");
         GUI.backgroundColor = new Color(0, 0, 0, 0);
         input = GUI.TextField(new Rect(10f, y + 5f, Screen.width - 20f, 50f), input);
-
         if (Event.current.type == EventType.KeyDown && Event.current.character.ToString() == "\n")
         {
             HandleInput();

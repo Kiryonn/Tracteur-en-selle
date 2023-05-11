@@ -37,6 +37,11 @@ public class UseBigBagTask : Task
         bigBagQuest.bigBag.seeds.Play();
         GameManager.Instance.player.canMove = false;
         GameManager.Instance.SwitchCam(CamTypes.Tractor, specialCam);
+
+        if (bigBagQuest.lostTheBag)
+        {
+            GameManager.Instance.FailTask();
+        }
         Invoke("StopSeeds", 5f);
     }
 
