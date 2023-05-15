@@ -91,16 +91,48 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        arduinoMovementNormalized = arduino.direction / 1000;
-        arduinoRotationNormalized = arduino.speed / 1000;
+        arduinoMovementNormalized = arduino.speed / 700;
+        //arduinoRotationNormalized = arduino.speed / 1000;
+
+        //arduinoRotationNormalized = -Mathf.Clamp(arduino.qx*7f,-1f,1f);
+
+        arduinoRotationNormalized = ArduinoRotation(arduino.qx,-0.15f,0.15f,(-0.03f,0.03f));
+
+
 
         movement = (Mathf.Abs(Input.GetAxis("Vertical")) > Mathf.Abs(arduinoMovementNormalized)) ? Input.GetAxis("Vertical") : arduinoMovementNormalized;
 
-        arduinoRotationNormalized = Mathf.Lerp(-1, 1, arduinoRotationNormalized);
+        //arduinoRotationNormalized = Mathf.Lerp(-1, 1, arduinoRotationNormalized);
 
         rotation = (Mathf.Abs(Input.GetAxis("Horizontal")) > Mathf.Abs(arduinoRotationNormalized)) ? Input.GetAxis("Horizontal") : arduinoRotationNormalized;
         //rotation = Input.GetAxis("Horizontal");
         
+    }
+
+    float ArduinoRotation(float value, float min, float max, (float,float) deadZone)
+    {
+        if (value >= deadZone.Item1 && value <= deadZone.Item2)
+        {
+            return 0;
+        }
+        bool m = (Mathf.Abs(value - max) < Mathf.Abs(value - min));
+        float rapport; 
+
+        if (m)
+        {
+            rapport = Mathf.Abs(value / max);
+            rapport = Mathf.Lerp(0.5f, 1f, rapport);
+        }
+        else
+        {
+            rapport = Mathf.Abs(value / min);
+            rapport = Mathf.Lerp(0.5f, -1f, rapport);
+        }
+
+        float result = Mathf.SmoothStep(-1f, 1f, rapport);
+        Debug.Log("Rapport : " + rapport + " & Result = " + result);
+
+        return result;
     }
 
     private void FixedUpdate()

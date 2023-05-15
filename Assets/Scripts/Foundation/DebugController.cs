@@ -11,6 +11,7 @@ public class DebugController : MonoBehaviour
     public static DebugCommand RESPAWN;
     public static DebugCommand SWITCH_CHARACTER;
     public static DebugCommand<float> SET_PENTE;
+    public static DebugCommand CALIBRATEGYRO;
     public List<object> commandList;
     // Start is called before the first frame update
     void Awake()
@@ -42,12 +43,20 @@ public class DebugController : MonoBehaviour
              GameManager.Instance.velo.ChangePente((int)x);
          });
 
+        CALIBRATEGYRO = new DebugCommand("/calibrate", "Calibrate the gyroscope", "/calibrate", () =>
+         {
+             ArduinoConnector.Instance.Calibrate();
+             Debug.Log("truing to calibrate");
+         });
+
+
         commandList = new List<object>
         {
             SET_PLAYER_SPEED,
             RESPAWN,
             SWITCH_CHARACTER,
-            SET_PENTE
+            SET_PENTE,
+            CALIBRATEGYRO
         };
     }
 
