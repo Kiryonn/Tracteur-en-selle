@@ -29,11 +29,24 @@ public class DamageController : MonoBehaviour
         }
     }
 
-    public void DamageTractor(float amount)
+
+    public void DamageTractor(float amount, bool scaleWithSpeed = false)
     {
-        health -= amount * rb.velocity.magnitude;
+        if (!scaleWithSpeed)
+        {
+            health -= amount;
+        }
+        else
+        {
+            health -= amount * rb.velocity.magnitude;
+        }
         if (health < 0)  health = 0;
         //Debug.Log("Endommagement "+rb.velocity.magnitude);
+
+        if (amount < 10)
+        {
+            GameManager.Instance.GetComponent<TransitionManager>().FadeDamage(0.4f);
+        }
         UpdateVisualDamage();
     }
 
@@ -52,5 +65,6 @@ public class DamageController : MonoBehaviour
             damageableParts[i].SetBlendShapeWeight(0, (1 - health / maxHealth) * 100);
             //Debug.Log("Blendshape values are : " + damageableParts[i].GetBlendShapeWeight(0));
         }
+        GameManager.Instance.SetPenteScaledWithDmg();
     }
 }

@@ -22,6 +22,7 @@ public class Remorque : Task
     Rigidbody remorqueBody;
 
     float baseCameraDistance;
+    bool check = false;
     protected override void OnStart()
     {
         base.OnStart();
@@ -46,6 +47,7 @@ public class Remorque : Task
         GameManager.Instance.player.canMove = false;
         GameManager.Instance.GetComponent<TransitionManager>().FadeTransition(1f,3f, 1f);
         Invoke("AttachRemorque",3f);
+
     }
 
     // Update is called once per frame
@@ -69,11 +71,12 @@ public class Remorque : Task
         trailer.SetTracteur(parent);
         OnAttach.Invoke(true);
         remorqueBody.isKinematic = false;
-        
+
 
         //ConnectHingeJoint();
         //trailerJoint.connectedBody = parent.GetComponent<Rigidbody>();
-        UpdateCameraDistance(cameraOffsetDistance);
+        GameManager.Instance.SwitchCam(CamTypes.Equipments);
+        //UpdateCameraDistance(cameraOffsetDistance);
         GameManager.Instance.player.canMove = true;
     }
 
@@ -83,7 +86,8 @@ public class Remorque : Task
         //RemoveHingeJoint();
         remorque.parent = transform;
         remorqueBody.isKinematic = true;
-        UpdateCameraDistance(baseCameraDistance);
+        //UpdateCameraDistance(baseCameraDistance);
+        GameManager.Instance.SwitchCam(CamTypes.Tractor);
     }
 
     float GetCameraDistance()

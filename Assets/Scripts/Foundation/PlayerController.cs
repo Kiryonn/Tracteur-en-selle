@@ -12,15 +12,18 @@ public class PlayerController : MonoBehaviour
     float arduinoRotationNormalized;
     [Header("Tractor Movement")]
 
+    [SerializeField] float maxGroundedTime = 5f;
+    [SerializeField] float groundedTime;
+
     float modifier = 1f; // float to control speed with like mud or stop the car
     [SerializeField] float speed = 1f;
     [SerializeField] float rotationSpeed;
     ResourceController resourceController;
     Rigidbody rb;
-    float movement;
-    float rotation;
+    public float movement { get; private set; }
+    public float rotation { get; private set; }
     [SerializeField] float maxAngle;
-    [HideInInspector]
+    //[HideInInspector]
     public bool canMove = true;
     [SerializeField] float energyRequired;
 
@@ -56,6 +59,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 destinationPoint;
     float minDistance;
+    [SerializeField] SpeedSystem uiSpeed;
     public bool destinationReached { get; private set; }
 
     [Header("Specific Equipement")]
@@ -91,12 +95,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        arduinoMovementNormalized = arduino.speed / 700;
+        arduinoMovementNormalized = arduino.speed / 700 - arduino.reverseSpeed / 700;
         //arduinoRotationNormalized = arduino.speed / 1000;
 
         //arduinoRotationNormalized = -Mathf.Clamp(arduino.qx*7f,-1f,1f);
 
-        arduinoRotationNormalized = ArduinoRotation(arduino.qx,-0.15f,0.15f,(-0.03f,0.03f));
+        arduinoRotationNormalized = ArduinoRotation(arduino.roll,-20f,20f,(-1.5f,1.5f));
 
 
 
@@ -106,6 +110,12 @@ public class PlayerController : MonoBehaviour
 
         rotation = (Mathf.Abs(Input.GetAxis("Horizontal")) > Mathf.Abs(arduinoRotationNormalized)) ? Input.GetAxis("Horizontal") : arduinoRotationNormalized;
         //rotation = Input.GetAxis("Horizontal");
+        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Escape is pressed");
+            GameManager.Instance.PauseGame();
+        }
         
     }
 
@@ -130,7 +140,7 @@ public class PlayerController : MonoBehaviour
         }
 
         float result = Mathf.SmoothStep(-1f, 1f, rapport);
-        Debug.Log("Rapport : " + rapport + " & Result = " + result);
+        //Debug.Log("Rapport : " + rapport + " & Result = " + result);
 
         return result;
     }
@@ -139,6 +149,9 @@ public class PlayerController : MonoBehaviour
     {
         if (!isCharacterControlled)
         {
+            IsGrounded();
+            float y = Mathf.InverseLerp(5f, 17f, rb.velocity.magnitude);
+            uiSpeed.particleSystem.emissionRate = Mathf.Lerp(0f, uiSpeed.maxParticle, y);
             switch (navState)
             {
                 case NavState.PlayerControl:
@@ -180,6 +193,12 @@ public class PlayerController : MonoBehaviour
         else
         {
             playerAnim.SetFloat("AnimSpeed",charaSpeed/3f);
+            if (!characterController.isGrounded)
+            {
+                Vector3 velocity = Vector3.zero;
+                velocity.y += gravity * Time.deltaTime;
+                characterController.Move(velocity * Time.deltaTime);
+            }
             if (canMove)
             {
                 Vector3 direction = transform.TransformDirection(new Vector3(rotation, 0f, movement));
@@ -205,12 +224,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleMovement(Vector3 direction)
     {
-        if (!characterController.isGrounded)
-        {
-            Vector3 velocity = Vector3.zero;
-            velocity.y += gravity * Time.deltaTime;
-            characterController.Move(velocity * Time.deltaTime);
-        }
+        
         if (direction.magnitude >= 0.1f)
         {
             if (movement >= 0)
@@ -343,6 +357,7 @@ public class PlayerController : MonoBehaviour
     {
         if (To == "Character")
         {
+            UIManager.instance.HideEnergy(true);
             rb.isKinematic = true;
             characterController.enabled = true;
             isCharacterControlled = true;
@@ -362,6 +377,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            UIManager.instance.HideEnergy(false);
             if (duplicate)
             {
                 Destroy(duplicate);
@@ -377,6 +393,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator SwitchControls(string to, bool transition, bool keepGraphic = false)
     {
+        Debug.Log("Switching player");
         if (transition)
         {
             canMove = false;
@@ -384,6 +401,7 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(3f);
             canMove = true;
         }
+        
         SwitchControl(to,keepGraphic);
     }
 
@@ -408,6 +426,26 @@ public class PlayerController : MonoBehaviour
         {
             canMove = true;
             rb.isKinematic = false;
+        }
+    }
+
+    void IsGrounded()
+    {
+        WheelHit hit1;
+        WheelHit hit2;
+        if (!(backLeftWheelCollider.GetGroundHit(out hit1) && frontRightWheelCollider.GetGroundHit(out hit2)))
+        {
+            groundedTime += Time.deltaTime;
+        }
+        else
+        {
+            groundedTime = 0f;
+        }
+
+        if (groundedTime > maxGroundedTime)
+        {
+            GameManager.Instance.SpawnPlayer(true);
+            groundedTime = 0f;
         }
     }
 }

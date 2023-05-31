@@ -11,12 +11,13 @@ public enum PlayerActions
 }
 public class TutorialBubble : MonoBehaviour
 {
-    bool triggered;
+    public bool triggered { get; private set; }
     [SerializeField] float waitingTime;
     [SerializeField] float delay;
     [SerializeField] float fadeSpeed;
     [SerializeField] bool allowMovement;
     [SerializeField] bool activated;
+    bool clustered = true;
     [SerializeField] GameObject indications;
     [SerializeField] PlayerActions playerAction;
     CanvasGroup canvasGroup;
@@ -28,6 +29,10 @@ public class TutorialBubble : MonoBehaviour
     void Start()
     {
         canvasGroup = indications.GetComponent<CanvasGroup>();
+        if (GetComponent<TutorialBubbleCluster>() == null)
+        {
+            clustered = false;
+        }
         if (requiredInteractions.Count <= 0 && requiredTuto.Count <= 0)
         {
             activated = true;
@@ -48,12 +53,11 @@ public class TutorialBubble : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     { 
-        if (!triggered && activated)
+        if (!triggered && activated && !clustered)
         {
-            if (!allowMovement) GameManager.Instance.player.canMove = false;
+            
             StartCoroutine("LaunchTutorial");
-            StartCoroutine(WaitForActions(playerAction));
-            OnCompletedTutorialBubble.Invoke(this);
+            
         }
     }
 
@@ -63,8 +67,14 @@ public class TutorialBubble : MonoBehaviour
         switch (action)
         {
             case PlayerActions.Move:
+                int timeout = 0;
                 while (GameManager.Instance.velo.speed <= 1)
                 {
+                    timeout++;
+                    if (timeout > 5000)
+                    {
+                        break;
+                    }
                     yield return null;
                 }
                 break;
@@ -77,7 +87,8 @@ public class TutorialBubble : MonoBehaviour
                 break;
         }
         triggered = true;
-        GameManager.Instance.player.canMove = true;
+        if (!clustered) { GameManager.Instance.player.canMove = true; }
+        
         StartCoroutine(FadeTutorial(2f, 0f));
     }
 
@@ -96,8 +107,11 @@ public class TutorialBubble : MonoBehaviour
 
     }
 
-    IEnumerator LaunchTutorial()
+    public IEnumerator LaunchTutorial()
     {
+        if (!allowMovement) GameManager.Instance.player.canMove = false;
+        StartCoroutine(WaitForActions(playerAction));
+        OnCompletedTutorialBubble.Invoke(this);
         yield return new WaitForSeconds(delay);
         StartCoroutine(FadeTutorial(fadeSpeed, 1f));
         StartCoroutine(WaitForActions(playerAction));
@@ -117,7 +131,7 @@ public class TutorialBubble : MonoBehaviour
 
     bool CheckActivation()
     {
-        Debug.Log(requiredInteractions.Count <= 0 && requiredTuto.Count <= 0);
+        //Debug.Log(requiredInteractions.Count <= 0 && requiredTuto.Count <= 0);
         return (requiredInteractions.Count <= 0 && requiredTuto.Count <= 0);
     }
 }

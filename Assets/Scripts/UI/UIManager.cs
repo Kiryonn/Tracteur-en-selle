@@ -4,6 +4,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+public class SpeedSystem
+{
+    public ParticleSystem particleSystem;
+    public float maxParticle;
+    
+}
+
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
@@ -13,6 +21,10 @@ public class UIManager : MonoBehaviour
     Dictionary<Quest, TextMeshProUGUI> questDico;
     [SerializeField] Image progressBar;
     [SerializeField] CanvasGroup progressRoot;
+    [SerializeField] GameObject energyRoot;
+    public GameObject pauseMenu;
+    public TextMeshProUGUI timerText;
+    public SpeedSystem speedSystem;
     bool fading;
     private void Awake()
     {
@@ -37,6 +49,7 @@ public class UIManager : MonoBehaviour
     public void SetProgressListener(AreaOfUse area)
     {
         area.onProgressChanged.AddListener(UpdateProgress);
+        //Debug.Log("Progress is set");
         StopCoroutine("FadeProgress");
         StartCoroutine(FadeProgress(1f,1f));
     }
@@ -61,7 +74,7 @@ public class UIManager : MonoBehaviour
 
     void UpdateEnergy(PlayerUI ui, float amount)
     {
-        ui.energy.fillAmount = amount * 0.655f + 0.2f;
+        ui.energy.fillAmount = amount;
     }
 
     void UpdateSpeed(PlayerUI ui, float amount)
@@ -95,5 +108,10 @@ public class UIManager : MonoBehaviour
         }
         progressRoot.alpha = endAlpha;
         fading = false;
+    }
+
+    public void HideEnergy(bool yn)
+    {
+        energyRoot.SetActive(!yn);
     }
 }

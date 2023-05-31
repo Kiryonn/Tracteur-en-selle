@@ -5,6 +5,7 @@ using UnityEngine;
 public class Item : Interactable
 {
     public List<Item> linkedItems;
+    protected Quest quest;
     public bool noDroneRequest;
     public override void Interact()
     {
@@ -34,5 +35,10 @@ public class Item : Interactable
     {
         base.ShowInteractable();
         
+    }
+
+    public void SetQuest(Quest q)
+    {
+        quest = q;
     }
 }

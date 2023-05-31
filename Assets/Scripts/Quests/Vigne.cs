@@ -38,6 +38,7 @@ public class Vigne : Quest
             }
             GameManager.Instance.HideUIObject(secateurImage.gameObject);
             secaAnim.SetTrigger("Close");
+            GameManager.Instance.SetPenteScaledWithDmg();
         }
     }
 

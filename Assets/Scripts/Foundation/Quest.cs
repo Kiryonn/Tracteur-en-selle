@@ -7,11 +7,34 @@ public class Quest : Interactable
     [SerializeField] protected List<Task> requiredTasks;
     public MSAVision vision;
     public bool isStarted { get { return (this == GameManager.Instance.currentQuest); } }
+    [SerializeField] bool arrowPointing;
+    [SerializeField] GameObject arrowPrefab;
+    GameObject arrow;
     protected override void OnStart()
     {
         GameManager.Instance.AddQuest(this);
         if (vision) { vision.HideInteractable(); }
         GetComponent<Renderer>().material.SetColor("_Color", GameManager.Instance.interactionProperties.taskColor);
+        if (arrowPointing)
+        {
+            arrow = Instantiate(arrowPrefab);
+            arrow.transform.SetParent(transform, false);
+            arrow.transform.localPosition = Vector3.forward * 3f;
+        }
+        
+    }
+
+    public override void ShowInteractable()
+    {
+        base.ShowInteractable();
+        if (arrow != null) { arrow.SetActive(true); }
+        
+    }
+
+    public override void HideInteractable()
+    {
+        base.HideInteractable();
+        if (arrow != null) { arrow.SetActive(false); }
     }
 
     public override void Interact()
@@ -45,12 +68,7 @@ public class Quest : Interactable
         }
         else
         {
-            if (vision)
-            {
-                vision.HideInteractable();
-            }
-            GameManager.Instance.CompleteQuest(this);
-            GameManager.Instance.currentQuest = null;
+            HandleCompletedQuest();
         }
     }
 
@@ -62,6 +80,7 @@ public class Quest : Interactable
         {
             foreach (var item in requiredTasks[0].requiredObjects)
             {
+                item.SetQuest(this);
                 item.ShowInteractable();
             }
             if (vision) { vision.ShowInteractable(); }
@@ -81,5 +100,15 @@ public class Quest : Interactable
     public bool isFinished()
     {
         return requiredTasks.Count <= 0;
+    }
+
+    protected virtual void HandleCompletedQuest()
+    {
+        if (vision)
+        {
+            vision.HideInteractable();
+        }
+        GameManager.Instance.CompleteQuest(this);
+        GameManager.Instance.currentQuest = null;
     }
 }

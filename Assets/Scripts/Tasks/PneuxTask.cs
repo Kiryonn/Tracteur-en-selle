@@ -5,6 +5,7 @@ using UnityEngine;
 public class PneuxTask : Task
 {
     [SerializeField] GameObject objectToRemove;
+    [SerializeField] Transform newTransform;
     [SerializeField] bool switchToTractor;
 
     public override void Interact()
@@ -25,6 +26,14 @@ public class PneuxTask : Task
 
     void RemoveObj()
     {
+
+        Transform pTransform = GameManager.Instance.player.transform;
+
+        if (newTransform)
+        {
+            pTransform.position = newTransform.position;
+            pTransform.rotation = newTransform.rotation;
+        }
         objectToRemove.SetActive(false);
     }
 }

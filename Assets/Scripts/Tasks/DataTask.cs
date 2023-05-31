@@ -7,7 +7,12 @@ public class DataTask : Task
     bool check;
     public override void ShowInteractable()
     {
-        if (check) base.ShowInteractable();
+        if (check)
+        {
+            base.ShowInteractable();
+            GameManager.Instance.CameraFocus(transform);
+        }
+            
     }
 
     protected override void OnStart()

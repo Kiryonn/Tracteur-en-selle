@@ -9,5 +9,6 @@ public enum Theme
     Elevage,
     JEV,
     None,
-    Garage
+    Garage,
+    Tutorial
 }

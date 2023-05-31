@@ -11,6 +11,7 @@ public class Interactable : MonoBehaviour
     protected Renderer render;
     [SerializeField] Transform pin;
     [System.NonSerialized] public UnityEvent<Interactable> OnInteract = new UnityEvent<Interactable>();
+    [SerializeField] protected bool focusOnShow;
 
     Drone drone;
     private void Start()
@@ -28,9 +29,10 @@ public class Interactable : MonoBehaviour
     }
     public virtual void Interact()
     {
-        Debug.Log("Interacting with " + _name);
+        //Debug.Log("Interacting with " + _name);
         if (pin) HidePin(1.5f);
         OnInteract.Invoke(this);
+
     }
 
     public virtual void HideInteractable()
@@ -45,6 +47,10 @@ public class Interactable : MonoBehaviour
         StartCoroutine(Fade(1.0f, 1.0f));
         gameObject.GetComponent<Collider>().enabled = true;
         if (pin) ShowPin(2f);
+        if (focusOnShow)
+        {
+            GameManager.Instance.CameraFocus(transform,2f);
+        }
     }
     
     IEnumerator Fade(float aTime, float aValue)

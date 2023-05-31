@@ -53,17 +53,15 @@ public class DataManager : MonoBehaviour
 
 	public void UpdateVisiteurData(ClientData data)
     {
-		Debug.Log(clientData[0]);
-        try
+		try
         {
 			clientDataList = clientData.ToList<ClientData>();
 		}
         catch (System.Exception)
         {
 			clientDataList = new List<ClientData>();
-            throw;
+            //throw;
         }
-		
 		clientDataList.Add(data);
 		clientData = clientDataList.ToArray();
 		SaveJson("VisiteursData.json");

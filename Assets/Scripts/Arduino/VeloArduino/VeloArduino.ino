@@ -1,3 +1,5 @@
+#include <Arduino_BuiltIn.h>
+
 // I2C device class (I2Cdev) demonstration Arduino sketch for MPU6050 class using DMP (MotionApps v2.0)
 // 6/21/2012 by Jeff Rowberg <jeff@rowberg.net>
 // Updates should (hopefully) always be available at https://github.com/jrowberg/i2cdevlib
@@ -83,7 +85,7 @@ MPU6050 mpu;
 // uncomment "OUTPUT_READABLE_QUATERNION" if you want to see the actual
 // quaternion components in a [w, x, y, z] format (not best for parsing
 // on a remote host such as Processing or something though)
-#define OUTPUT_READABLE_QUATERNION
+//#define OUTPUT_READABLE_QUATERNION
 
 // uncomment "OUTPUT_READABLE_EULER" if you want to see Euler angles
 // (in degrees) calculated from the quaternions coming from the FIFO.
@@ -96,7 +98,7 @@ MPU6050 mpu;
 // from the FIFO. Note this also requires gravity vector calculations.
 // Also note that yaw/pitch/roll angles suffer from gimbal lock (for
 // more info, see: http://en.wikipedia.org/wiki/Gimbal_lock)
-//#define OUTPUT_READABLE_YAWPITCHROLL
+#define OUTPUT_READABLE_YAWPITCHROLL
 
 // uncomment "OUTPUT_READABLE_REALACCEL" if you want to see acceleration
 // components with gravity removed. This acceleration reference frame is
@@ -154,6 +156,8 @@ void dmpDataReady() {
 
 int fsrInput = A0;
 int fsrRead = 0;
+int fsrInput2 = A1;
+int fsrRead2 = 0;
 bool cal = true;
 
 // ================================================================
@@ -202,10 +206,12 @@ void setup() {
   devStatus = mpu.dmpInitialize();
 
   // supply your own gyro offsets here, scaled for min sensitivity
-  mpu.setXGyroOffset(220);
-  mpu.setYGyroOffset(76);
-  mpu.setZGyroOffset(-85);
-  mpu.setZAccelOffset(1788);  // 1688 factory default for my test chip
+  mpu.setXGyroOffset(142);
+  mpu.setYGyroOffset(-787);
+  mpu.setZGyroOffset(-5313);
+  mpu.setXAccelOffset(-41);
+  mpu.setYAccelOffset(699);
+  mpu.setZAccelOffset(1314);  // 1688 factory default for my test chip
 
   // make sure it worked (returns 0 if so)
   if (devStatus == 0) {
@@ -255,7 +261,9 @@ void loop() {
   if (!dmpReady) return;
   // read a packet from FIFO
   fsrRead = analogRead(fsrInput);
-
+  fsrRead2 = analogRead(fsrInput2);
+  Serial.print(fsrRead2);
+  Serial.print(",");
   Serial.print(fsrRead);
   Serial.print(",");
 
@@ -263,8 +271,11 @@ void loop() {
   if (Serial.available()) {
     String command = Serial.readStringUntil('\n');
 
-    if (command == "Calibrate") {
+    if (command == "Caligfdsgbrate") {
       cal = false;
+
+
+
       mpu.initialize();
 
 
@@ -279,10 +290,12 @@ void loop() {
       devStatus = mpu.dmpInitialize();
 
       // supply your own gyro offsets here, scaled for min sensitivity
-      mpu.setXGyroOffset(220);
-      mpu.setYGyroOffset(76);
-      mpu.setZGyroOffset(-85);
-      mpu.setZAccelOffset(1788);  // 1688 factory default for my test chip
+      mpu.setXGyroOffset(142);
+      mpu.setYGyroOffset(-787);
+      mpu.setZGyroOffset(-5313);
+      mpu.setXAccelOffset(-41);
+      mpu.setYAccelOffset(699);
+      mpu.setZAccelOffset(1314);  // 1688 factory default for my test chip
 
       // make sure it worked (returns 0 if so)
       if (devStatus == 0) {
@@ -320,11 +333,11 @@ void loop() {
     // display Euler angles in degrees
     mpu.dmpGetQuaternion(&q, fifoBuffer);
     mpu.dmpGetEuler(euler, &q);
-    Serial.print("euler\t");
+    //Serial.print("euler\t");
     Serial.print(euler[0] * 180 / M_PI);
-    Serial.print("\t");
+    Serial.print(",");
     Serial.print(euler[1] * 180 / M_PI);
-    Serial.print("\t");
+    Serial.print(",");
     Serial.println(euler[2] * 180 / M_PI);
 #endif
 
@@ -333,11 +346,11 @@ void loop() {
     mpu.dmpGetQuaternion(&q, fifoBuffer);
     mpu.dmpGetGravity(&gravity, &q);
     mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
-    Serial.print("ypr\t");
+    //Serial.print("ypr\t");
     Serial.print(ypr[0] * 180 / M_PI);
-    Serial.print("\t");
+    Serial.print(",");
     Serial.print(ypr[1] * 180 / M_PI);
-    Serial.print("\t");
+    Serial.print(",");
     Serial.println(ypr[2] * 180 / M_PI);
 #endif
 

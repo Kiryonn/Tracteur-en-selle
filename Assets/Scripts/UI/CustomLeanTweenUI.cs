@@ -13,4 +13,14 @@ public class CustomLeanTweenUI : MonoBehaviour
     public void OnClick()
     {
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void RestartGame()
+    {
+        SettingsManager.instance.ForceLoadMainMenu();
+    }
 }

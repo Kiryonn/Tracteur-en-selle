@@ -16,10 +16,12 @@ public class Task : Interactable
     public float sucessChance;
     public Item[] necessaryItem; // Le meilleur objet
     protected Quest quest;
+    public bool succeeded { get; private set; }
 
     [Header("Switching")]
-    [SerializeField] bool switchPlayer;
-    [SerializeField] string targetChange;
+    [SerializeField] protected bool switchPlayer;
+    [SerializeField] protected string targetChange;
+    
 
     protected override void OnStart()
     {
@@ -39,19 +41,20 @@ public class Task : Interactable
     public override void Interact()
     {
         base.Interact();
+        
         foreach (var item in requiredObjects)
         {
             item.HideInteractable();
         }
         if (!requireItem)
         {
-            quest.CompleteTask(this);
+            HandleSucceededTask();
         }
         else
         {
             if (CheckNecessaryItem()) // Check if all the necessary items are collected
             {
-                quest.CompleteTask(this);
+                HandleSucceededTask();
                 Debug.Log("All necessary are aquired");
             }
             else
@@ -64,11 +67,11 @@ public class Task : Interactable
                 else
                 {
                     Debug.Log("Task sucessfully not failed");
+                    HandleSucceededTask();
                 }
-                quest.CompleteTask(this);
+                
             }
         }
-
     }
 
     public virtual void SetQuest(Quest q)
@@ -78,9 +81,18 @@ public class Task : Interactable
 
     protected virtual void HandleFailedTask()
     {
-        Debug.Log("Task failed sucessfully");
+        Debug.Log("Task failed");
         GameManager.Instance.FailTask();
-        GameManager.Instance.velo.GetComponent<DamageController>().DamageTractor(5f);
+        succeeded = false;
+        quest.CompleteTask(this);
+        GameManager.Instance.GetComponent<TransitionManager>().FadeDamage(0.2f);
+        //GameManager.Instance.velo.GetComponent<DamageController>().DamageTractor(5f);
+    }
+
+    protected virtual void HandleSucceededTask()
+    {
+        succeeded = true;
+        quest.CompleteTask(this);
     }
 
     protected bool CheckNecessaryItem()

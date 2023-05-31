@@ -11,7 +11,8 @@ public class SettingsManager : MonoBehaviour
     int[] levelOrder;
     Dictionary<Theme, string> dicoThemes;
     bool nextIsGarage;
-    Scene loadedLevel;
+    [SerializeField] List<Scene> loadedLevel;
+
     private void Awake()
     {
         if (instance != null)
@@ -25,7 +26,7 @@ public class SettingsManager : MonoBehaviour
     }
     private void Start()
     {
-        nextIsGarage = true;
+        //nextIsGarage = true;
         dicoThemes = new Dictionary<Theme, string>();
         foreach (var item in settings.levelDescs)
         {
@@ -35,7 +36,8 @@ public class SettingsManager : MonoBehaviour
         {
             settings.allowedThemes = new List<Theme>();
         }
-        
+        //settings.gameMode = GameMode.SerieDeTheme;
+        loadedLevel = new List<Scene>();
     }
 
     public void UpdateTutorial(bool b)
@@ -47,15 +49,17 @@ public class SettingsManager : MonoBehaviour
     {
         if (b)
         {
-            if (settings.allowedThemes.Contains(t)){ return; }
+            if (settings.allowedThemes.Contains(t)) { return; }
             settings.allowedThemes.Add(t);
         }
         else
         {
             settings.allowedThemes.Remove(t);
         }
-        
+
     }
+
+
 
 
     public void UpdateGrassDensity(float f)
@@ -69,24 +73,75 @@ public class SettingsManager : MonoBehaviour
     }
     public void StartGame()
     {
-        try
+        switch (settings.gameMode)
         {
-            LoadingScreenTips.instance.StartLoading();
+            case GameMode.SerieDeTheme:
+                try
+                {
+                    LoadingScreenTips.instance.StartLoading();
+                }
+                catch (System.Exception)
+                {
+                    Debug.Log("Missing Component");
+                    //throw;
+                }
+                if (settings.enableTutorial)
+                {
+                    settings.currentTheme = Theme.Tutorial;
+                    //nextIsGarage = true;
+                    StartCoroutine(LoadSceneAsyncScreen(1, new string[] { "Tutorial" }));
+                }
+                else
+                {
+                    settings.currentTheme = Theme.Garage;
+                    nextIsGarage = false;
+                    StartCoroutine(LoadSceneAsyncScreen(1, new string[] { "Garage" }));
+                }
+
+                break;
+            case GameMode.ContreLaMontre:
+                try
+                {
+                    LoadingScreenTips.instance.StartLoading();
+                }
+                catch (System.Exception)
+                {
+                    Debug.Log("Missing Component");
+                    //throw;
+                }
+                if (settings.enableTutorial)
+                {
+                    settings.currentTheme = Theme.Tutorial;
+                    //nextIsGarage = true;
+                    StartCoroutine(LoadSceneAsyncScreen(1, new string[] { "Tutorial" }));
+                }
+                else
+                {
+                    Theme[] t = settings.allowedThemes.ToArray();
+                    string[] s = new string[t.Length];
+                    for (int i = 0; i < s.Length; i++)
+                    {
+                        s[i] = t[i].ToString();
+                    }
+                    
+                    StartCoroutine(LoadSceneAsyncScreen(1, s));
+                    settings.allowedThemes.Clear();
+                }
+                break;
+            default:
+                break;
         }
-        catch (System.Exception)
-        {
-            Debug.Log("Missing Component");
-            throw;
-        }
-        StartCoroutine(LoadSceneAsyncScreen(1));
-        
+
+
         //nextIsGarage = false;
         //loadedLevel = SceneManager.GetSceneByName("Garage");
         //LoadNextLevel();
     }
 
-    IEnumerator LoadSceneAsyncScreen(int sceneId)
+    IEnumerator LoadSceneAsyncScreen(int sceneId, string[] scenesToLoad = null)
     {
+        if (scenesToLoad == null) { scenesToLoad = new string[] { "Garage" }; }
+
         AsyncOperation operation = SceneManager.LoadSceneAsync(1);
 
         while (!operation.isDone)
@@ -94,18 +149,39 @@ public class SettingsManager : MonoBehaviour
             LoadingScreenTips.instance.loadgingBarFill.fillAmount = Mathf.Clamp01(operation.progress / 0.9f);
             yield return null;
         }
-
         AsyncOperation operation2;
+        for (int i = 0; i < scenesToLoad.Length; i++)
+        {
+            operation2 = SceneManager.LoadSceneAsync(scenesToLoad[i], LoadSceneMode.Additive);
+            loadedLevel.Add(SceneManager.GetSceneByName(scenesToLoad[i]));
+            while (!operation2.isDone)
+            {
+                try
+                {
+                    LoadingScreenTips.instance.loadgingBarFill.fillAmount = Mathf.Clamp01(operation2.progress / 0.9f);
+                }
+                catch { }
+
+                yield return null;
+            }
+            Debug.Log("Trying to load " + scenesToLoad[i]);
+            
+            yield return null;
+        }
+        /*
+        
         if (settings.enableTutorial)
         {
             operation2 = SceneManager.LoadSceneAsync("Tutorial", LoadSceneMode.Additive);
             loadedLevel = SceneManager.GetSceneByName("Tutorial");
+            settings.currentTheme = Theme.Tutorial;
             nextIsGarage = true;
         }
         else
         {
             operation2 = SceneManager.LoadSceneAsync("Garage", LoadSceneMode.Additive);
             loadedLevel = SceneManager.GetSceneByName("Garage");
+            settings.currentTheme = Theme.Garage;
             nextIsGarage = false;
         }
 
@@ -114,12 +190,40 @@ public class SettingsManager : MonoBehaviour
             LoadingScreenTips.instance.loadgingBarFill.fillAmount = Mathf.Clamp01(operation2.progress / 0.9f);
             yield return null;
         }
+        */
+    }
+
+    void LoadMultiple()
+    {
+        Theme[] t = settings.allowedThemes.ToArray();
+        //string[] s = new string[t.Length];
+        for (int i = 0; i < t.Length; i++)
+        {
+            SceneManager.LoadScene(t[i].ToString(), LoadSceneMode.Additive);
+            loadedLevel.Add(SceneManager.GetSceneByName(t[i].ToString()));
+            settings.allowedThemes.Remove(t[i]);
+        }
 
     }
 
     public void LoadNextLevel()
     {
-        SceneManager.UnloadSceneAsync(loadedLevel);
+        // We first unload all of the levels that we previously loaded
+        foreach (Scene scene in loadedLevel)
+        {
+            SceneManager.UnloadSceneAsync(scene);
+        }
+        loadedLevel.Clear(); // Tell our setting manager that we have no loaded scenes
+
+        // If we were in the tutorial and in timed run, we meight need to load multiple scenes
+        if (settings.currentTheme == Theme.Tutorial && settings.gameMode == GameMode.ContreLaMontre)
+        {
+            LoadMultiple();
+            settings.currentTheme = Theme.Viticulture;
+            return;
+        }
+        
+        
 
         if (settings.allowedThemes.Count <= 0)
         {
@@ -132,27 +236,29 @@ public class SettingsManager : MonoBehaviour
             {
                 SceneManager.LoadScene("Garage", LoadSceneMode.Additive);
                 nextIsGarage = false;
-                loadedLevel = SceneManager.GetSceneByName("Garage");
+                loadedLevel.Add(SceneManager.GetSceneByName("Garage"));
                 settings.currentTheme = Theme.Garage;
             }
             else
             {
                 int r = Random.Range(0, settings.allowedThemes.Count);
-                SceneManager.LoadScene(dicoThemes[settings.allowedThemes[r]],LoadSceneMode.Additive);
-                loadedLevel = SceneManager.GetSceneByName(dicoThemes[settings.allowedThemes[r]]);
+                SceneManager.LoadScene(dicoThemes[settings.allowedThemes[r]], LoadSceneMode.Additive);
+                loadedLevel.Add(SceneManager.GetSceneByName(dicoThemes[settings.allowedThemes[r]]));
                 settings.currentTheme = settings.allowedThemes[r];
                 settings.allowedThemes.Remove(settings.allowedThemes[r]);
-                
-                nextIsGarage = true;
+
+                //nextIsGarage = true;
             }
         }
-        
+
     }
 
     public void LoadMainMenu()
     {
+        
         if (settings.currentTheme == Theme.None)
         {
+            ArduinoConnector.Instance.Close();
             foreach (var item in settings.levelDescs)
             {
                 settings.allowedThemes.Add(item.th);
@@ -160,5 +266,21 @@ public class SettingsManager : MonoBehaviour
             Debug.Log("Reloading all levels");
             SceneManager.LoadScene("Main Menu");
         }
+    }
+
+    public void ForceLoadMainMenu()
+    {
+        ArduinoConnector.Instance.Close();
+        foreach (var item in settings.levelDescs)
+        {
+            settings.allowedThemes.Add(item.th);
+        }
+        Debug.Log("Reloading all levels");
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    public bool isGarageOrTutorial()
+    {
+        return settings.currentTheme == Theme.Garage || settings.currentTheme == Theme.Tutorial;
     }
 }

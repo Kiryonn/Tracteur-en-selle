@@ -50,9 +50,11 @@ public class Secateur : Item
                 break;
             case 4:
                 lameIndex = 3;
+                GameManager.Instance.velo.ChangePente(3);
                 break;
             case 2:
                 lameIndex = 4;
+                GameManager.Instance.velo.ChangePente(7);
                 break;
             case 0:
                 lameIndex = 5;
@@ -66,6 +68,7 @@ public class Secateur : Item
         {
             Debug.Log("Besoin d'affuter");
             affilage = false;
+            GameManager.Instance.GetComponent<TransitionManager>().FadeDamage(0.4f);
         }
         else
         {
@@ -87,6 +90,7 @@ public class Secateur : Item
             currentDurability = maxDurability;
             lameIndex = 0;
             v.UpdateSecateurSprite(0);
+            GameManager.Instance.velo.ChangePente(0);
         }
     }
 

@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class SystemManager : MonoBehaviour
 {
-
+    public static SystemManager instance;
     private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
     }
 }

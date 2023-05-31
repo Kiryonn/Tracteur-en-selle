@@ -9,8 +9,6 @@ public class TutorielQuest : Quest
     protected override void OnStart()
     {
         base.OnStart();
-        GameManager.Instance.player.isCharacterControlled = true;
-        StartCoroutine(GameManager.Instance.player.SwitchControls("Character",false));
         client = new ClientData();
         client.ID = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
     }

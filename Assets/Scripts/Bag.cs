@@ -7,7 +7,6 @@ public class Bag : MonoBehaviour
     public HingeJoint startRope;
     public Transform bigBagAnchor;
     public ParticleSystem seeds;
-    int layerMask = 3;
     [SerializeField] float minFloorDistance = 1.5f;
     [SerializeField] GameObject recupBagInteractable;
     bool onTheGround;

@@ -17,12 +17,19 @@ public class Semer : Quest
         
     }
 
+    public override void Interact()
+    {
+        base.Interact();
+        nTime.FadeDayNight(50f, 0f);
+    }
+
     public override void CompleteTask(Task task)
     {
         base.CompleteTask(task);
         if (requiredTasks.Count <= 0)
         {
             remorque.DetachRemorque();
+            nTime.FadeDayNight(20f, 1f);
             //nTime.SetDayTime(true);
         }
     }

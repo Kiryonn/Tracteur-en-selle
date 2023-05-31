@@ -22,7 +22,7 @@ public class NightTime : MonoBehaviour
         day = true;
         //StartCoroutine("WaitForNight");
     }
-
+    /*
     private void Update()
     {
         if (dayNightCycle)
@@ -49,9 +49,10 @@ public class NightTime : MonoBehaviour
             StartCoroutine(ChangeDayTime(transitionSpeed, 1f));
             day = true;
         }
+
     }
 
-
+    */
     // aValue = 1 -> transition vers le jour
     IEnumerator ChangeDayTime(float aTime, float aValue)
     {
@@ -83,6 +84,11 @@ public class NightTime : MonoBehaviour
             day = false;
         }
         
+    }
+
+    public void FadeDayNight(float aTime, float aValue)
+    {
+        StartCoroutine(ChangeDayTime(aTime, aValue));
     }
 
     public void SetDayTime(bool yn)

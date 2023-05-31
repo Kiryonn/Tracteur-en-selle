@@ -54,6 +54,7 @@ Material:
     - _AlphaClip: 0
     - _BOOLEAN: 0
     - _Blend: 1
+    - _DitherScale: 0.8
     - _ENUM: 0
     - _FresnelPower: 0.011
     - _MetallicFloat: 0

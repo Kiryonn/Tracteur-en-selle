@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +9,9 @@ using UnityEngine.UI;
 public enum GameState
 {
 	QuestState,
-	ScoreState
+	ScoreState,
+	Pause,
+	CountDown
 }
 
 public enum CamTypes
@@ -16,7 +19,9 @@ public enum CamTypes
 	Tractor,
 	Equipments,
 	Character,
-	Cinematic
+	Cinematic,
+	Show,
+	LookAt
 }
 
 [System.Serializable]
@@ -61,7 +66,9 @@ public class GameManager : MonoBehaviour
 	[System.NonSerialized] public UnityEvent<Quest,string> onCreatedQuest = new UnityEvent<Quest,string>();
 
 	float timer = 0f;
+	float maxTime = 0f;
 	float hasStartedFloat = 1f;
+	bool isPaused;
 
 	public PlayerData playerData;
 	public InteractionProperties interactionProperties;
@@ -73,6 +80,7 @@ public class GameManager : MonoBehaviour
 	[Header("Cameras")]
 	[SerializeField] List<CameraObjects> cameras;
 	GameObject currentCamera;
+	CamTypes currentCamType;
 	void Awake()
 	{
 		if(Instance != null)
@@ -93,8 +101,11 @@ public class GameManager : MonoBehaviour
 		nTime = GetComponent<NightTime>();
 		itemUIRoot.gameObject.SetActive(false);
 		player = velo.gameObject.GetComponent<PlayerController>();
+		Invoke("SetPenteScaledWithDmg", 9f);
 		currentState = GameState.QuestState;
 		SpawnPlayer();
+		
+		
 	}
 
     private void Update()
@@ -102,27 +113,44 @@ public class GameManager : MonoBehaviour
         switch (currentState)
         {
             case GameState.QuestState:
+
 				timer += Time.deltaTime;
+				UIManager.instance.timerText.text = Mathf.RoundToInt(maxTime-timer).ToString();
+
+                if (maxTime > 0f && timer>maxTime)
+				{
+					WinGame();
+				}
                 break;
             case GameState.ScoreState:
-				
 				timer = 0;
                 break;
+			case GameState.CountDown:
+				break;
+			case GameState.Pause:
+				
+				break;
             default:
                 break;
         }
     }
 
-	public void SwitchCam(CamTypes camType = CamTypes.Tractor, GameObject specialCamera = null)
+	public void SwitchCam(CamTypes camType = CamTypes.Tractor, GameObject specialCamera = null, bool limited = false, float duration = 0f, Transform newTarget = null)
     {
-		if (specialCamera && currentCamera != specialCamera)
+		
+        if (limited)
         {
-			specialCamera.SetActive(true);
+			StartCoroutine(SwitchBackCam(currentCamType, duration));
+        }
+        if (specialCamera && currentCamera != specialCamera)
+        {
+			//specialCamera.SetActive(true);
 			foreach (var item in cameras)
 			{
 				item.camera.SetActive(false);
 			}
 			currentCamera = specialCamera;
+			
 		}
         else
         {
@@ -130,8 +158,9 @@ public class GameManager : MonoBehaviour
 			{
 				if (item.camTypes == camType)
 				{
-					item.camera.SetActive(true);
+					//item.camera.SetActive(true);
 					currentCamera = item.camera;
+					currentCamType = camType;
 				}
 				else
 				{
@@ -139,6 +168,12 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
+		if (newTarget)
+		{
+            CinemachineVirtualCamera vCam = currentCamera.GetComponent<CinemachineVirtualCamera>();
+			vCam.LookAt = newTarget;
+        }
+		currentCamera.SetActive(true);
 		/*
         switch (camType)
         {
@@ -163,16 +198,46 @@ public class GameManager : MonoBehaviour
 		*/
     }
 
-	public void SpawnPlayer()
+	IEnumerator SwitchBackCam(CamTypes cam,float duration)
+	{
+		yield return new WaitForSeconds(duration);
+		SwitchCam(cam);
+	}
+
+	public void SpawnPlayer(bool groundcheck = false)
     {
+		if (groundcheck && currentState != GameState.QuestState) { return; }
 		velo.transform.SetParent(playerParent);
 		player.characterController.enabled = false;
 		velo.transform.position = spawnPosition.position;
 		velo.transform.rotation = spawnPosition.rotation;
-		Debug.Log("Setting up player position");
-		if (player.isCharacterControlled) StartCoroutine(player.SwitchControls("Character", false));
-		if (!player.isCharacterControlled) StartCoroutine(player.SwitchControls("Tractor", false));
+		//Debug.Log("Setting up player position");
+		Theme cur = SettingsManager.instance.settings.currentTheme;
+		/*
+        if (!player.isCharacterControlled) StartCoroutine(player.SwitchControls("Tractor", false));
+        if (player.isCharacterControlled) StartCoroutine(player.SwitchControls("Character", false));
+		*/
+        if (cur == Theme.Tutorial || cur == Theme.Garage)
+		{
+			StartCoroutine(player.SwitchControls("Character", false));
+        }
+		else
+		{
+            StartCoroutine(player.SwitchControls("Tractor", false));
+        }
+
+        if (SettingsManager.instance.settings.gameMode == GameMode.ContreLaMontre && SettingsManager.instance.settings.currentTheme != Theme.Tutorial)
+        {
+            UIManager.instance.timerText.transform.parent.gameObject.SetActive(true);
+            maxTime = SettingsManager.instance.settings.maxTimeForTimedRun;
+        }
+        else
+        {
+            UIManager.instance.timerText.transform.parent.gameObject.SetActive(false);
+            maxTime = 0f;
+        }
 		player.canMove = true;
+        
 	}
 
     public void WinGame()
@@ -228,6 +293,7 @@ public class GameManager : MonoBehaviour
         else
         {
 			ShowQuests();
+			FocusOnNearestQuest();
 		}
 		
     }
@@ -255,21 +321,21 @@ public class GameManager : MonoBehaviour
         switch (type.ToString())
         {
 			case "Item":
-				Debug.Log("hiding an item");
+				//Debug.Log("hiding an item");
 				foreach (var item in allItems)
 				{
 					item.HideInteractable();
 				}
 				break;
 			case "Task":
-				Debug.Log("hiding a task");
+				//Debug.Log("hiding a task");
 				break;
 			case "Quest":
 				foreach (var item in remainingQuests)
 				{
 					item.HideInteractable();
 				}
-				Debug.Log("hiding a quest");
+				//Debug.Log("hiding a quest");
 				break;
 			default:
                 break;
@@ -286,11 +352,69 @@ public class GameManager : MonoBehaviour
 	float CalculateScore()
     {
 		float life = velo.GetComponent<DamageController>().health;
-		return ((10000 / (timer + 10)) + (life * 10) - (totalFailedQuests * 100)) * 10;
+		return ((10000 / (timer + 10)) + (life * 10) - (totalFailedQuests * 100)) * 10 + completedQuests.Count * 1000f;
     }
 
 	public void SwitchState(GameState newGameState)
     {
 		currentState = newGameState;
+    }
+
+    public void SetPenteScaledWithDmg()
+    {
+        DamageController dmg = player.GetComponent<DamageController>();
+		float rp = dmg.health / dmg.maxHealth;
+		//Debug.Log("Health with rapport = " + dmg.health);
+		//Debug.Log("Rapport = " + ((1 - rp) * 7));
+		Difficulty diff = SettingsManager.instance.settings.currentDifficulty;
+
+        velo.ChangePente(Mathf.RoundToInt(
+			Mathf.Lerp(
+				diff.minPente,diff.maxPente, 1 - rp
+				)
+			)
+		);
+    }
+
+	public void PauseGame()
+	{
+		
+		if (!isPaused)
+		{
+			isPaused = true;
+			UIManager.instance.pauseMenu.SetActive(true);
+            SwitchState(GameState.Pause);
+		}
+		else
+		{
+			isPaused = false;
+            UIManager.instance.pauseMenu.SetActive(false);
+            SwitchState(GameState.QuestState);
+        }
+	}
+
+	public void CameraFocus(Transform lookObject, float howLong = 3f)
+	{
+        SwitchCam(CamTypes.LookAt, null, true, howLong,lookObject);
+    }
+
+	public void FocusOnNearestQuest()
+	{
+		float dist = 0f;
+		float currDist;
+		Quest nearestQuest = null;
+        foreach (var item in remainingQuests)
+        {
+            currDist = Vector3.Distance(player.transform.position,item.transform.position);
+			if (dist == 0f || currDist < dist)
+			{
+				dist = currDist;
+				nearestQuest = item;
+			}
+        }
+
+		if (nearestQuest == null) { return; }
+
+		SwitchCam(CamTypes.LookAt,null,true,3f,nearestQuest.transform);
     }
 }

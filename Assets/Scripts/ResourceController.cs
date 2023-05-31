@@ -25,6 +25,9 @@ public class ResourceController : MonoBehaviour
     [SerializeField] [ColorUsage(true, true)] Color lowBatteryColor;
     [SerializeField] [ColorUsage(true, true)] Color maxBatteryColor;
     Color batteryColor;
+    Rigidbody rb;
+    [SerializeField] float maxRbDrag;
+    [SerializeField] float minRbDrag;
     private void Start()
     {
         dialogueVelo = GetComponent<DialogueVelo>();
@@ -41,6 +44,7 @@ public class ResourceController : MonoBehaviour
         }
 
         UIManager.instance.SetListener(this);
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -70,6 +74,14 @@ public class ResourceController : MonoBehaviour
         {
             tempS -= cadenceFillSpeed * Time.deltaTime;
         } 
+        if (tempS > dialogueVelo.maxSpeed * 0.8f)
+        {
+            rb.drag = minRbDrag;
+        }
+        else
+        {
+            rb.drag = maxRbDrag;
+        }
         //tempS += speedMultiplier * Time.deltaTime;
         if (tempS >= dialogueVelo.maxSpeed)
         {

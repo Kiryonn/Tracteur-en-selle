@@ -54,6 +54,7 @@ public class FitnessEquipmentDisplay : MonoBehaviour {
     public int distanceTraveled; //Accumulated value of the distance traveled since start of workout in meters
     public int instantaneousPower; //Stationary Bike specific
     public int cadence; //Specific Trainer Data
+    public float bigSlope;
 
     private TrainerCapabilities trainerCapabilities = new TrainerCapabilities();
 
@@ -209,7 +210,7 @@ public class FitnessEquipmentDisplay : MonoBehaviour {
 
             CommandStatus status = JsonUtility.FromJson<CommandStatus>(jsonstring);
 
-            ReadCommandStatus(status);
+            ReadCommandStatus(status, this);
         }
 
     }
@@ -362,12 +363,11 @@ public class FitnessEquipmentDisplay : MonoBehaviour {
             status.byte_5 = data[5];
             status.byte_6 = data[6];
             status.byte_7 = data[7];
-            ReadCommandStatus(status);
-
+            ReadCommandStatus(status,this);
         }
     }
 
-    private static void ReadCommandStatus(CommandStatus status) {
+    private static void ReadCommandStatus(CommandStatus status,FitnessEquipmentDisplay fit) {
 
         Debug.Log("Last_Received_Command_ID: " + status.lastReceivedCommandId);
         Debug.Log("sequence_number: " + status.lastReceivedSequenceNumber);
@@ -377,6 +377,7 @@ public class FitnessEquipmentDisplay : MonoBehaviour {
 
             int rawSlopeValue = (status.byte_5) | (status.byte_6 << 8);
             float slope = (rawSlopeValue - 20000) / 100;
+            fit.bigSlope = slope;
             Debug.Log("current slope is: " + slope);
 
         } else if (status.lastReceivedCommandId == 48) {   //we are in basic resistance Mode

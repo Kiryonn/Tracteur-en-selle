@@ -23,7 +23,9 @@ public class AreaOfUse : MonoBehaviour
             yield return null;
         }
         onProgressChanged.Invoke(1f);
+        if (!dontShowProgressBar) UIManager.instance.RemoveProgressListener(this);
         interactable.Interact();
+        interacted = false;
         //gameObject.SetActive(false);
     }
 

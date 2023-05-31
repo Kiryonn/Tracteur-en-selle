@@ -42,15 +42,14 @@ public class TaskGetBag : Task
 
     protected override void ItemCollectedTrigger(Item item)
     {
-        Debug.Log("An item as been collected : " + item._name);
-        
         EquipmentRecup obj = item as EquipmentRecup;
-        Debug.Log("Is is an equipment ? : " + obj != null);
-        Debug.Log("Is the quest started ? : " + quest.isStarted);
-        if (quest.isStarted && obj != null)
+        if (quest)
         {
-            canShow = true;
-            ShowInteractable();
+            if (quest.isStarted && obj != null)
+            {
+                canShow = true;
+                ShowInteractable();
+            }
         }
     }
 }

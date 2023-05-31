@@ -34,7 +34,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _TextRender:
-        m_Texture: {fileID: 8400000, guid: 9a8ad67a16e2c994db157d01d084e05c, type: 2}
+        m_Texture: {fileID: 8400000, guid: d7314c833a97ef048873adc228b3feff, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -61,7 +61,7 @@ Material:
     - _QueueOffset: 0
     - _Range: 1.38
     - _Speed: 0.63
-    - _Text_Intensity: 2.95
+    - _Text_Intensity: 1.86
     m_Colors:
     - _Color: {r: 0.6623012, g: 1.392881, b: 1.741101, a: 0}
     - _Offset: {r: 0.06, g: 0.06, b: 0, a: 0}
