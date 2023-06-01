@@ -305,6 +305,10 @@ public class GameManager : MonoBehaviour
 			if (!item.noDroneRequest) drone.SummonDrone(item);
 			collectedItems.Add(item);
 			onCollectedItem.Invoke(item);
+			if (player.isCharacterControlled)
+			{
+				player.playerAnim.SetTrigger("Take");
+			}
 		}
     }
 

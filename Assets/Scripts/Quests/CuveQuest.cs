@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CuveQuest : MonoBehaviour
+public class CuveQuest : Quest
 {
-    // Start is called before the first frame update
-    void Start()
+    public CleaningMaterial cleaningMaterial;
+    public override void Interact()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        base.Interact();
+        StartCoroutine(GameManager.Instance.player.SwitchControls("Character", true));
     }
 }

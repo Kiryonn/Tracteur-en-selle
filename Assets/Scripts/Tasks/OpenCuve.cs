@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OpenCuve : MonoBehaviour
+public class OpenCuve : Task
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Animator cuveAnim;
+    [SerializeField] GazZone gazZone;
+
+    protected override void OnStart()
     {
-        
+        base.OnStart();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Interact()
     {
-        
+        base.Interact();
+        gazZone.ActivateZone(10f);
+        cuveAnim.SetBool("Open", true);
+
     }
 }

@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Karcher : MonoBehaviour
+public class Karcher : CleaningMaterial
 {
-    // Start is called before the first frame update
-    void Start()
+    //[SerializeField] GameObject karcherEquip;
+    KarcherController karcherController;
+    public override void Interact()
     {
-        
+        base.Interact();
+        karcherController = GameManager.Instance.player.GetComponent<KarcherController>();
+        karcherController.GetKarcher();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Use(NettoyageCuve net)
     {
-        
+        base.Use(net);
+        karcherController.UseKarcher();
     }
 }

@@ -22,7 +22,7 @@ public class Vigne : Quest
             item.ShowInteractable();
             item.vigne = this;
         }
-        secaAnim = GameManager.Instance.velo.GetComponent<PlayerController>().secateurAnimator;
+        secaAnim = GameManager.Instance.player.secateurAnimator;
     }
 
     public override void CompleteTask(Task task)

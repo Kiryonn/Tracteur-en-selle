@@ -25,7 +25,7 @@ MonoBehaviour:
   - th: 3
     sceneName: JEV
   allowedThemes: 
-  currentTheme: 2
+  currentTheme: 0
   enableTutorial: 0
   gameMode: 0
   maxTimeForTimedRun: 180

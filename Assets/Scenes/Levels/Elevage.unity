@@ -1044,7 +1044,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334297711}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1095,7 +1095,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334297711}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 328.504, y: 12.57, z: 120.08}
+  m_LocalPosition: {x: 274.7, y: 14.354, z: 176.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1198,7 +1198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7218873012386234856, guid: 16eb635e6c7f9d3419c1ea80fb634364, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7218873012386234861, guid: 16eb635e6c7f9d3419c1ea80fb634364, type: 3}
       propertyPath: neil
@@ -1629,6 +1629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Traire une vache
   pin: {fileID: 0}
+  focusOnShow: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -1767,6 +1768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: 
   pin: {fileID: 0}
+  focusOnShow: 0
   linkedItems: []
   noDroneRequest: 1
   offset:
@@ -1977,6 +1979,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: 
   pin: {fileID: 0}
+  focusOnShow: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -2545,7 +2548,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742652442}
   m_LocalRotation: {x: -0.24800055, y: 0.66515404, z: 0.25061128, w: 0.6582248}
-  m_LocalPosition: {x: 327.269, y: 9.746, z: 119.815}
+  m_LocalPosition: {x: 273.46503, y: 11.530001, z: 176.235}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2590,7 +2593,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742652442}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2716,6 +2719,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: 
   pin: {fileID: 0}
+  focusOnShow: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -3209,6 +3213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Traire une vache
   pin: {fileID: 0}
+  focusOnShow: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -3373,6 +3378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: 
   pin: {fileID: 0}
+  focusOnShow: 0
   linkedItems: []
   noDroneRequest: 1
   offset:
@@ -3571,6 +3577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: 
   pin: {fileID: 0}
+  focusOnShow: 0
   linkedItems: []
   noDroneRequest: 1
   offset:
@@ -3711,6 +3718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Traire une vache
   pin: {fileID: 0}
+  focusOnShow: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -4018,6 +4026,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Retourner au tracteur
   pin: {fileID: 0}
+  focusOnShow: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -4620,6 +4629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: 
   pin: {fileID: 0}
+  focusOnShow: 0
   linkedItems: []
   noDroneRequest: 1
   offset:
@@ -7275,6 +7285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Build a betailliere
   pin: {fileID: 0}
+  focusOnShow: 0
   requiredTasks:
   - {fileID: 8828740723187745468}
   - {fileID: 819613388}
@@ -7420,6 +7431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: 
   pin: {fileID: 0}
+  focusOnShow: 0
   linkedItems: []
   noDroneRequest: 1
   offset:
@@ -7468,6 +7480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: 
   pin: {fileID: 0}
+  focusOnShow: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -7638,6 +7651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: 
   pin: {fileID: 0}
+  focusOnShow: 0
   linkedItems: []
   noDroneRequest: 1
   offset:

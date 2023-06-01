@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float smoothAnim;
     public CharacterController characterController { get; private set; }
     [SerializeField] GameObject charaGraphics;
-    [SerializeField] Animator playerAnim;
+    public Animator playerAnim;
 
     [Header("Shaders")]
     public Renderer cabin;
@@ -192,6 +192,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            uiSpeed.particleSystem.emissionRate = 0f;
             playerAnim.SetFloat("AnimSpeed",charaSpeed/3f);
             if (!characterController.isGrounded)
             {
