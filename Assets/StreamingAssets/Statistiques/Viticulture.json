@@ -1,0 +1,14 @@
+{
+	"ATFrance":555,"ATBT":5,
+	"Zones":[
+		{"ID":"Epaule", "Valeur":5},
+		{"ID":"Torse", "Valeur":8}
+	],
+	"Circonstance":[
+	{
+		"Pourcentage":55,
+		"Motif":"Le st moret"
+	}
+	],"CoutAn":125,
+	  "CoutJour":4
+}

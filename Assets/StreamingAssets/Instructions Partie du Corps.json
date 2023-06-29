@@ -1,0 +1,23 @@
+****** Liste des parties du corps possible *****
+
+Epaule
+Torse
+Main
+Dos
+Coude
+Tete
+Jambe
+
+****** Ecriture ******
+
+Exemple de format : 
+"Zones":[
+		{"ID":"Epaule", "Valeur":5},
+		{"ID":"Torse", "Valeur":8}
+	],
+
+Respectez la forme :
+
+Ne pas oubliez les virgules au bon endroit
+Les espacements n'ont pas d'impact sur le programme mais
+c'est plus compliqué à lire

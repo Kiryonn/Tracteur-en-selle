@@ -1,0 +1,10 @@
+{
+	"ATFrance":486,"ATBT":6,
+	"Zones":[
+		{"ID":"Epaule", "Valeur":5}
+	],
+	"Circonstance":[
+		{"Pourcentage":56,"Motif":"Le st morais"}
+	],"CoutAn":126,
+	  "CoutJour":7
+}

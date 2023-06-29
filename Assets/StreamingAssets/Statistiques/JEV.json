@@ -1,0 +1,13 @@
+{
+	"ATFrance":558,"ATBT":8,
+	"Zones":[
+		{"ID":"Epaule", "Valeur":5}
+	],
+	"Circonstance":[
+	{
+		"Pourcentage":58,
+		"Motif":"Le st marmelade de rez"
+	}
+	],"CoutAn":128,
+	  "CoutJour":9
+}
