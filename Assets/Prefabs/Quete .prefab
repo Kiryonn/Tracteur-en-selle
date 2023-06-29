@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '- Traite des vaches'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7bc3c98b57735de499f773d4a113e556, type: 2}
-  m_sharedMaterial: {fileID: 3488031383736346912, guid: 7bc3c98b57735de499f773d4a113e556, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 85127f7529b62684f9d1b8c5f0d9890d, type: 2}
+  m_sharedMaterial: {fileID: -35381680726952016, guid: 85127f7529b62684f9d1b8c5f0d9890d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 19
+  m_fontSize: 18.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
