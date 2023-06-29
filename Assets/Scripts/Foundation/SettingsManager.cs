@@ -40,6 +40,12 @@ public class SettingsManager : MonoBehaviour
         }
         //settings.gameMode = GameMode.SerieDeTheme;
         loadedLevel = new List<Scene>();
+
+        if (settings.currentTheme == null)
+        {
+            settings.currentTheme = new List<Theme>();
+        }
+       
     }
 
     public void UpdateTutorial(bool b)
@@ -69,19 +75,10 @@ public class SettingsManager : MonoBehaviour
     {
         settings = savedSettings;
     }
-
-    public void UpdateGrassDensity(float f)
-    {
-        settings.grassDensity = f;
-    }
-
-    public void UpdateViewDistance(float f)
-    {
-        settings.viewDistance = f;
-    }
     public void StartGame()
     {
         SaveSettings();
+        settings.currentTheme.Clear();
         switch (settings.gameMode)
         {
             case GameMode.SerieDeTheme:
@@ -96,13 +93,13 @@ public class SettingsManager : MonoBehaviour
                 }
                 if (settings.enableTutorial)
                 {
-                    settings.currentTheme = Theme.Tutorial;
+                    settings.currentTheme.Add(Theme.Tutorial);
                     //nextIsGarage = true;
                     StartCoroutine(LoadSceneAsyncScreen(1, new string[] { "Tutorial" }));
                 }
                 else
                 {
-                    settings.currentTheme = Theme.Garage;
+                    settings.currentTheme.Add(Theme.Garage);
                     nextIsGarage = false;
                     StartCoroutine(LoadSceneAsyncScreen(1, new string[] { "Garage" }));
                 }
@@ -120,7 +117,7 @@ public class SettingsManager : MonoBehaviour
                 }
                 if (settings.enableTutorial)
                 {
-                    settings.currentTheme = Theme.Tutorial;
+                    settings.currentTheme.Add(Theme.Tutorial);
                     //nextIsGarage = true;
                     StartCoroutine(LoadSceneAsyncScreen(1, new string[] { "Tutorial" }));
                 }
@@ -131,6 +128,7 @@ public class SettingsManager : MonoBehaviour
                     for (int i = 0; i < s.Length; i++)
                     {
                         s[i] = t[i].ToString();
+                        settings.currentTheme.Add(t[i]);
                     }
                     
                     StartCoroutine(LoadSceneAsyncScreen(1, s));
@@ -207,12 +205,14 @@ public class SettingsManager : MonoBehaviour
     void LoadMultiple()
     {
         Theme[] t = settings.allowedThemes.ToArray();
+        settings.currentTheme.Clear();
         //string[] s = new string[t.Length];
         for (int i = 0; i < t.Length; i++)
         {
             SceneManager.LoadScene(t[i].ToString(), LoadSceneMode.Additive);
             loadedLevel.Add(SceneManager.GetSceneByName(t[i].ToString()));
             settings.allowedThemes.Remove(t[i]);
+            settings.currentTheme.Add(t[i]);
         }
 
     }
@@ -227,10 +227,9 @@ public class SettingsManager : MonoBehaviour
         loadedLevel.Clear(); // Tell our setting manager that we have no loaded scenes
 
         // If we were in the tutorial and in timed run, we might need to load multiple scenes
-        if (settings.currentTheme == Theme.Tutorial && settings.gameMode == GameMode.ContreLaMontre)
+        if (settings.currentTheme[0] == Theme.Tutorial && settings.gameMode == GameMode.ContreLaMontre)
         {
             LoadMultiple();
-            settings.currentTheme = Theme.Viticulture;
             return;
         }
         
@@ -239,7 +238,7 @@ public class SettingsManager : MonoBehaviour
         if (settings.allowedThemes.Count <= 0)
         {
             Debug.Log("No more level");
-            settings.currentTheme = Theme.None;
+            settings.currentTheme.Clear();
         }
         else
         {
@@ -248,14 +247,14 @@ public class SettingsManager : MonoBehaviour
                 SceneManager.LoadScene("Garage", LoadSceneMode.Additive);
                 nextIsGarage = false;
                 loadedLevel.Add(SceneManager.GetSceneByName("Garage"));
-                settings.currentTheme = Theme.Garage;
+                settings.currentTheme[0] = Theme.Garage;
             }
             else
             {
                 int r = Random.Range(0, settings.allowedThemes.Count);
                 SceneManager.LoadScene(dicoThemes[settings.allowedThemes[r]], LoadSceneMode.Additive);
                 loadedLevel.Add(SceneManager.GetSceneByName(dicoThemes[settings.allowedThemes[r]]));
-                settings.currentTheme = settings.allowedThemes[r];
+                settings.currentTheme[0] = settings.allowedThemes[r];
                 settings.allowedThemes.Remove(settings.allowedThemes[r]);
 
                 //nextIsGarage = true;
@@ -267,7 +266,7 @@ public class SettingsManager : MonoBehaviour
     public void LoadMainMenu()
     {
         
-        if (settings.currentTheme == Theme.None)
+        if (settings.currentTheme.Count == 0)
         {
             ArduinoConnector.Instance.Close();
             foreach (var item in settings.levelDescs)
@@ -295,6 +294,14 @@ public class SettingsManager : MonoBehaviour
 
     public bool isGarageOrTutorial()
     {
-        return settings.currentTheme == Theme.Garage || settings.currentTheme == Theme.Tutorial;
+        try
+        {
+            return settings.currentTheme[0] == Theme.Garage || settings.currentTheme[0] == Theme.Tutorial;
+        }
+        catch
+        {
+            return false;
+        }
+        
     }
 }

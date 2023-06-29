@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +7,7 @@ using UnityEngine.UI;
 public class PieCreator : MonoBehaviour
 {
     [SerializeField] GameObject uIRoot;
-
+    
     [SerializeField] Sprite circleSprite;
 
     [Header("Test Values")]
@@ -19,6 +17,7 @@ public class PieCreator : MonoBehaviour
     public void CreatePieFromComponent()
     {
         CreatePie(uIRoot, circleSprite, testValues);
+
     }
 
     public static Color[] CreatePie(GameObject uIRoot, Sprite circleSprite, int[] values)
@@ -36,6 +35,7 @@ public class PieCreator : MonoBehaviour
         float rapport = 1 / ((float)values[values.Length - 1] / (float)sum);
         Color rngColor;
         float lastFillAmount = 1f;
+
         // Mettons la premiere valeur en fond à 1 (totalement remplie)
 
         float percentage = (float)values[0] / sum;
@@ -52,9 +52,10 @@ public class PieCreator : MonoBehaviour
         rngColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
 
         img.color = rngColor;
+
         SetAndStretchToParentSize(temp, uIRoot.GetComponent<RectTransform>());
         colors[0] = rngColor;
-        // Pour chaque valeur on prend en compte la dernière valeur et on diminue de la
+        // Pour chaque valeur on prend en compte la dernière valeur et on fait la difference de pourcentage
         for (int i = 1; i < values.Length; i++)
         {
             percentage = (float)values[i-1] / (float)sum;
@@ -78,14 +79,24 @@ public class PieCreator : MonoBehaviour
 
         return colors;
     }
+    /*
+    Color[] GetRandomColorsFromColor(Color reference, int colorCount)
+    {
+        Color[] colors = new Color[colorCount];
+        Color colorHSV = 
+        for (int i = 0; i < colorCount - 1; i++)
+        {
+            colors[i] = 
+        }
+    }
+    */
+
 
     public static void SetAndStretchToParentSize(RectTransform _mRect, RectTransform _parent)
     {
-        //_mRect.anchoredPosition = _parent.position;
         _mRect.anchorMin = new Vector2(0, 0);
         _mRect.anchorMax = new Vector2(1, 1);
         _mRect.pivot = new Vector2(0.5f, 0.5f);
-        //_mRect.sizeDelta = _parent.rect.size;
         _mRect.transform.SetParent(_parent,false);
     }
 }

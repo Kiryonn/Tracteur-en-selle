@@ -8,6 +8,14 @@
 	{
 		"Pourcentage":55,
 		"Motif":"Le st moret"
+	},
+	{
+		"Pourcentage":28,
+		"Motif":"Etouffement"
+	},
+	{
+		"Pourcentage":12,
+		"Motif":"Manger du fromage"
 	}
 	],"CoutAn":125,
 	  "CoutJour":4

@@ -91,4 +91,18 @@ public class MedicalRecap : MonoBehaviour
         Debug.Log("Healthy worker");
         return false;
     }
+
+    public void ClearInjuries()
+    {
+        foreach (var item in bodyParts)
+        {
+            if (bodyDico.ContainsKey(item.partie))
+            {
+                bodyDico[item.partie] = 0f;
+            }
+            item.painPoint.Stop();
+            item.painPoint.Reinit();
+        }
+        UpdateRecap();
+    }
 }

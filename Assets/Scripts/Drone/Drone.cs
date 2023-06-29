@@ -21,6 +21,8 @@ public class Drone : MonoBehaviour
     [SerializeField] Transform grabPosition;
     [SerializeField] Transform box;
     [SerializeField] bool grabbed;
+    Vector3 boxStartPosition;
+    Quaternion boxStartRotation;
 
     [System.NonSerialized] public UnityEvent<Item> deliveryEvent;
 
@@ -41,6 +43,12 @@ public class Drone : MonoBehaviour
             deliveryEvent = new UnityEvent<Item>();
         }
         if (hideDroneAtStart) gameObject.SetActive(false);
+        if (box != null)
+        {
+            boxStartPosition = box.transform.localPosition;
+            boxStartRotation = box.transform.rotation;
+        }
+        
     }
 
     // Update is called once per frame
@@ -153,6 +161,28 @@ public class Drone : MonoBehaviour
             player.GetComponentInChildren<Animator>().SetTrigger("ClosePad");
         }
         openedPad = !openedPad;
+    }
+
+    public void ReleaseBox()
+    {
+        if(box.TryGetComponent<Rigidbody>(out Rigidbody comp))
+        {
+            comp.isKinematic = false;
+            box.SetParent(null);
+        }
+        
+    }
+
+    public void RespawnBox()
+    {
+        if (box.TryGetComponent<Rigidbody>(out Rigidbody comp))
+        {
+            comp.isKinematic = true;
+            box.SetParent(transform);
+        }
+
+        box.localPosition = boxStartPosition;
+        box.rotation = boxStartRotation;
     }
 
     void HideDrone()

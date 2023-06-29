@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class TerrainGraphic : MonoBehaviour
 {
+    Terrain terrain;
     [SerializeField] GraphicSettings _settings;
     // Start is called before the first frame update
     void Start()
     {
+        terrain = GetComponent<Terrain>();
+
         _settings.densityEvent += UpdateTerrainGrassDensity;
         _settings.distanceEvent += UpdateTerrainGrassDistance;
 
@@ -17,11 +20,11 @@ public class TerrainGraphic : MonoBehaviour
 
     void UpdateTerrainGrassDensity(float to)
     {
-        Terrain.activeTerrain.detailObjectDensity = to;
+        terrain.detailObjectDensity = to;
     }
 
     void UpdateTerrainGrassDistance(float to)
     {
-        Terrain.activeTerrain.detailObjectDistance = to;
+        terrain.detailObjectDistance = to;
     }
 }

@@ -3,14 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Filliere
-{
-    Viticulture,
-    GrandeCulture,
-    Elevage,
-    JEV
-}
-
 public class StatistiqueManager : MonoBehaviour
 {
     public Statistique statsViti;
@@ -18,7 +10,7 @@ public class StatistiqueManager : MonoBehaviour
     public Statistique statsEle;
     public Statistique statsJEV;
 
-    public Dictionary<Filliere, Statistique> filliereToStatsDictionary { get; private set; }
+    public Dictionary<Theme, Statistique> filliereToStatsDictionary { get; private set; }
     // Start is called before the first frame update
     void Start()
     {
@@ -39,14 +31,14 @@ public class StatistiqueManager : MonoBehaviour
 
     IEnumerator AddToDictionary()
     {
-        filliereToStatsDictionary = new Dictionary<Filliere, Statistique>();
+        filliereToStatsDictionary = new Dictionary<Theme, Statistique>();
         yield return new WaitForSeconds(5);
         try
         {
-            filliereToStatsDictionary.Add(Filliere.Viticulture, statsViti);
-            filliereToStatsDictionary.Add(Filliere.GrandeCulture, statsGC);
-            filliereToStatsDictionary.Add(Filliere.Elevage, statsEle);
-            filliereToStatsDictionary.Add(Filliere.JEV, statsJEV);
+            filliereToStatsDictionary.Add(Theme.Viticulture, statsViti);
+            filliereToStatsDictionary.Add(Theme.Grande_Culture, statsGC);
+            filliereToStatsDictionary.Add(Theme.Elevage, statsEle);
+            filliereToStatsDictionary.Add(Theme.JEV, statsJEV);
             Debug.Log("Dictionary initialized");
         }
         catch (System.Exception)

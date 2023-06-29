@@ -42,6 +42,20 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &-7085522630024056155
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: cc502ac389e833d43be2e9605927d2fd
+  m_EffectName: Attenuation
+  m_MixLevel: 4813f5f74938ba74e87773c2345dbaf7
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &-4096372637468473924
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -155,6 +169,7 @@ AudioMixerController:
     - 6af9187381638e04d9869abc3437725a
     - 93ee9e60de8cab741b55c6c0ce96e953
     - 84ba24b05c2ecdd418d9c90a1605d5c7
+    - 9944da6e1fa2d8f40a59cebf61c4466b
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -220,6 +235,7 @@ AudioMixerSnapshotController:
     4403afae24cf06848a8d6062d9a27b97: 0
     dd13897ff009ad347a31a1b4ca5b6da8: 3276.7664
     187452ef53eb1964a9b4adf08335cb0e: 20
+    798d1cff61cb1a5489bc2c8082f6b5ab: 13.532477
   m_TransitionOverrides: {}
 --- !u!243 &1538804368369723649
 AudioMixerGroupController:
@@ -294,6 +310,25 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!243 &4081193897022008571
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BipBip
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 9944da6e1fa2d8f40a59cebf61c4466b
+  m_Children: []
+  m_Volume: 798d1cff61cb1a5489bc2c8082f6b5ab
+  m_Pitch: 95319f01dd7ebda49b11adbe28d16927
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -7085522630024056155}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &5629859563932366211
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -304,6 +339,7 @@ AudioMixerGroupController:
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: ae830bd70e84ea948a68b80c9d27abd1
   m_Children:
+  - {fileID: 4081193897022008571}
   - {fileID: 3838546804126574087}
   - {fileID: 6379329527339180559}
   - {fileID: -2041630655168949460}

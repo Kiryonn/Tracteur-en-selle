@@ -1,8 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
+// Gère les transitions entre des éléments de l'ui comme un flash de dégat, un fondu au noir
+// Gère aussi la phase où le score s'affiche en baissant la luminosité au max
 
 public class TransitionManager : MonoBehaviour
 {
@@ -11,6 +13,9 @@ public class TransitionManager : MonoBehaviour
     public Light spot;
     public Transform tractorPosition;
     public GameObject oldUI;
+
+    [Header("important")]
+    [SerializeField] int transitionIndex;
 
     [Header("Fade UI")]
 
@@ -38,13 +43,27 @@ public class TransitionManager : MonoBehaviour
 
     [Header("UI Elements Stats")]
 
-    public UIDataText circonsMockupText;
+    [SerializeField] CanvasGroup globalCanva; // Contains all the stats ui elements
 
-    public UIDataText coutAnText;
-    public UIDataText coutJText;
+    public UIDataText filliereName;
+
+    public GameObject circonstanceLayout; // Vertical Layout where you piss text inside
+    //public UIDataText circonsMockupText;
+    public TextMeshProUGUI circonsText;
+
+    public TextMeshProUGUI coutATF; // Contains the image with color of the pie (you need to change it)
+    public TextMeshProUGUI coutATBT; // same as above
+
+    public TextMeshProUGUI coutAn;
+    public TextMeshProUGUI coutJ;
+
+    public Sprite circleSprite; // Pie form
+    [SerializeField] CanvasGroup pieExplain; //
+    [SerializeField] PieCreator pieCreator; // Contains the alpha group
 
     float score;
     int index = 0;
+    int indexStat = 0;
 
     [Header("Musics")]
     [SerializeField] AudioClip normalMusic;
@@ -122,7 +141,6 @@ public class TransitionManager : MonoBehaviour
             img.gameObject.SetActive(true);
         }
     }
-        
 
 
     // Start is called before the first frame update
@@ -138,9 +156,9 @@ public class TransitionManager : MonoBehaviour
     public void SetValues(float t, float e, float s, float scr)
     {
         score = scr;
-        tempsText.txt.text = "temps : " + (int)t + " secondes";
-        echecText.txt.text = "echecs : " + e;
-        duraText.txt.text = "sante du tracteur : " + s + "%";
+        tempsText.txt.text = "Temps : " + (int)t + " secondes";
+        echecText.txt.text = "Echecs : " + e;
+        duraText.txt.text = "Sante du Tracteur : " + s + "%";
         FadeToBlack();
     }
 
@@ -179,7 +197,7 @@ public class TransitionManager : MonoBehaviour
     {
         Debug.Log("We are rendering black");
         bool check = !SettingsManager.instance.isGarageOrTutorial();
-        SettingsManager.instance.LoadNextLevel();
+
         // Making the scene black
 
         cam.enabled = false;
@@ -197,9 +215,9 @@ public class TransitionManager : MonoBehaviour
         oldUI.SetActive(false);
         fadeScreenImage.gameObject.SetActive(false);
 
-        if (check) { ShowScoreParam(); } else { RenderWhite(); }
+        if (check) { StartCoroutine(MakeNextTransition()); } else { RenderWhite(); }
         //AudioManager.instance.ChangeBackgroundMusic(victoryMusic);
-        
+
     }
 
     void MovePlayerToScorePosition()
@@ -215,6 +233,10 @@ public class TransitionManager : MonoBehaviour
 
     public void RenderWhite()
     {
+        GameManager.Instance.SwitchState(GameState.QuestState);
+        AudioManager.instance.ChangeBackgroundMusic(normalMusic);
+
+        SettingsManager.instance.LoadNextLevel();
         SettingsManager.instance.LoadMainMenu();
         cam.enabled = true;
         RenderSettings.reflectionIntensity = 1f;
@@ -232,8 +254,7 @@ public class TransitionManager : MonoBehaviour
         // Removing the black foreground
         oldUI.SetActive(true);
         StartCoroutine(FadeScreen(0f, fadeDuration, false));
-        GameManager.Instance.SwitchState(GameState.QuestState);
-        AudioManager.instance.ChangeBackgroundMusic(normalMusic);
+        
     }
 
     void ShowScoreParam()
@@ -262,7 +283,8 @@ public class TransitionManager : MonoBehaviour
                 break;
             case 3:
                 index = -1;
-                ShowTotal();
+                transitionIndex++;
+                StartCoroutine(MakeNextTransition());
                 break;
             default:
                 break;
@@ -270,11 +292,7 @@ public class TransitionManager : MonoBehaviour
         index++;
     }
 
-    void ShowTotal()
-    {
-        totalText.Show();
-        Invoke("CountScore", delays.scoreDisplay);
-    }
+
 
     void CountScore()
     {
@@ -286,12 +304,11 @@ public class TransitionManager : MonoBehaviour
                 pointNumberText.txt.text = "" + (int)val;
             });
         ptsText.Show();
-        Invoke("HideScore", delays.scoreDuration);
     }
 
     void HideScore()
     {
-        tempsText.txt.LeanAlphaText(0, delays.scoreDisplay).setOnComplete(ShowMedicalRecap);
+        tempsText.txt.LeanAlphaText(0, delays.scoreDisplay);
         echecText.txt.LeanAlphaText(0, delays.scoreDisplay);
         duraText.txt.LeanAlphaText(0, delays.scoreDisplay);
 
@@ -306,7 +323,7 @@ public class TransitionManager : MonoBehaviour
         schemaHumain.img.gameObject.SetActive(true);
         Vector3 startPos;
         startPos = schemaHumain.img.rectTransform.position;
-        LeanTween.moveX(schemaHumain.img.gameObject, startPos.x + 20, delays.medicalRecapSpeed)
+        LeanTween.moveX(schemaHumain.img.gameObject, startPos.x + 18, delays.medicalRecapSpeed)
             .setOnComplete(() =>
             {
                 if (RecapManager.instance.medicalRecap.Injured())
@@ -325,7 +342,7 @@ public class TransitionManager : MonoBehaviour
                     });
 
                 }
-                StartCoroutine(WaitForInputs());
+                //StartCoroutine(WaitForInputs());
                 //Invoke("ShowRecap", delays.medicalRecapDuraction);
             });
         LeanTween.value(schemaHumain.img.gameObject, 0f, 1f, delays.medicalRecapSpeed / 1.5f)
@@ -345,7 +362,7 @@ public class TransitionManager : MonoBehaviour
         LeanTween.moveX(schemaHumain.img.gameObject, startPos.x - 20, delays.medicalRecapSpeed)
             .setOnComplete(() =>
             {
-                Invoke("ResetScene", delays.medicalRecapDuraction/2);
+                Invoke("ResetScene", delays.medicalRecapDuraction / 2);
             });
         LeanTween.value(schemaHumain.img.gameObject, 1f, 0f, delays.medicalRecapSpeed)
             .setOnUpdate((float val) =>
@@ -365,6 +382,7 @@ public class TransitionManager : MonoBehaviour
 
     void InitUIData()
     {
+        // score
         tempsText.Init();
         echecText.Init();
         duraText.Init();
@@ -372,8 +390,14 @@ public class TransitionManager : MonoBehaviour
         totalText.Init();
         pointNumberText.Init();
         ptsText.Init();
-
+        // medical
         schemaHumain.Init();
+
+        // stats
+        filliereName.Init();
+        globalCanva.alpha = 0f;
+        //circonsMockupText.Init();
+
     }
 
     void ResetUIData()
@@ -387,6 +411,10 @@ public class TransitionManager : MonoBehaviour
         ptsText.Reset();
 
         schemaHumain.Reset();
+
+        // stats
+        filliereName.Reset();
+        globalCanva.alpha = 0f;
     }
 
     public void FadeTransition(float endAlpha, float speed, float duration)
@@ -423,11 +451,11 @@ public class TransitionManager : MonoBehaviour
         c = fadeScreenImage.color;
         for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / speed)
         {
-            c.a = Mathf.Lerp(a, 1-endAlpha, i);
+            c.a = Mathf.Lerp(a, 1 - endAlpha, i);
             fadeScreenImage.color = c;
             yield return null;
         }
-        c.a = 1-endAlpha;
+        c.a = 1 - endAlpha;
         fadeScreenImage.color = c;
     }
 
@@ -457,17 +485,15 @@ public class TransitionManager : MonoBehaviour
             });
     }
 
-    IEnumerator WaitForInputs()
+    void HideMedicalRecap()
     {
-        while (!Input.GetKeyDown(KeyCode.Return))
-        {
-            yield return null;
-        }
         Vector3 startPos = schemaHumain.img.rectTransform.position;
         LeanTween.moveX(schemaHumain.img.gameObject, startPos.x - 20, delays.medicalRecapSpeed)
             .setOnComplete(() =>
             {
-                ResetScene();
+                RecapManager.instance.medicalRecap.ClearInjuries();
+                //transitionIndex++;
+                //StartCoroutine(MakeNextTransition());
             });
         LeanTween.value(schemaHumain.img.gameObject, 1f, 0f, delays.medicalRecapSpeed)
             .setOnUpdate((float val) =>
@@ -476,5 +502,156 @@ public class TransitionManager : MonoBehaviour
                 c.a = val;
                 schemaHumain.img.color = c;
             });
+    }
+
+    IEnumerator WaitForInputs()
+    {
+        while (!Input.GetKeyDown(KeyCode.Return))
+        {
+            yield return null;
+        }
+        StartCoroutine(MakeNextTransition());
+    }
+
+    IEnumerator MakeNextTransition()
+    {
+        switch (transitionIndex)
+        {
+            case 0:
+                ShowScoreParam();
+                break;
+            case 1:
+                totalText.Show();
+                yield return new WaitForSeconds(delays.scoreDisplay);
+                transitionIndex++;
+                StartCoroutine(MakeNextTransition());
+                break;
+            case 2:
+                CountScore();
+                yield return new WaitForSeconds(delays.scoreDuration);
+                transitionIndex++;
+                StartCoroutine(MakeNextTransition());
+                break;
+            case 3:
+                HideScore();
+                yield return new WaitForSeconds(delays.scoreDuration / 2);
+                transitionIndex++;
+                StartCoroutine(MakeNextTransition());
+                break;
+            case 4:
+                ShowMedicalRecap();
+                transitionIndex++;
+                StartCoroutine(WaitForInputs());
+                break;
+            case 5:
+                //HideMedicalRecap();
+                transitionIndex++;
+                StartCoroutine(MakeNextTransition());
+                break;
+            case 6:
+                transitionIndex++;
+                StartCoroutine(ShowStats());
+                break;
+            case 7:
+                HideStats();
+                yield return new WaitForSeconds(3f);
+                StartCoroutine(MakeNextTransition());
+                break;
+            default:
+                ResetScene();
+                break;
+        }
+        //if (_continueT) { StartCoroutine(MakeNextTransition()); }
+
+        yield return null;
+    }
+
+    IEnumerator ShowStats()
+    {
+        if (indexStat >= SettingsManager.instance.settings.currentTheme.Count)
+        {
+            StartCoroutine(MakeNextTransition());
+            yield break;
+        }
+
+        LeanTween.value(schemaHumain.img.gameObject, schemaHumain.color, Color.white, 3f)
+                    .setOnUpdate((Color c) =>
+                    {
+                        schemaHumain.img.color = c;
+                        var tempColor = schemaHumain.img.color;
+                        tempColor.a = 1f;
+                        schemaHumain.img.color = tempColor;
+                    });
+
+        statistiqueManager.filliereToStatsDictionary.TryGetValue(SettingsManager.instance.settings.currentTheme[indexStat], out Statistique st);
+
+        filliereName.txt.text = SettingsManager.instance.settings.currentTheme[indexStat].ToString();
+        filliereName.Show();
+
+        coutAn.text = "Coût moyen d'un AT par AN en euros : " + st.CoutAn+" €";
+        coutJ.text = "Coût moyen d'un AT par JOUR en euros : " + st.CoutJour + " €";
+
+        Color[] colors = PieCreator.CreatePie(pieCreator.gameObject, circleSprite, new int[] { st.ATBT, st.ATFrance });
+
+        coutATBT.text = "Nombre d'AT en région berry-tourainne : "+st.ATBT;
+        coutATF.text = "Nombre d'AT en France : "+st.ATFrance;
+
+        coutATBT.GetComponentInChildren<Image>().color = colors[0];
+        coutATF.GetComponentInChildren<Image>().color = colors[1];
+
+        RecapManager.instance.medicalRecap.ClearInjuries();
+
+        for (int i = 0; i < st.Zones.Length; i++)
+        {
+            Parts parsedPart = (Parts)System.Enum.Parse(typeof(Parts), st.Zones[i].ID);
+            RecapManager.instance.medicalRecap.AddInjurie(parsedPart, st.Zones[i].Valeur);
+        }
+
+        RecapManager.instance.medicalRecap.ShowMedicalRecap(10f);
+
+        circonsText.gameObject.SetActive(true);
+
+        for (int i = circonstanceLayout.transform.childCount-1; i > 0 ; i--)
+        {
+            Destroy(circonstanceLayout.transform.GetChild(i).gameObject);
+        }
+
+        for (int i = 0; i < st.Circonstance.Length; i++)
+        {
+            TextMeshProUGUI tempText = Instantiate(circonsText, circonsText.rectTransform.parent);
+            tempText.text = (st.Circonstance[i].Motif + " : " + st.Circonstance[i].Pourcentage + "%");
+            
+            //st.Circonstance[i].
+        }
+
+        circonsText.gameObject.SetActive(false);
+
+        LeanTween.value(0, 1, 3f).setOnUpdate((float value) =>
+        {
+            globalCanva.alpha = value;
+        });
+        //LeanTween.moveX(globalCanva.gameObject,)
+
+        indexStat++;
+        yield return new WaitForSeconds(3f);
+        StartCoroutine(WaitForInputs());
+    }
+
+    void HideStats()
+    {
+        if (globalCanva.alpha == 0)
+        {
+            transitionIndex++;
+            HideMedicalRecap();
+        }
+        else
+        {
+            transitionIndex--;
+            LeanTween.value(1, 0, 3f).setOnUpdate((float value) =>
+            {
+                globalCanva.alpha = value;
+            });
+        }
+        
     }
 }

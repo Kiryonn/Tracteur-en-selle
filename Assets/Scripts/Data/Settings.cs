@@ -30,7 +30,7 @@ public class Settings : ScriptableObject
     public float viewDistance;
     public List<LevelDesc> levelDescs;
     public List<Theme> allowedThemes;
-    public Theme currentTheme;
+    public List<Theme> currentTheme;
     public bool enableTutorial;
     public GameMode gameMode;
     public float maxTimeForTimedRun;

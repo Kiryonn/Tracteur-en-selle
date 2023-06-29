@@ -13,6 +13,7 @@ public class PlayerGazResistance : MonoBehaviour
     [SerializeField] float minBipDelay;
     float currentBipDelay = 0f;
     [SerializeField] AudioClip bipClip;
+    [SerializeField] AudioSource bipSource;
 
     public bool insideGaz;
     public bool dead;
@@ -26,7 +27,7 @@ public class PlayerGazResistance : MonoBehaviour
             currentBipDelay += Time.deltaTime;
             if (currentBipDelay > Mathf.Lerp(maxBipDelay,minBipDelay,currentGazValue/gazResistance))
             {
-                AudioManager.instance.PlaySFX(bipClip);
+                bipSource.PlayOneShot(bipClip);
                 currentBipDelay = 0f;
             }
 

@@ -222,13 +222,13 @@ public class GameManager : MonoBehaviour
         velo.transform.position = spawnPosition.position;
         velo.transform.rotation = spawnPosition.rotation;
         //Debug.Log("Setting up player position");
-        Theme cur = SettingsManager.instance.settings.currentTheme;
-        Debug.Log(cur.ToString());
+
+        
         /*
         if (!player.isCharacterControlled) StartCoroutine(player.SwitchControls("Tractor", false));
         if (player.isCharacterControlled) StartCoroutine(player.SwitchControls("Character", false));
 		*/
-        if (cur == Theme.Tutorial || cur == Theme.Garage)
+        if (SettingsManager.instance.isGarageOrTutorial())
         {
             StartCoroutine(player.SwitchControls("Character", false));
         }
@@ -237,7 +237,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(player.SwitchControls("Tractor", false));
         }
 
-        if (SettingsManager.instance.settings.gameMode == GameMode.ContreLaMontre && SettingsManager.instance.settings.currentTheme != Theme.Tutorial)
+        if (SettingsManager.instance.settings.gameMode == GameMode.ContreLaMontre && SettingsManager.instance.settings.currentTheme[0] != Theme.Tutorial)
         {
             UIManager.instance.timerText.transform.parent.gameObject.SetActive(true);
             maxTime = SettingsManager.instance.settings.maxTimeForTimedRun;
@@ -380,7 +380,7 @@ public class GameManager : MonoBehaviour
     float CalculateScore()
     {
         float life = velo.GetComponent<DamageController>().health;
-        return ((10000 / (timer + 10)) + (life * 10) - (totalFailedTasks * 100)) * 10 + completedQuests.Count * 1000f + totalSucceededTasks * 87.5f;
+        return ((1 - timer/SettingsManager.instance.settings.maxTimeForTimedRun + 0.5f) * 10000 + (life * 10) - (totalFailedTasks * 100)) * 10 + completedQuests.Count * 1000f + totalSucceededTasks * 87.5f;
     }
 
     public void SwitchState(GameState newGameState)

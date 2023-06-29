@@ -57,10 +57,7 @@ public class TaskPedalez : Task
         // increase progress when pedale
         while (progress < duration)
         {
-            if (resource.tempS > playerVelo.maxSpeed / 2)
-            {
-                progress += Time.deltaTime;
-            }
+            progress += Time.deltaTime * (resource.tempS * 2 / playerVelo.maxSpeed);
             OnProgessChanged(progress);
             yield return null;
         }
