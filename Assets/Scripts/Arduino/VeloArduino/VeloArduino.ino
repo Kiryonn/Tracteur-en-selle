@@ -279,8 +279,8 @@ void loop() {
 
   if (Serial.available()) {
     String command = Serial.readStringUntil('\n');
-
-    if (command == "Caligfdsgbrate") {
+    
+    if (command == "Calibrate") {
       cal = false;
 
 

@@ -8,105 +8,112 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 public enum GameState
 {
-	QuestState,
-	ScoreState,
-	Pause,
-	CountDown
+    QuestState,
+    ScoreState,
+    Pause,
+    CountDown
 }
 
 public enum CamTypes
 {
-	Tractor,
-	Equipments,
-	Character,
-	Cinematic,
-	Show,
-	LookAt
+    Tractor,
+    Equipments,
+    Character,
+    Cinematic,
+    Show,
+    LookAt,
+    Generator
 }
 
 [System.Serializable]
 public class CameraObjects
 {
-	public GameObject camera;
-	public CamTypes camTypes;
+    public GameObject camera;
+    public CamTypes camTypes;
 }
 
 public class GameManager : MonoBehaviour
 {
 
 
-	public static GameManager Instance;
-	GameState currentState;
-	NightTime nTime;
-	public Camera cam { get; private set; }
+    public static GameManager Instance;
+    GameState currentState;
+    NightTime nTime;
+    public Camera cam { get; private set; }
 
-	[Header("Vélo")]
-	public DialogueVelo velo;
-	public PlayerController player { get; private set; }
-	public Drone drone;
-	//public GameObject player;
-	public int pente;
-	public Slider slider;
-	[SerializeField] Transform spawnPosition;
-	[SerializeField] Transform playerParent;
-	
+    [Header("Vélo")]
+    public DialogueVelo velo;
+    public PlayerController player { get; private set; }
+    public Drone drone;
+    //public GameObject player;
+    public int pente;
+    public Slider slider;
+    [SerializeField] Transform spawnPosition;
+    [SerializeField] Transform playerParent;
 
-	[Header("Quetes objets et tâches")]
-	public List<Quest> remainingQuests = new List<Quest>();
-	public List<Quest> completedQuests = new List<Quest>();
-	public Quest currentQuest;
-	public List<Task> remainingTasks = new List<Task>();
-	public List<Item> collectedItems = new List<Item>();
-	[HideInInspector]
-	public List<Item> allItems = new List<Item>();
-    int totalQuest = 0;
-	int totalFailedQuests = 0;
 
-	[System.NonSerialized] public UnityEvent<Item> onCollectedItem = new UnityEvent<Item>();
-	[System.NonSerialized] public UnityEvent<Quest,string> onCreatedQuest = new UnityEvent<Quest,string>();
+    [Header("Quetes objets et tâches")]
+    public List<Quest> remainingQuests = new List<Quest>();
+    public List<Quest> completedQuests = new List<Quest>();
+    public Quest currentQuest;
+    public List<Task> remainingTasks = new List<Task>();
+    public List<Item> collectedItems = new List<Item>();
+    [HideInInspector]
+    public List<Item> allItems = new List<Item>();
+    int totalSucceededTasks = 0;
+    int totalFailedTasks = 0;
 
-	float timer = 0f;
-	float maxTime = 0f;
-	float hasStartedFloat = 1f;
-	bool isPaused;
+    [System.NonSerialized] public UnityEvent<Item> onCollectedItem = new UnityEvent<Item>();
+    [System.NonSerialized] public UnityEvent<Quest, string> onCreatedQuest = new UnityEvent<Quest, string>();
+    [System.NonSerialized] public UnityEvent<Quest> onStartQuest = new UnityEvent<Quest>();
+    [System.NonSerialized] public UnityEvent<Quest> onCompleteTask = new UnityEvent<Quest>();
+    [System.NonSerialized] public UnityEvent<Quest> onCompleteQuest = new UnityEvent<Quest>();
 
-	public PlayerData playerData;
-	public InteractionProperties interactionProperties;
+    float timer = 0f;
+    float maxTime = 0f;
+    float hasStartedFloat = 1f;
+    bool isPaused;
 
-	[Header("UI")]
+    public PlayerData playerData;
+    public InteractionProperties interactionProperties;
 
-	public Transform itemUIRoot;
+    [Header("UI")]
 
-	[Header("Cameras")]
-	[SerializeField] List<CameraObjects> cameras;
-	GameObject currentCamera;
-	CamTypes currentCamType;
-	void Awake()
-	{
-		if(Instance != null)
+    public Transform itemUIRoot;
+
+    [Header("Cameras")]
+    [SerializeField] List<CameraObjects> cameras;
+    GameObject currentCamera;
+    CamTypes currentCamType;
+
+    [Header("SFX")]
+    [SerializeField] AudioClip failSFX;
+    [SerializeField] AudioClip successSFX;
+    void Awake()
+    {
+        if (Instance != null)
         {
-			Destroy(this);
+            Destroy(this);
         }
         else
         {
-			Instance = this;
+            Instance = this;
         }
-		
-		cam = Camera.main;
-	}
+
+        cam = Camera.main;
+    }
 
     private void Start()
     {
-		UIManager.instance.SetQuestListener();
-		nTime = GetComponent<NightTime>();
-		itemUIRoot.gameObject.SetActive(false);
-		player = velo.gameObject.GetComponent<PlayerController>();
-		Invoke("SetPenteScaledWithDmg", 9f);
-		currentState = GameState.QuestState;
-		SpawnPlayer();
-		
-		
-	}
+        UIManager.instance.SetQuestListener();
+        nTime = GetComponent<NightTime>();
+        itemUIRoot.gameObject.SetActive(false);
+        player = velo.gameObject.GetComponent<PlayerController>();
+        Invoke("SetPenteScaledWithDmg", 9f);
+        currentState = GameState.QuestState;
+        SpawnPlayer();
+        
+    }
 
     private void Update()
     {
@@ -114,67 +121,67 @@ public class GameManager : MonoBehaviour
         {
             case GameState.QuestState:
 
-				timer += Time.deltaTime;
-				UIManager.instance.timerText.text = Mathf.RoundToInt(maxTime-timer).ToString();
+                timer += Time.deltaTime;
+                UIManager.instance.timerText.text = Mathf.RoundToInt(maxTime - timer).ToString();
 
-                if (maxTime > 0f && timer>maxTime)
-				{
-					WinGame();
-				}
+                if (maxTime > 0f && timer > maxTime)
+                {
+                    WinGame();
+                }
                 break;
             case GameState.ScoreState:
-				timer = 0;
+                timer = 0;
                 break;
-			case GameState.CountDown:
-				break;
-			case GameState.Pause:
-				
-				break;
+            case GameState.CountDown:
+                break;
+            case GameState.Pause:
+                break;
             default:
                 break;
         }
     }
 
-	public void SwitchCam(CamTypes camType = CamTypes.Tractor, GameObject specialCamera = null, bool limited = false, float duration = 0f, Transform newTarget = null)
+    public void SwitchCam(CamTypes camType = CamTypes.Tractor, GameObject specialCamera = null, bool limited = false, float duration = 0f, Transform newTarget = null)
     {
-		
         if (limited)
         {
-			StartCoroutine(SwitchBackCam(currentCamType, duration));
+            StartCoroutine(SwitchBackCam(currentCamType, duration));
+
         }
         if (specialCamera && currentCamera != specialCamera)
         {
-			//specialCamera.SetActive(true);
-			foreach (var item in cameras)
-			{
-				item.camera.SetActive(false);
-			}
-			currentCamera = specialCamera;
-			
-		}
+            //specialCamera.SetActive(true);
+            foreach (var item in cameras)
+            {
+                item.camera.SetActive(false);
+            }
+            currentCamera = specialCamera;
+
+        }
         else
         {
-			foreach (var item in cameras)
-			{
-				if (item.camTypes == camType)
-				{
-					//item.camera.SetActive(true);
-					currentCamera = item.camera;
-					currentCamType = camType;
-				}
-				else
-				{
-					item.camera.SetActive(false);
-				}
-			}
-		}
-		if (newTarget)
-		{
-            CinemachineVirtualCamera vCam = currentCamera.GetComponent<CinemachineVirtualCamera>();
-			vCam.LookAt = newTarget;
+            foreach (var item in cameras)
+            {
+                
+                if (item.camTypes == camType)
+                {
+                    //item.camera.SetActive(true);
+                    currentCamera = item.camera;
+                    currentCamType = camType;
+                }
+                else
+                {
+                    item.camera.SetActive(false);
+                }
+            }
         }
-		currentCamera.SetActive(true);
-		/*
+        if (newTarget)
+        {
+            CinemachineVirtualCamera vCam = currentCamera.GetComponent<CinemachineVirtualCamera>();
+            vCam.LookAt = newTarget;
+        }
+        currentCamera.SetActive(true);
+        /*
         switch (camType)
         {
             case CamTypes.Tractor:
@@ -198,31 +205,35 @@ public class GameManager : MonoBehaviour
 		*/
     }
 
-	IEnumerator SwitchBackCam(CamTypes cam,float duration)
-	{
-		yield return new WaitForSeconds(duration);
-		SwitchCam(cam);
-	}
-
-	public void SpawnPlayer(bool groundcheck = false)
+    IEnumerator SwitchBackCam(CamTypes cam, float duration)
     {
-		if (groundcheck && currentState != GameState.QuestState) { return; }
-		velo.transform.SetParent(playerParent);
-		player.characterController.enabled = false;
-		velo.transform.position = spawnPosition.position;
-		velo.transform.rotation = spawnPosition.rotation;
-		//Debug.Log("Setting up player position");
-		Theme cur = SettingsManager.instance.settings.currentTheme;
-		/*
+        Debug.Log("Switching cam for : " + duration);
+        Debug.Log("The camera that we want to go back to is : " + cam.ToString());
+        yield return new WaitForSeconds(duration);
+        Debug.Log("Switching camera back to : " + cam.ToString());
+        SwitchCam(cam,null,false);
+    }
+
+    public void SpawnPlayer(bool groundcheck = false)
+    {
+        if (groundcheck && currentState != GameState.QuestState) { return; }
+        velo.transform.SetParent(playerParent);
+        player.characterController.enabled = false;
+        velo.transform.position = spawnPosition.position;
+        velo.transform.rotation = spawnPosition.rotation;
+        //Debug.Log("Setting up player position");
+        Theme cur = SettingsManager.instance.settings.currentTheme;
+        Debug.Log(cur.ToString());
+        /*
         if (!player.isCharacterControlled) StartCoroutine(player.SwitchControls("Tractor", false));
         if (player.isCharacterControlled) StartCoroutine(player.SwitchControls("Character", false));
 		*/
         if (cur == Theme.Tutorial || cur == Theme.Garage)
-		{
-			StartCoroutine(player.SwitchControls("Character", false));
+        {
+            StartCoroutine(player.SwitchControls("Character", false));
         }
-		else
-		{
+        else
+        {
             StartCoroutine(player.SwitchControls("Tractor", false));
         }
 
@@ -236,189 +247,224 @@ public class GameManager : MonoBehaviour
             UIManager.instance.timerText.transform.parent.gameObject.SetActive(false);
             maxTime = 0f;
         }
-		player.canMove = true;
-        
-	}
+        player.canMove = true;
+
+    }
 
     public void WinGame()
     {
-		Debug.Log("You win");
-		Debug.Log("Temps passé : " + timer);
-		Debug.Log("Tracteur endommagé à :"+ (100f - velo.GetComponent<DamageController>().health));
-		Debug.Log("Nombre d'échecs : " + totalFailedQuests);
-		Debug.Log("Votre score est de : " + CalculateScore());
-		playerData.score = CalculateScore();
-		float durabilite = velo.gameObject.GetComponent<DamageController>().health;
-		gameObject.GetComponent<TransitionManager>().SetValues(timer, totalFailedQuests, durabilite, CalculateScore());
-		currentState = GameState.ScoreState;
-		
-		nTime.SetDayTime(true);
-		nTime.dayNightCycle = false;
-		totalFailedQuests = 0;
-		collectedItems = new List<Item>();
-		//SettingsManager.instance.LoadNextLevel();
+        Debug.Log("You win");
+        Debug.Log("Temps passé : " + timer);
+        Debug.Log("Tracteur endommagé à :" + (100f - velo.GetComponent<DamageController>().health));
+        Debug.Log("Nombre d'échecs : " + totalFailedTasks);
+        Debug.Log("Votre score est de : " + CalculateScore());
+        playerData.score = CalculateScore();
+        float durabilite = velo.gameObject.GetComponent<DamageController>().health;
+        gameObject.GetComponent<TransitionManager>().SetValues(timer, totalFailedTasks, durabilite, CalculateScore());
+        currentState = GameState.ScoreState;
+
+        nTime.SetDayTime(true);
+        nTime.dayNightCycle = false;
+        totalFailedTasks = 0;
+        collectedItems = new List<Item>();
+        SettingsManager.instance.scoreDataManager.AddScore(playerData.score);
+        //SettingsManager.instance.LoadNextLevel();
     }
 
-	
 
-	public GameObject UISpawnObject(GameObject item)
+
+    public GameObject UISpawnObject(GameObject item)
     {
-		itemUIRoot.gameObject.SetActive(true);
-		GameObject temp = Instantiate(item, itemUIRoot);
-		temp.transform.localPosition = Vector3.zero;
-		return temp;
+        itemUIRoot.gameObject.SetActive(true);
+        GameObject temp = Instantiate(item, itemUIRoot);
+        temp.transform.localPosition = Vector3.zero;
+        return temp;
     }
 
-	public void HideUIObject(GameObject item)
+    public void HideUIObject(GameObject item)
     {
-		item.SetActive(false);
-		itemUIRoot.gameObject.SetActive(false);
+        item.SetActive(false);
+        itemUIRoot.gameObject.SetActive(false);
     }
 
-	public void FailTask()
+    public void FailTask()
     {
-		totalFailedQuests += 1;
+        totalFailedTasks += 1;
+        Debug.Log("Task is failed, current failure is equal to : " + totalFailedTasks);
+        AudioManager.instance.PlaySFX(AudioManager.instance.soundData.failClip,1,true);
+        onCompleteTask.Invoke(currentQuest);
     }
 
-	public void CompleteQuest(Quest quest)
+    public void CompleteQuest(Quest quest)
     {
-		remainingQuests.Remove(quest);
-		completedQuests.Add(quest);
-		quest.HideInteractable();
-		onCreatedQuest.Invoke(quest, "");
-		if (remainingQuests.Count == 0)
+        remainingQuests.Remove(quest);
+        completedQuests.Add(quest);
+        quest.HideInteractable();
+        onCreatedQuest.Invoke(quest, "");
+        onCompleteQuest.Invoke(quest);
+
+        Debug.Log("COMPLETING QUEST OF TYPE : " + quest._name);
+        if (remainingQuests.Count == 0)
         {
-			WinGame();
+            WinGame();
         }
         else
         {
-			ShowQuests();
-			FocusOnNearestQuest();
-		}
-		
+            ShowQuests();
+            Invoke("FocusOnNearestQuest", 4f);
+        }
+
     }
 
-	public void CollectItem(Item item)
+    public void CollectItem(Item item)
     {
-		if (!collectedItems.Contains(item))
+        if (!collectedItems.Contains(item))
         {
-			if (!item.noDroneRequest) drone.SummonDrone(item);
-			collectedItems.Add(item);
-			onCollectedItem.Invoke(item);
-			if (player.isCharacterControlled)
-			{
-				player.playerAnim.SetTrigger("Take");
-			}
-		}
-    }
-
-	public void ShowQuests()
-    {
-        foreach (var item in remainingQuests)
-        {
-			item.ShowInteractable();
+            if (!item.noDroneRequest) drone.SummonDrone(item);
+            collectedItems.Add(item);
+            onCollectedItem.Invoke(item);
+            if (player.isCharacterControlled)
+            {
+                player.playerAnim.SetTrigger("Take");
+            }
         }
     }
 
-	public void HideAllObjectsOfType(Type type)
+    public void ShowQuests()
+    {
+        foreach (var item in remainingQuests)
+        {
+            item.ShowInteractable();
+        }
+    }
+
+    public void TriggerQuestStart(Quest q)
+    {
+        onStartQuest.Invoke(q);
+    }
+
+    public void HideAllObjectsOfType(Type type)
     {
         switch (type.ToString())
         {
-			case "Item":
-				//Debug.Log("hiding an item");
-				foreach (var item in allItems)
-				{
-					item.HideInteractable();
-				}
-				break;
-			case "Task":
-				//Debug.Log("hiding a task");
-				break;
-			case "Quest":
-				foreach (var item in remainingQuests)
-				{
-					item.HideInteractable();
-				}
-				//Debug.Log("hiding a quest");
-				break;
-			default:
+            case "Item":
+                //Debug.Log("hiding an item");
+                foreach (var item in allItems)
+                {
+                    item.HideInteractable();
+                }
+                break;
+            case "Task":
+                //Debug.Log("hiding a task");
+                break;
+            case "Quest":
+                foreach (var item in remainingQuests)
+                {
+                    item.HideInteractable();
+                }
+                //Debug.Log("hiding a quest");
+                break;
+            default:
                 break;
         }
     }
 
-	public void AddQuest(Quest q)
+    public void AddQuest(Quest q)
     {
-		//Debug.Log("Addind "+q._name);
-		remainingQuests.Add(q);
-		onCreatedQuest.Invoke(q,q._name);
+        //Debug.Log("Addind "+q._name);
+        remainingQuests.Add(q);
+        q.ShowInteractable();
+        onCreatedQuest.Invoke(q, q._name);
     }
 
-	float CalculateScore()
+    float CalculateScore()
     {
-		float life = velo.GetComponent<DamageController>().health;
-		return ((10000 / (timer + 10)) + (life * 10) - (totalFailedQuests * 100)) * 10 + completedQuests.Count * 1000f;
+        float life = velo.GetComponent<DamageController>().health;
+        return ((10000 / (timer + 10)) + (life * 10) - (totalFailedTasks * 100)) * 10 + completedQuests.Count * 1000f + totalSucceededTasks * 87.5f;
     }
 
-	public void SwitchState(GameState newGameState)
+    public void SwitchState(GameState newGameState)
     {
-		currentState = newGameState;
+        currentState = newGameState;
     }
 
-    public void SetPenteScaledWithDmg()
+    public void SetPenteScaledWithDmg(float value = -1f)
     {
+
         DamageController dmg = player.GetComponent<DamageController>();
-		float rp = dmg.health / dmg.maxHealth;
-		//Debug.Log("Health with rapport = " + dmg.health);
-		//Debug.Log("Rapport = " + ((1 - rp) * 7));
-		Difficulty diff = SettingsManager.instance.settings.currentDifficulty;
-
-        velo.ChangePente(Mathf.RoundToInt(
-			Mathf.Lerp(
-				diff.minPente,diff.maxPente, 1 - rp
-				)
-			)
-		);
+        float rp = dmg.health / dmg.maxHealth;
+        //Debug.Log("Health with rapport = " + dmg.health);
+        //Debug.Log("Rapport = " + ((1 - rp) * 7));
+        Difficulty diff = SettingsManager.instance.settings.currentDifficulty;
+        if (value > -1)
+        {
+            velo.ChangePente(Mathf.RoundToInt(
+            Mathf.Lerp(
+                diff.minPente, diff.maxPente, value
+                    )
+                )
+            );
+        }
+        else
+        {
+            velo.ChangePente(Mathf.RoundToInt(
+            Mathf.Lerp(
+                diff.minPente, diff.maxPente, 1 - rp
+                    )
+                )
+            );
+        }
+        
     }
 
-	public void PauseGame()
-	{
-		
-		if (!isPaused)
-		{
-			isPaused = true;
-			UIManager.instance.pauseMenu.SetActive(true);
+    public void PauseGame()
+    {
+
+        if (!isPaused)
+        {
+            isPaused = true;
+            UIManager.instance.pauseMenu.SetActive(true);
             SwitchState(GameState.Pause);
-		}
-		else
-		{
-			isPaused = false;
+        }
+        else
+        {
+            isPaused = false;
             UIManager.instance.pauseMenu.SetActive(false);
             SwitchState(GameState.QuestState);
         }
-	}
-
-	public void CameraFocus(Transform lookObject, float howLong = 3f)
-	{
-        SwitchCam(CamTypes.LookAt, null, true, howLong,lookObject);
     }
 
-	public void FocusOnNearestQuest()
-	{
-		float dist = 0f;
-		float currDist;
-		Quest nearestQuest = null;
+    public void CameraFocus(Transform lookObject, float howLong = 3f)
+    {
+        SwitchCam(CamTypes.LookAt, null, true, howLong, lookObject);
+    }
+
+    public void FocusOnNearestQuest()
+    {
+        float dist = 0f;
+        float currDist;
+        Quest nearestQuest = null;
         foreach (var item in remainingQuests)
         {
-            currDist = Vector3.Distance(player.transform.position,item.transform.position);
-			if (dist == 0f || currDist < dist)
-			{
-				dist = currDist;
-				nearestQuest = item;
-			}
+            currDist = Vector3.Distance(player.transform.position, item.transform.position);
+            if (dist == 0f || currDist < dist)
+            {
+                dist = currDist;
+                nearestQuest = item;
+            }
         }
 
-		if (nearestQuest == null) { return; }
+        if (nearestQuest == null) { return; } 
 
-		SwitchCam(CamTypes.LookAt,null,true,3f,nearestQuest.transform);
+        CameraFocus(nearestQuest.transform, 3f);
+        //SwitchCam(CamTypes.LookAt, null, true, 3f, nearestQuest.transform);
+    }
+
+    public void SucceedTask(Task t)
+    {
+        totalSucceededTasks++;
+        AudioManager.instance.PlaySFX(AudioManager.instance.soundData.sucessClip, 1,true);
+        onCompleteTask.Invoke(currentQuest);
+        Debug.Log("Task is succeeded, current sucess is equal to : " + totalSucceededTasks);
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.VFX;
 
 public class ResourceController : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class ResourceController : MonoBehaviour
     [SerializeField] float speedMultiplier;
     DialogueVelo dialogueVelo;
 
-    [SerializeField] float tempS;
+    public float tempS { get; private set; }
     [SerializeField] float cadenceMax;
     [SerializeField] float cadenceFillSpeed;
     [SerializeField] float speedDecay;
@@ -28,6 +29,12 @@ public class ResourceController : MonoBehaviour
     Rigidbody rb;
     [SerializeField] float maxRbDrag;
     [SerializeField] float minRbDrag;
+
+    [SerializeField] VisualEffect batteryR;
+    [SerializeField] VisualEffect batteryL;
+
+    [SerializeField] float maxBaterryDelay;
+    [SerializeField] float maxBatteryCount;
     private void Start()
     {
         dialogueVelo = GetComponent<DialogueVelo>();
@@ -63,6 +70,17 @@ public class ResourceController : MonoBehaviour
         */
         speedChangeEvent.Invoke(playerUI, tempS / dialogueVelo.maxSpeed);
         FillEnergy();
+
+        HandleBatteryVFX();
+    }
+
+    void HandleBatteryVFX()
+    {
+        batteryL.SetFloat("Count", Mathf.Lerp(0f, maxBatteryCount, energy / maxEnergy));
+        batteryR.SetFloat("Count", Mathf.Lerp(0f, maxBatteryCount, energy / maxEnergy));
+
+        batteryL.SetFloat("Delay", Mathf.Lerp(6f, maxBaterryDelay, energy / maxEnergy));
+        batteryR.SetFloat("Delay", Mathf.Lerp(6f, maxBaterryDelay, energy / maxEnergy));
     }
     void UpdateFakeSpeed()
     {

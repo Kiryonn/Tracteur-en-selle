@@ -24,7 +24,7 @@ public class DataManager : MonoBehaviour
 		clientData = JsonConvert.DeserializeObject<ClientData[]>(json);
 	}
 
-	string ReadFromFile(string fileName)
+	public static string ReadFromFile(string fileName)
 	{
 		string path = Application.streamingAssetsPath + "/" + fileName;
 		if (File.Exists(path))
@@ -62,6 +62,7 @@ public class DataManager : MonoBehaviour
 			clientDataList = new List<ClientData>();
             //throw;
         }
+		SettingsManager.instance.scoreDataManager.AddPlayer(data.ID);
 		clientDataList.Add(data);
 		clientData = clientDataList.ToArray();
 		SaveJson("VisiteursData.json");

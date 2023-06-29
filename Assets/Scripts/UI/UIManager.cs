@@ -26,6 +26,10 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI timerText;
     public SpeedSystem speedSystem;
     bool fading;
+    [Header("Quete en cour")]
+    [SerializeField] GameObject tacheRoot;
+    [SerializeField] TextMeshProUGUI queteName;
+    [SerializeField] TextMeshProUGUI tacheName;
     private void Awake()
     {
         if (instance == null)
@@ -38,6 +42,8 @@ public class UIManager : MonoBehaviour
             Destroy(this);
         }
         questDico = new Dictionary<Quest, TextMeshProUGUI>();
+        questRoot.gameObject.SetActive(true);
+        tacheRoot.SetActive(false);
     }
 
     public void SetListener(ResourceController res)
@@ -70,6 +76,9 @@ public class UIManager : MonoBehaviour
     public void SetQuestListener()
     {
         GameManager.Instance.onCreatedQuest.AddListener(UpdateQuest);
+        GameManager.Instance.onStartQuest.AddListener(UpdateTabletQuest);
+        GameManager.Instance.onCompleteTask.AddListener(UpdateQueteEnCour);
+        GameManager.Instance.onCompleteQuest.AddListener(UpdateFinishQuest);
     }
 
     void UpdateEnergy(PlayerUI ui, float amount)
@@ -96,6 +105,33 @@ public class UIManager : MonoBehaviour
             text.text = "- " + txt;
             questDico.TryAdd(q, text);
         }
+    }
+
+    void UpdateTabletQuest(Quest q)
+    {
+        questRoot.gameObject.SetActive(false);
+        queteName.text = q._name;
+        tacheName.text = q.GetCurrentTask()._name;
+        tacheRoot.gameObject.SetActive(true);
+    }
+
+    void UpdateQueteEnCour(Quest q)
+    {
+        try
+        {
+            tacheName.text = q.GetCurrentTask()._name;
+        }
+        catch
+        {
+            Debug.Log("Np");
+        }
+        
+    }
+
+    void UpdateFinishQuest(Quest q)
+    {
+        questRoot.gameObject.SetActive(true);
+        tacheRoot.SetActive(false);
     }
 
     IEnumerator FadeProgress(float endAlpha, float duration)

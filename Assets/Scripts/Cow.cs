@@ -21,6 +21,12 @@ public class Cow : MonoBehaviour
     [SerializeField] Vector2 timeBetweenChanges;
     float currentTimer;
     float maxTimer;
+    [SerializeField] bool randomSpeed;
+
+    [Header("SFX")]
+    [SerializeField] AudioClip[] cowSounds;
+    [SerializeField] Vector2 timingRange;
+    AudioSource source;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +39,18 @@ public class Cow : MonoBehaviour
         {
             anim.SetInteger("AnimIndex", selectedAnim);
         }
+
+        if (randomSpeed)
+        {
+            anim.SetFloat("Multiplier", Random.Range(0.7f, 1.3f));
+        }
+        else
+        {
+            anim.SetFloat("Multiplier", 1f);
+        }
+
+        source = GetComponent<AudioSource>();
+        StartCoroutine(CowMoo((timingRange.x,timingRange.y)));
     }
 
     // Update is called once per frame
@@ -46,7 +64,6 @@ public class Cow : MonoBehaviour
                 ChangeAnimation();
             }
         }
-        
     }
 
     int RandomSelect()
@@ -87,5 +104,20 @@ public class Cow : MonoBehaviour
         maxTimer = Random.Range(timeBetweenChanges.x, timeBetweenChanges.y);
         anim.SetTrigger("ChangeAnim");
         anim.SetInteger("AnimIndex", RandomSelect());
+    }
+
+    IEnumerator CowMoo((float,float) range)
+    {
+        while (true)
+        {
+            float timing = Random.Range(range.Item1, range.Item2);
+            for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / timing)
+            {
+                yield return null;
+            }
+            int randomIndex = Random.Range(0, cowSounds.Length-1);
+            source.pitch = Random.Range(-1.5f, 1.5f);
+            source.PlayOneShot(cowSounds[randomIndex]);
+        }
     }
 }

@@ -81,11 +81,11 @@ public class Task : Interactable
 
     protected virtual void HandleFailedTask()
     {
-        Debug.Log("Task failed");
-        GameManager.Instance.FailTask();
         succeeded = false;
         quest.CompleteTask(this);
-        GameManager.Instance.GetComponent<TransitionManager>().FadeDamage(0.2f);
+        GameManager.Instance.GetComponent<TransitionManager>().FadeDamage(0.12f);
+        Debug.Log("Task failed");
+        GameManager.Instance.FailTask();
         //GameManager.Instance.velo.GetComponent<DamageController>().DamageTractor(5f);
     }
 
@@ -93,6 +93,7 @@ public class Task : Interactable
     {
         succeeded = true;
         quest.CompleteTask(this);
+        GameManager.Instance.SucceedTask(this);
     }
 
     protected bool CheckNecessaryItem()

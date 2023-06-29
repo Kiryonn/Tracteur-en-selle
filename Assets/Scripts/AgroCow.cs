@@ -45,7 +45,7 @@ public class AgroCow : MonoBehaviour
             attackStates = AttackStates.Attacked;
             agent.isStopped = true;
             GameManager.Instance.player.GetComponent<DamageController>().DamageTractor(30f);
-            GameManager.Instance.GetComponent<TransitionManager>().FadeDamage(1f);
+            GameManager.Instance.GetComponent<TransitionManager>().FadeDamage(0.12f);
             Destroy(gameObject, 10f);
         }
     }

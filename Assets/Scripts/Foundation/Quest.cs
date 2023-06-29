@@ -40,6 +40,7 @@ public class Quest : Interactable
     public override void Interact()
     {
         base.Interact();
+        GameManager.Instance.TriggerQuestStart(this);
         StartQuest();
     }
 
@@ -74,6 +75,7 @@ public class Quest : Interactable
 
     protected virtual void NextTask()
     {
+        AudioManager.instance.PlaySFX(AudioManager.instance.soundData.popClip);
         requiredTasks[0].ShowInteractable();
         requiredTasks[0].SetQuest(this);
         if (requiredTasks[0].requireItem)

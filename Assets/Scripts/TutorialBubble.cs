@@ -7,7 +7,10 @@ public enum PlayerActions
 {
     Move,
     Turn,
-    Wait
+    Wait,
+    Input,
+    StartQuest,
+    Pedale
 }
 public class TutorialBubble : MonoBehaviour
 {
@@ -18,9 +21,9 @@ public class TutorialBubble : MonoBehaviour
     [SerializeField] bool allowMovement;
     [SerializeField] bool activated;
     bool clustered = true;
-    [SerializeField] GameObject indications;
+    [SerializeField] protected GameObject indications;
     [SerializeField] PlayerActions playerAction;
-    CanvasGroup canvasGroup;
+    protected CanvasGroup canvasGroup;
     [SerializeField] List<Interactable> requiredInteractions = new List<Interactable>();
     [SerializeField] List<TutorialBubble> requiredTuto = new List<TutorialBubble>();
 
@@ -49,6 +52,13 @@ public class TutorialBubble : MonoBehaviour
                 item.OnCompletedTutorialBubble.AddListener(UpdateRequiredTutorial);
             }
         }
+
+        OnStart();
+    }
+
+    protected virtual void OnStart()
+    {
+        // Do anything
     }
 
     private void OnTriggerEnter(Collider other)
@@ -63,10 +73,20 @@ public class TutorialBubble : MonoBehaviour
 
     IEnumerator WaitForActions(PlayerActions action)
     {
-        
+        float currentTime = 0f;
         switch (action)
         {
             case PlayerActions.Move:
+                while (currentTime < waitingTime)
+                {
+                    if (GameManager.Instance.player.movement != 0)
+                    {
+                        currentTime += Time.deltaTime;
+                    }
+                    yield return null;
+                }
+                break;
+            case PlayerActions.Pedale:
                 int timeout = 0;
                 while (GameManager.Instance.velo.speed <= 1)
                 {
@@ -79,9 +99,24 @@ public class TutorialBubble : MonoBehaviour
                 }
                 break;
             case PlayerActions.Turn:
+
+                while (currentTime < waitingTime)
+                {
+                    if (GameManager.Instance.player.rotation != 0)
+                    {
+                        currentTime += Time.deltaTime;
+                    }
+                    yield return null;
+                }
                 break;
             case PlayerActions.Wait:
                 yield return new WaitForSeconds(waitingTime + fadeSpeed);
+                break;
+            case PlayerActions.Input:
+                while (!Input.GetKeyDown(KeyCode.Return))
+                {
+                    yield return null;
+                }
                 break;
             default:
                 break;
@@ -92,7 +127,7 @@ public class TutorialBubble : MonoBehaviour
         StartCoroutine(FadeTutorial(2f, 0f));
     }
 
-    IEnumerator FadeTutorial(float duration, float endAlpha)
+    protected virtual IEnumerator FadeTutorial(float duration, float endAlpha)
     {
         if (endAlpha == 1f) indications.SetActive(true);
         
@@ -107,11 +142,14 @@ public class TutorialBubble : MonoBehaviour
 
     }
 
-    public IEnumerator LaunchTutorial()
+    public virtual IEnumerator LaunchTutorial()
     {
         if (!allowMovement) GameManager.Instance.player.canMove = false;
-        StartCoroutine(WaitForActions(playerAction));
+        else GameManager.Instance.player.canMove = true;
+
+        //StartCoroutine(WaitForActions(playerAction));
         OnCompletedTutorialBubble.Invoke(this);
+
         yield return new WaitForSeconds(delay);
         StartCoroutine(FadeTutorial(fadeSpeed, 1f));
         StartCoroutine(WaitForActions(playerAction));

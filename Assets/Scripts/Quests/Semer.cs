@@ -20,7 +20,7 @@ public class Semer : Quest
     public override void Interact()
     {
         base.Interact();
-        nTime.FadeDayNight(50f, 0f);
+        nTime.FadeDayNight(70f, 0f);
     }
 
     public override void CompleteTask(Task task)

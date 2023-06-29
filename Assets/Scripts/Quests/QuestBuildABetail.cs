@@ -22,7 +22,6 @@ public class QuestBuildABetail : Quest
 
     public override void CompleteTask(Task task)
     {
-        base.CompleteTask(task);
         AcceptPosTask acceptPosTask = (AcceptPosTask)task;
 
         if (acceptPosTask)
@@ -33,6 +32,8 @@ public class QuestBuildABetail : Quest
             }
             lastInstancedObject = (acceptPosTask.currentOption.objInst) ? acceptPosTask.currentOption.objInst : lastInstancedObject;
         }
+        base.CompleteTask(task);
+        
     }
 
     protected override void HandleCompletedQuest()

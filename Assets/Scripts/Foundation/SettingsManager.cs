@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 public class SettingsManager : MonoBehaviour
 {
     public Settings settings;
-
+    Settings savedSettings;
     public static SettingsManager instance;
     int[] levelOrder;
     Dictionary<Theme, string> dicoThemes;
     bool nextIsGarage;
     [SerializeField] List<Scene> loadedLevel;
+    public ScoreDataManager scoreDataManager { get; private set; }
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class SettingsManager : MonoBehaviour
     {
         //nextIsGarage = true;
         dicoThemes = new Dictionary<Theme, string>();
+        scoreDataManager = GetComponent<ScoreDataManager>();
         foreach (var item in settings.levelDescs)
         {
             dicoThemes.TryAdd(item.th, item.sceneName);
@@ -59,8 +61,14 @@ public class SettingsManager : MonoBehaviour
 
     }
 
-
-
+    void SaveSettings()
+    {
+        savedSettings = settings;
+    }
+    void LoadSettings()
+    {
+        settings = savedSettings;
+    }
 
     public void UpdateGrassDensity(float f)
     {
@@ -73,6 +81,7 @@ public class SettingsManager : MonoBehaviour
     }
     public void StartGame()
     {
+        SaveSettings();
         switch (settings.gameMode)
         {
             case GameMode.SerieDeTheme:
@@ -149,6 +158,7 @@ public class SettingsManager : MonoBehaviour
             LoadingScreenTips.instance.loadgingBarFill.fillAmount = Mathf.Clamp01(operation.progress / 0.9f);
             yield return null;
         }
+
         AsyncOperation operation2;
         for (int i = 0; i < scenesToLoad.Length; i++)
         {
@@ -168,6 +178,7 @@ public class SettingsManager : MonoBehaviour
             
             yield return null;
         }
+        SceneManager.UnloadSceneAsync(0);
         /*
         
         if (settings.enableTutorial)
@@ -215,7 +226,7 @@ public class SettingsManager : MonoBehaviour
         }
         loadedLevel.Clear(); // Tell our setting manager that we have no loaded scenes
 
-        // If we were in the tutorial and in timed run, we meight need to load multiple scenes
+        // If we were in the tutorial and in timed run, we might need to load multiple scenes
         if (settings.currentTheme == Theme.Tutorial && settings.gameMode == GameMode.ContreLaMontre)
         {
             LoadMultiple();
@@ -266,17 +277,20 @@ public class SettingsManager : MonoBehaviour
             Debug.Log("Reloading all levels");
             SceneManager.LoadScene("Main Menu");
         }
+        LoadSettings();
     }
 
     public void ForceLoadMainMenu()
     {
         ArduinoConnector.Instance.Close();
+        settings.allowedThemes.Clear();
         foreach (var item in settings.levelDescs)
         {
             settings.allowedThemes.Add(item.th);
         }
         Debug.Log("Reloading all levels");
         SceneManager.LoadScene("Main Menu");
+        LoadSettings();
     }
 
     public bool isGarageOrTutorial()

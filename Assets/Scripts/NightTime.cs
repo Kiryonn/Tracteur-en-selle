@@ -77,10 +77,12 @@ public class NightTime : MonoBehaviour
 
         if (aValue == 1)
         {
+            TurnSpotlights(false);
             day = true;
         }
         else
         {
+            TurnSpotlights(true);
             day = false;
         }
         

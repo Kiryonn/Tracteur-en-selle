@@ -15,8 +15,8 @@ public class OpenCuve : Task
     public override void Interact()
     {
         base.Interact();
-        gazZone.ActivateZone(10f);
+        gazZone.ActivateZone();
         cuveAnim.SetBool("Open", true);
-
+        GameManager.Instance.player.playerAnim.SetTrigger("Take");
     }
 }

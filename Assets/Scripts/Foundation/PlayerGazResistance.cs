@@ -7,18 +7,42 @@ public class PlayerGazResistance : MonoBehaviour
     [SerializeField] float gazResistance = 100f;
     [SerializeField] float currentGazValue = 0f;
     [SerializeField] float gazFillSpeed = 0.5f;
-    public bool insideGaz;
 
+    [Header("SFX")]
+    [SerializeField] float maxBipDelay;
+    [SerializeField] float minBipDelay;
+    float currentBipDelay = 0f;
+    [SerializeField] AudioClip bipClip;
+
+    public bool insideGaz;
+    public bool dead;
     // Update is called once per frame
     void Update()
     {
-        if (insideGaz)
+        if (insideGaz && !dead)
         {
-            currentGazValue += gazFillSpeed;
+            currentGazValue += gazFillSpeed * Time.deltaTime;
+            if (currentGazValue > gazResistance) { Die(); }
+            currentBipDelay += Time.deltaTime;
+            if (currentBipDelay > Mathf.Lerp(maxBipDelay,minBipDelay,currentGazValue/gazResistance))
+            {
+                AudioManager.instance.PlaySFX(bipClip);
+                currentBipDelay = 0f;
+            }
+
         }
         else
         {
-            currentGazValue = currentGazValue <= 0 ? 0 : currentGazValue-gazFillSpeed;
+            currentGazValue = currentGazValue <= 0 ? 0 : currentGazValue-gazFillSpeed * Time.deltaTime;
+        }
+    }
+
+    void Die()
+    {
+        if (!dead)
+        {
+            dead = true;
+            currentGazValue = 0f;
         }
     }
 }

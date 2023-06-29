@@ -24,13 +24,17 @@ public class Drone : MonoBehaviour
 
     [System.NonSerialized] public UnityEvent<Item> deliveryEvent;
 
+    float startPropSpeed;
+
+    AudioSource audioSource;
     Item transportedItem;
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
+        startPropSpeed = propellersSpeed;
         if (GameManager.Instance) player = GameManager.Instance.velo.GetComponent<PlayerController>();
-
+        TryGetComponent(out audioSource);
         grabbed = true;
         if (deliveryEvent == null)
         {
@@ -43,6 +47,14 @@ public class Drone : MonoBehaviour
     void Update()
     {
         HandlePropeller();
+
+        // SFX
+
+        if (audioSource)
+        {
+            audioSource.volume = Mathf.InverseLerp(0, startPropSpeed, propellersSpeed);
+        }
+        
     }
 
     public void ToggleGrab()

@@ -30,6 +30,7 @@ public class PorteBB : EquipmentRecup
     [SerializeField] Transform offsetTransform;
     [SerializeField] Offset offsetSemoir;
 
+    [SerializeField] AudioClip equipSFX;
     public bool used { get; private set; }
     protected override void OnStart()
     {
@@ -39,13 +40,14 @@ public class PorteBB : EquipmentRecup
     public override void Interact()
     {
         base.Interact();
-
+        AudioManager.instance.PlaySFX(equipSFX);
         bigBagSupport = equipment.GetComponent<PorteBBReferences>();
     }
 
     public override void Use_1()
     {
         base.Use_1();
+
         bigBagSupport.transform.SetParent(GameManager.Instance.player.tractorGraphics.transform);
         switch (porteBBType)
         {

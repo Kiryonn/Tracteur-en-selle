@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f7d68b7bbca77b4bb5793e9084ac08b, type: 3}
+  m_Name: Sound data
+  m_EditorClassIdentifier: 
+  popClip: {fileID: 8300000, guid: 47a367d19f71ead4d9461ef0c6bacfde, type: 3}
+  sucessClip: {fileID: 8300000, guid: b116811120ae5234ca5201a876645356, type: 3}
+  failClip: {fileID: 8300000, guid: baf2474fbf184ae4091153415aed4c91, type: 3}
+  equipClip: {fileID: 8300000, guid: 86671e7723d735c4499d670bd636b782, type: 3}
+  recupClip: {fileID: 8300000, guid: 86671e7723d735c4499d670bd636b782, type: 3}

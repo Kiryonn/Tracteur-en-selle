@@ -8,12 +8,14 @@ public class DialogueVelo : MonoBehaviour
     public FitnessEquipmentDisplay velo;
     public bool connected;
     public float instantaneousPower;
+    [SerializeField] float SupposedResistance;
     public float speed;
     public float elapsedTime;
     public int heartRate;
     public int distanceTraveled;
     public int cadence;
     public float maxSpeed = 24f;
+    bool started = false;
 
     public int veloPente = 0;
     // Update is called once per frame
@@ -34,6 +36,12 @@ public class DialogueVelo : MonoBehaviour
                 Debug.Log("Searching for Fitness");
                 throw;
             }
+        }
+
+        if (!started && velo && GameManager.Instance != null)
+        {
+            GameManager.Instance.SetPenteScaledWithDmg();
+            started = true;
         }
     }
 
@@ -60,13 +68,25 @@ public class DialogueVelo : MonoBehaviour
 
     public void ChangeResitance(int n)
     {
-        velo.SetTrainerResistance(n);
+        if (velo)
+        {
+            velo.SetTrainerResistance(n);
+        }
+        
     }
 
     public void ChangePente(int n)
     {
-        velo.SetTrainerResistance(n);
-        veloPente = n;
+        if (velo)
+        {
+            velo.SetTrainerResistance(n);
+            veloPente = n;
+        }
+        else
+        {
+            Debug.Log("There is no velo");
+        }
+        
         /*
         StopCoroutine("AsyncSetSlope");
         StartCoroutine(AsyncSetSlope(n, 6));

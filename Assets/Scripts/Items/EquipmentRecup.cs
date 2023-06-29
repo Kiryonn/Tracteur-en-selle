@@ -15,7 +15,6 @@ public class EquipmentRecup : Item
 
     public override void Interact()
     {
-        base.Interact();
         GameManager.Instance.player.SetEquipment(this);
         equipment = Instantiate(equipmentPrefab);
 
@@ -26,6 +25,8 @@ public class EquipmentRecup : Item
         equipment.transform.localPosition = offset.position;
         equipment.transform.localRotation = Quaternion.Euler(offset.rotation);
         equipment.transform.localScale = offset.scale;
+        base.Interact();
+        
     }
 
     public void RemoveEquipment()

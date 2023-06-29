@@ -27,7 +27,7 @@ public class TutorialBubbleCluster : MonoBehaviour
 
     IEnumerator StartTutorialSerie()
     {
-        GameManager.Instance.player.canMove = false;
+        //GameManager.Instance.player.canMove = false;
         foreach (var cluster in clusterList)
         {
             StartCoroutine(cluster.LaunchTutorial());
@@ -41,7 +41,7 @@ public class TutorialBubbleCluster : MonoBehaviour
         {
             clusterBackground.SetActive(false);
         }
-        GameManager.Instance.player.canMove = true;
+        //GameManager.Instance.player.canMove = true;
         
     }
 }

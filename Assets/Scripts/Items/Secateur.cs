@@ -12,6 +12,8 @@ public class Secateur : Item
     Vigne v;
     public bool affilage;
 
+    [SerializeField] AudioClip cutSound;
+
     protected override void OnStart()
     {
         base.OnStart();
@@ -20,7 +22,7 @@ public class Secateur : Item
 
     public void Use(int amount)
     {
-        Debug.Log("Using secateur");
+        AudioManager.instance.PlaySFX(cutSound, 0.5f);
 
         currentDurability -= amount;
         switch (type)
@@ -50,11 +52,11 @@ public class Secateur : Item
                 break;
             case 4:
                 lameIndex = 3;
-                GameManager.Instance.velo.ChangePente(3);
+                GameManager.Instance.SetPenteScaledWithDmg(0.5f);
                 break;
             case 2:
                 lameIndex = 4;
-                GameManager.Instance.velo.ChangePente(7);
+                GameManager.Instance.SetPenteScaledWithDmg(0.7f);
                 break;
             case 0:
                 lameIndex = 5;
@@ -68,7 +70,7 @@ public class Secateur : Item
         {
             Debug.Log("Besoin d'affuter");
             affilage = false;
-            GameManager.Instance.GetComponent<TransitionManager>().FadeDamage(0.4f);
+            GameManager.Instance.GetComponent<TransitionManager>().FadeDamage(0.12f);
         }
         else
         {

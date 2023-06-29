@@ -7,7 +7,9 @@ public class DamageController : MonoBehaviour
     public float health { get; private set; }
     public float maxHealth;
     Rigidbody rb;
-
+    [SerializeField] AudioClip impactSFX;
+    [SerializeField] float maxVolume;
+    [SerializeField] float maxImpactMagnitude;
     [SerializeField] SkinnedMeshRenderer[] damageableParts;
     private void Start()
     {
@@ -18,6 +20,10 @@ public class DamageController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("It's colliding with : "+collision.gameObject.tag);
+        float v = Mathf.Lerp(0,maxVolume,
+            Mathf.Clamp01(rb.velocity.magnitude/ maxImpactMagnitude));
+        AudioManager.instance.PlaySFX(impactSFX,v);
+
         if (collision.gameObject.CompareTag("Hazard"))
         {
             DamageTractor(5f);
@@ -45,7 +51,7 @@ public class DamageController : MonoBehaviour
 
         if (amount < 10)
         {
-            GameManager.Instance.GetComponent<TransitionManager>().FadeDamage(0.4f);
+            GameManager.Instance.GetComponent<TransitionManager>().FadeDamage(0.12f);
         }
         UpdateVisualDamage();
     }

@@ -3,6 +3,7 @@ using System.IO.Ports;
 using UnityEngine;
 using System.Globalization;
 using System.Collections;
+using System.Threading;
 /// <summary>
 /// C# based connector to an Arduino Board. Usable in Unity, Attach this to a game object and call the open function first, then either read/write or 
 /// the asynchronous function. When finished close the stream with the Close() function.
@@ -28,6 +29,11 @@ public class ArduinoConnector : MonoBehaviour
     public string[] strData_received = new string[4];
     public float yaw, pitch, roll;
 
+    Queue outputQueue;
+    Queue inputQueue;
+
+    Thread thread;
+    public bool looping = true;
     
     public void Start()
     {
@@ -35,7 +41,8 @@ public class ArduinoConnector : MonoBehaviour
             Destroy(this);
         else
             Instance = this;
-        Open();
+        StartThread();
+        //Open();
         /*
         StartCoroutine
         (
@@ -51,10 +58,10 @@ public class ArduinoConnector : MonoBehaviour
 
     public void Update()
     {
-
-        string x = ReadFromArduino();
-        //str_received = x;
-        //Debug.Log(ReadFromArduino());
+        string x = ReadQueueFromArduino();
+        
+        str_received = x;
+        //Debug.Log(x);
         if (!String.IsNullOrEmpty(x))
         {
             //Debug.Log("[Debug] Arduino Stream : "+x);
@@ -93,6 +100,55 @@ public class ArduinoConnector : MonoBehaviour
         //&& x.Contains('?')
     }
 
+    public void StartThread()
+    {
+        outputQueue = Queue.Synchronized(new Queue());
+        inputQueue = Queue.Synchronized(new Queue());
+
+        thread = new Thread(ThreadLoop);
+        thread.Start();
+    }
+
+    public bool IsLooping()
+    {
+        lock (this)
+        {
+            return looping;
+        }
+    }
+
+    public void ThreadLoop()
+    {
+        Open();
+
+        
+
+        while (IsLooping())
+        {
+            // send to arduino
+            if (outputQueue.Count != 0)
+            {
+                string command = (string)outputQueue.Dequeue();
+                Write(command);
+            }
+            //read from arduino
+
+            string result = ReadFromArduino();
+            if (result != null)
+            {
+                inputQueue.Enqueue(result);
+            }
+        }
+    }
+
+    public void StopThread()
+    {
+        lock (this)
+        {
+            looping = false;
+        }
+    }
+
     public void Open()
     {
         //Open Serial Port
@@ -112,12 +168,38 @@ public class ArduinoConnector : MonoBehaviour
             }
             catch (Exception e)
             {
+                StopThread();
                 Debug.LogError("Stream Failed to open: " + e.ToString());
             }
         }
         else
+        {
+            StopThread();
             Debug.LogWarning("No COM ports found!");
+        }
+            
 
+    }
+
+    public void Write(string msg)
+    {
+        if (stream.IsOpen)
+        {
+            stream.WriteLine(msg);
+            stream.BaseStream.Flush();
+        }
+    }
+
+    public void SendToArduino(string command)
+    {
+        outputQueue.Enqueue(command);
+    }
+
+    public string ReadQueueFromArduino()
+    {
+        if (inputQueue.Count == 0) return null;
+
+        return (string)inputQueue.Dequeue();
     }
 
     public string ReadFromArduino(int timeout = 10)
@@ -126,7 +208,7 @@ public class ArduinoConnector : MonoBehaviour
         {
             if (stream.IsOpen)
             {
-                stream.ReadTimeout = timeout;
+                
                 try
                 {
                     return stream.ReadLine();
@@ -149,37 +231,6 @@ public class ArduinoConnector : MonoBehaviour
         }
     }
 
-    public IEnumerator AsynchronousReadFromArduino(Action<string> callback, Action fail = null, float timeout = float.PositiveInfinity)
-    {
-        DateTime initialTime = DateTime.Now;
-        DateTime nowTime;
-        TimeSpan diff = default(TimeSpan);
-        string dataString = null;
-        do
-        {
-            try
-            {
-                dataString = stream.ReadLine();
-            }
-            catch (TimeoutException)
-            {
-                dataString = null;
-            }
-            if (dataString != null)
-            {
-                callback(dataString);
-                yield break; // Terminates the Coroutine
-            }
-            else
-                yield return null; // Wait for next frame
-            nowTime = DateTime.Now;
-            diff = nowTime - initialTime;
-        } while (diff.Milliseconds < timeout);
-        if (fail != null)
-            fail();
-        yield return null;
-    }
-
     public void Close()
     {
         if (stream != null && stream.IsOpen)
@@ -196,14 +247,7 @@ public class ArduinoConnector : MonoBehaviour
 
     public void Calibrate()
     {
-
-        if (!stream.IsOpen)
-        {
-            stream.Open();
-            Debug.Log("Stream was NOT open");
-        }
-
-        stream.WriteLine("Calibrate");
+        SendToArduino("Calibrate");
     }
 
 }

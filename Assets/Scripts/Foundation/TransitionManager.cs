@@ -36,8 +36,22 @@ public class TransitionManager : MonoBehaviour
 
     public UIDataImage schemaHumain;
 
+    [Header("UI Elements Stats")]
+
+    public UIDataText circonsMockupText;
+
+    public UIDataText coutAnText;
+    public UIDataText coutJText;
+
     float score;
     int index = 0;
+
+    [Header("Musics")]
+    [SerializeField] AudioClip normalMusic;
+    [SerializeField] AudioClip victoryMusic;
+
+    [Header("Data")]
+    [SerializeField] StatistiqueManager statistiqueManager;
 
     [System.Serializable]
     public class UIDataText
@@ -157,6 +171,7 @@ public class TransitionManager : MonoBehaviour
     public void FadeToBlack()
     {
         StartCoroutine(FadeScreen(1f, fadeDuration, false));
+        AudioManager.instance.ChangeBackgroundMusic(victoryMusic);
         Invoke("RenderBlack", fadeDuration + 2f);
     }
 
@@ -183,6 +198,7 @@ public class TransitionManager : MonoBehaviour
         fadeScreenImage.gameObject.SetActive(false);
 
         if (check) { ShowScoreParam(); } else { RenderWhite(); }
+        //AudioManager.instance.ChangeBackgroundMusic(victoryMusic);
         
     }
 
@@ -217,11 +233,13 @@ public class TransitionManager : MonoBehaviour
         oldUI.SetActive(true);
         StartCoroutine(FadeScreen(0f, fadeDuration, false));
         GameManager.Instance.SwitchState(GameState.QuestState);
+        AudioManager.instance.ChangeBackgroundMusic(normalMusic);
     }
 
     void ShowScoreParam()
     {
         Vector3 startPos;
+
         switch (index)
         {
             case 0:
@@ -307,8 +325,8 @@ public class TransitionManager : MonoBehaviour
                     });
 
                 }
-
-                Invoke("ShowRecap", delays.medicalRecapDuraction);
+                StartCoroutine(WaitForInputs());
+                //Invoke("ShowRecap", delays.medicalRecapDuraction);
             });
         LeanTween.value(schemaHumain.img.gameObject, 0f, 1f, delays.medicalRecapSpeed / 1.5f)
             .setOnUpdate((float val) =>
@@ -436,6 +454,27 @@ public class TransitionManager : MonoBehaviour
                             {
                                 fadeDamageImage.gameObject.SetActive(false);
                             });
+            });
+    }
+
+    IEnumerator WaitForInputs()
+    {
+        while (!Input.GetKeyDown(KeyCode.Return))
+        {
+            yield return null;
+        }
+        Vector3 startPos = schemaHumain.img.rectTransform.position;
+        LeanTween.moveX(schemaHumain.img.gameObject, startPos.x - 20, delays.medicalRecapSpeed)
+            .setOnComplete(() =>
+            {
+                ResetScene();
+            });
+        LeanTween.value(schemaHumain.img.gameObject, 1f, 0f, delays.medicalRecapSpeed)
+            .setOnUpdate((float val) =>
+            {
+                Color c = schemaHumain.img.color;
+                c.a = val;
+                schemaHumain.img.color = c;
             });
     }
 }

@@ -23,6 +23,8 @@ public class Remorque : Task
 
     float baseCameraDistance;
     bool check = false;
+
+    [SerializeField] AudioClip equipSFX;
     protected override void OnStart()
     {
         base.OnStart();
@@ -50,15 +52,9 @@ public class Remorque : Task
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void AttachRemorque()
     {
-        
+        AudioManager.instance.PlaySFX(equipSFX);
         Transform parent;
         parent = GameManager.Instance.player.transform;
 

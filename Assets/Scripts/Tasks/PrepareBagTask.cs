@@ -4,22 +4,36 @@ using UnityEngine;
 
 public class PrepareBagTask : Task
 {
+    [SerializeField] float delay;
+    int state = 0;
     public override void Interact()
     {
-        base.Interact();
-        PorteBB porteBB = (PorteBB)GameManager.Instance.player.equipment;
-        BigBagQuest bq = (BigBagQuest)quest;
-
-        if (porteBB.porteBBType == PorteBBType.Crochet)
+        if (state == 1)
         {
-            bq.bigBag.bigBagAnchor.SetParent(porteBB.bigBagSupport.rotationCrochetPivot);
+            base.Interact();
+            Debug.Log("we interact");
+            state = 2;
         }
         else
         {
-            bq.bigBag.bigBagAnchor.SetParent(porteBB.bigBagSupport.elevationClassPivot);
+            HideInteractable();
+            PorteBB porteBB = (PorteBB)GameManager.Instance.player.equipment;
+            BigBagQuest bq = (BigBagQuest)quest;
+
+            if (porteBB.porteBBType == PorteBBType.Crochet)
+            {
+                bq.bigBag.bigBagAnchor.SetParent(porteBB.bigBagSupport.rotationCrochetPivot);
+            }
+            else
+            {
+                bq.bigBag.bigBagAnchor.SetParent(porteBB.bigBagSupport.elevationClassPivot);
+            }
+
+            porteBB.Use_1();
+            state = 1;
+            Invoke("Interact", delay);
         }
         
-        porteBB.Use_1();
     }
     
 }

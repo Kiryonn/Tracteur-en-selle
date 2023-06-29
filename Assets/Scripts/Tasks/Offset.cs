@@ -23,19 +23,20 @@ public class Offset
         scale = Vector3.one;
     }
 
-    public void SetOffset(Transform _object, Space space = Space.Self)
+    public void SetOffset(Transform _object, Space space = Space.Self, bool ignoreScale = false)
     {
         if (space == Space.World)
         {
             _object.position = position;
             _object.rotation = Quaternion.Euler(rotation);
-            _object.localScale = scale;
+            if (!ignoreScale) { _object.localScale = scale; }
+            
         }
         else
         {
             _object.localPosition = position;
             _object.localRotation = Quaternion.Euler(rotation);
-            _object.localScale = scale;
+            if (!ignoreScale) { _object.localScale = scale; }
         }
         
     }

@@ -15,6 +15,10 @@ public class MachineSecateur : Interactable
     [SerializeField] Animator affilageAnim;
     Transform playerTransform;
 
+    [Header("SFX")]
+    [SerializeField] AudioClip affutageSFX;
+    [SerializeField] AudioClip affileSFX;
+
     protected override void OnStart()
     {
         base.OnStart();
@@ -24,7 +28,7 @@ public class MachineSecateur : Interactable
 
     public override void Interact()
     {
-        base.Interact();
+        
         Use();
     }
     public void Use()
@@ -72,5 +76,11 @@ public class MachineSecateur : Interactable
         GameManager.Instance.SwitchCam(CamTypes.Tractor);
         vigne.secaAnim.SetBool("Repairing", false);
         GameManager.Instance.player.canMove = true;
+
+        if (!affutage)
+        {
+            AudioManager.instance.PlaySFX(affileSFX);
+        }
+        
     }
 }

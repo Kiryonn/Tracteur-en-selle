@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     float minDistance;
     [SerializeField] SpeedSystem uiSpeed;
     public bool destinationReached { get; private set; }
+    PostProcessManager processManager;
 
     [Header("Specific Equipement")]
 
@@ -78,6 +79,7 @@ public class PlayerController : MonoBehaviour
         resourceController = GetComponent<ResourceController>();
         characterController = GetComponent<CharacterController>();
         arduino = GetComponentInChildren<ArduinoConnector>();
+        processManager = GetComponent<PostProcessManager>();
     }
 
     public enum NavState 
@@ -152,6 +154,7 @@ public class PlayerController : MonoBehaviour
             IsGrounded();
             float y = Mathf.InverseLerp(5f, 17f, rb.velocity.magnitude);
             uiSpeed.particleSystem.emissionRate = Mathf.Lerp(0f, uiSpeed.maxParticle, y);
+            processManager.ChangeLensDistord(Mathf.Lerp(0f, -0.5f, y*1.2f));
             switch (navState)
             {
                 case NavState.PlayerControl:
@@ -394,7 +397,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator SwitchControls(string to, bool transition, bool keepGraphic = false)
     {
-        Debug.Log("Switching player");
+        //Debug.Log("Switching player");
         if (transition)
         {
             canMove = false;

@@ -12,6 +12,7 @@ public class Item : Interactable
         base.Interact();
         HideInteractable();
         GameManager.Instance.CollectItem(this);
+        AudioManager.instance.PlaySFX(AudioManager.instance.soundData.recupClip);
         foreach (var item in linkedItems)
         {
             item.HideInteractable();

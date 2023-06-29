@@ -21,13 +21,12 @@ public class TailleVigne : Task
         v.secateur.Use(vigneResistance);
         if (b)
         {
-            int r = Random.Range(0, 100);
-            if (r > sucessChance)
-            {
-                HandleFailedTask();
-            }
+            HandleFailedTask();
         }
-        quest.CompleteTask(this);
+        else
+        {
+            HandleSucceededTask();
+        }
     }
 
     public override void ShowInteractable()

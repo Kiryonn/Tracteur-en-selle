@@ -15,9 +15,7 @@ public class CustomSettingsButton : MonoBehaviour
         {
             toggle.isOn = SettingsManager.instance.settings.allowedThemes.Contains(theme);
             if (isTut) toggle.isOn = SettingsManager.instance.settings.enableTutorial;
-        }
-            
-        
+        } 
     }
 
     public void OnClick(bool checkBox)
