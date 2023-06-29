@@ -63,7 +63,8 @@ Material:
     - _Speed: 0.63
     - _Text_Intensity: 1.86
     m_Colors:
-    - _Color: {r: 0.6623012, g: 1.392881, b: 1.741101, a: 0}
+    - _Color: {r: 0.9396947, g: 0, b: 1.4053127, a: 0}
     - _Offset: {r: 0.06, g: 0.06, b: 0, a: 0}
+    - _TextColor: {r: 1, g: 1, b: 1, a: 0}
     - _Tilling: {r: 1.5, g: 1.5, b: 0, a: 0}
   m_BuildTextureStacks: []
