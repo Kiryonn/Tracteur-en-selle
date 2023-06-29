@@ -8,6 +8,7 @@ TagManager:
   - objet
   - Hazard
   - Haie
+  - Bottle
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - Player
   - Obstacles
   - RecapUI
-  - 
-  - 
+  - Items
+  - MapEdge
   - 
   - 
   - 
