@@ -523,6 +523,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: c53bfadd316909849bf3b68d7870ecf8, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 3368846401244636440, guid: 964d82bf6a95e394e99818718fcc7c84, type: 3}
     - target: {fileID: 919132149155446097, guid: c53bfadd316909849bf3b68d7870ecf8, type: 3}
       propertyPath: m_Name
       value: BarriereOpen (2)
@@ -605,6 +609,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: c53bfadd316909849bf3b68d7870ecf8, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 3368846401244636440, guid: 964d82bf6a95e394e99818718fcc7c84, type: 3}
     - target: {fileID: 919132149155446097, guid: c53bfadd316909849bf3b68d7870ecf8, type: 3}
       propertyPath: m_Name
       value: BarriereOpen (1)
@@ -687,6 +695,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: c53bfadd316909849bf3b68d7870ecf8, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 3368846401244636440, guid: 964d82bf6a95e394e99818718fcc7c84, type: 3}
     - target: {fileID: 919132149155446097, guid: c53bfadd316909849bf3b68d7870ecf8, type: 3}
       propertyPath: m_Name
       value: BarriereOpen (3)
@@ -769,6 +781,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: c53bfadd316909849bf3b68d7870ecf8, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 3368846401244636440, guid: 964d82bf6a95e394e99818718fcc7c84, type: 3}
     - target: {fileID: 919132149155446097, guid: c53bfadd316909849bf3b68d7870ecf8, type: 3}
       propertyPath: m_Name
       value: BarriereOpen (4)
@@ -851,6 +867,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: c53bfadd316909849bf3b68d7870ecf8, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 3368846401244636440, guid: 964d82bf6a95e394e99818718fcc7c84, type: 3}
     - target: {fileID: 919132149155446097, guid: c53bfadd316909849bf3b68d7870ecf8, type: 3}
       propertyPath: m_Name
       value: BarriereOpen (5)
