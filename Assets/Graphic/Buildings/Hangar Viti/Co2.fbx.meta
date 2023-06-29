@@ -3,7 +3,12 @@ guid: a5c2e692187443a41a230a20593154f1
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DetecteurCo2
+    second: {fileID: 2100000, guid: f6eea1ebb6b5f9b42b3ea1885c507ed6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

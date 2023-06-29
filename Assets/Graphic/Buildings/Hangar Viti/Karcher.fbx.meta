@@ -3,7 +3,12 @@ guid: 1d3e0b65dfc341d43b3c467076164aef
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Karcher
+    second: {fileID: 2100000, guid: eaee0d5db3a062a418f0b05c67a29f9b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

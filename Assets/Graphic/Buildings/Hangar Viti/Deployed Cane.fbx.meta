@@ -3,7 +3,22 @@ guid: e6b66643dbbbaa54c95a127eaccbd0e9
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Canne
+    second: {fileID: 2100000, guid: fbb4b4cc579995b44903dba0481eabc8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pompe
+    second: {fileID: 2100000, guid: de3e2f1ba5e7bd3458d3802d87401be2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tuyau
+    second: {fileID: 2100000, guid: a7270d0df32128e4ca629cf2a10f42cc, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
