@@ -391,7 +391,7 @@ public class GameManager : MonoBehaviour
         float life = velo.GetComponent<DamageController>().health * 10;
         Debug.Log("Score debug 1 : " + (1 - (timer / SettingsManager.instance.settings.maxTimeForTimedRun) + 0.5f));
         float timeCal = (1 - (timer / SettingsManager.instance.settings.maxTimeForTimedRun) + 0.5f) * 10000;
-        float failCal = totalFailedTasks / totalFailedTasks+totalSucceededTasks;
+        float failCal = 1/(totalFailedTasks+1);
         float questCal = completedQuests.Count * 1000f;
         float succCal = totalSucceededTasks * 87.5f;
         return ( timeCal + life + questCal + succCal)* failCal;

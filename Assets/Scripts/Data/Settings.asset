@@ -24,11 +24,11 @@ MonoBehaviour:
     sceneName: Elevage
   - th: 3
     sceneName: JEV
-  allowedThemes: 
-  currentTheme: 00000000
-  enableTutorial: 0
+  allowedThemes: 00000000
+  currentTheme: 01000000
+  enableTutorial: 1
   gameMode: 1
-  maxTimeForTimedRun: 10
+  maxTimeForTimedRun: 5
   difficulties:
   - difficultyName: Facile
     maxPente: 35
