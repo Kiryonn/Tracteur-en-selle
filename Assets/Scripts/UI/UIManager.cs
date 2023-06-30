@@ -30,6 +30,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject tacheRoot;
     [SerializeField] TextMeshProUGUI queteName;
     [SerializeField] TextMeshProUGUI tacheName;
+
+    [Header("Task bar stylish")]
+    [SerializeField] RectTransform bar;
+    [SerializeField] TextMeshProUGUI barText;
+    [SerializeField] Image leftIcon;
+    [SerializeField] Image rightIcon;
+    [SerializeField] float maxWidth;
+    [SerializeField] float minWidth;
+    [SerializeField] Image obscurImage;
     private void Awake()
     {
         if (instance == null)
@@ -44,6 +53,7 @@ public class UIManager : MonoBehaviour
         questDico = new Dictionary<Quest, TextMeshProUGUI>();
         questRoot.gameObject.SetActive(true);
         tacheRoot.SetActive(false);
+        HideStylishBar(true);
     }
 
     public void SetListener(ResourceController res)
@@ -113,6 +123,7 @@ public class UIManager : MonoBehaviour
         queteName.text = q._name;
         tacheName.text = q.GetCurrentTask()._name;
         tacheRoot.gameObject.SetActive(true);
+        Invoke("ShowStylishBar", 1f);
     }
 
     void UpdateQueteEnCour(Quest q)
@@ -125,7 +136,62 @@ public class UIManager : MonoBehaviour
         {
             Debug.Log("Np");
         }
-        
+    }
+
+    public void ShowStylishBar()
+    {
+        barText.text = queteName.text;
+        LeanTween.value(rightIcon.gameObject, rightIcon.color.a, 1f, 0.5f)
+            .setOnUpdate((float val) =>
+            {
+                rightIcon.SetAlpha(val);
+                leftIcon.SetAlpha(val);
+                
+            });
+        LeanTween.value(barText.gameObject, 0f, 1f, 1.5f)
+            .setDelay(2f)
+            .setOnUpdate((float val) =>
+            {
+                barText.alpha = val;
+            });
+        LeanTween.size(bar, new Vector2(maxWidth, bar.sizeDelta.y), 2f).setEaseInBack();
+        LeanTween.value(obscurImage.gameObject, 0f, 1f, 2f).setDelay(0.2f)
+            .setOnUpdate((float val) =>
+            {
+                obscurImage.SetAlpha(val);
+            });
+        // Just to do a delay
+        LeanTween.value(gameObject, 0f, 1f, 1f).setDelay(4f).setOnComplete(() => { HideStylishBar(); });
+    }
+
+    void HideStylishBar(bool fastHide = false)
+    {
+        if (fastHide)
+        {
+            bar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, minWidth);
+            leftIcon.SetAlpha(0f);
+            rightIcon.SetAlpha(0f);
+            barText.alpha = 0f;
+            Color c = obscurImage.color;
+            c.a = 0f;
+            obscurImage.color = c;
+        }
+        else
+        {
+            LeanTween.value(rightIcon.gameObject, rightIcon.color.a, 0f, 0.5f).setDelay(1.5f)
+            .setOnUpdate((float val) =>
+            {
+                rightIcon.SetAlpha(val);
+                leftIcon.SetAlpha(val);
+                obscurImage.SetAlpha(val);
+            });
+            LeanTween.value(barText.gameObject, 1f, 0f, 1.5f).setDelay(0.3f)
+                .setOnUpdate((float val) =>
+                {
+                    barText.alpha = val;
+                });
+            LeanTween.size(bar, new Vector2(minWidth, bar.sizeDelta.y), 2f).setEaseInBack();
+        }
     }
 
     void UpdateFinishQuest(Quest q)
@@ -149,5 +215,18 @@ public class UIManager : MonoBehaviour
     public void HideEnergy(bool yn)
     {
         energyRoot.SetActive(!yn);
+    }
+
+
+}
+
+public static class ImageEx
+{
+    public static Image SetAlpha(this Image image,float to)
+    {
+        Color c =  image.color;
+        c.a = to;
+        image.color = c;
+        return image;
     }
 }

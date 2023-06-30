@@ -570,8 +570,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Une qu\xEAte est compos\xE9e de t\xE2ches qui sont compos\xE9es d'objets
-    \xE0 utiliser\n"
+  m_text: "Une qu\xEAte est compos\xE9e de t\xE2ches, r\xE9alis\xE9es \xE0 l'aide
+    d'objets \xE0 r\xE9cup\xE9rer ou d'int\xE9ractifs \xE0 utiliser\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 85127f7529b62684f9d1b8c5f0d9890d, type: 2}
   m_sharedMaterial: {fileID: -35381680726952016, guid: 85127f7529b62684f9d1b8c5f0d9890d, type: 2}
@@ -598,7 +598,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 32.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -12017,7 +12017,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Votre but en tant qu'agriculteur de l'extr\xE8me est de r\xE9aliser le
+  m_text: "Votre but en tant qu'agriculteur de l'extr\xEAme est de r\xE9aliser le
     plus de qu\xEAtes dans la ferme."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 85127f7529b62684f9d1b8c5f0d9890d, type: 2}

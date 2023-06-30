@@ -109,12 +109,17 @@ public class GameManager : MonoBehaviour
         nTime = GetComponent<NightTime>();
         itemUIRoot.gameObject.SetActive(false);
         player = velo.gameObject.GetComponent<PlayerController>();
-        Invoke("SetPenteScaledWithDmg", 9f);
+
+        StartCoroutine(InitPente(9f));
         currentState = GameState.QuestState;
         SpawnPlayer();
         
     }
-
+    IEnumerator InitPente(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SetPenteScaledWithDmg();
+    }
     private void Update()
     {
         switch (currentState)
@@ -217,6 +222,10 @@ public class GameManager : MonoBehaviour
     public void SpawnPlayer(bool groundcheck = false)
     {
         if (groundcheck && currentState != GameState.QuestState) { return; }
+        if (groundcheck)
+        {
+            player.GetComponent<DamageController>().DamageTractor(20f);
+        }
         velo.transform.SetParent(playerParent);
         player.characterController.enabled = false;
         velo.transform.position = spawnPosition.position;
@@ -379,8 +388,13 @@ public class GameManager : MonoBehaviour
 
     float CalculateScore()
     {
-        float life = velo.GetComponent<DamageController>().health;
-        return ((1 - timer/SettingsManager.instance.settings.maxTimeForTimedRun + 0.5f) * 10000 + (life * 10) - (totalFailedTasks * 100)) * 10 + completedQuests.Count * 1000f + totalSucceededTasks * 87.5f;
+        float life = velo.GetComponent<DamageController>().health * 10;
+        Debug.Log("Score debug 1 : " + (1 - (timer / SettingsManager.instance.settings.maxTimeForTimedRun) + 0.5f));
+        float timeCal = (1 - (timer / SettingsManager.instance.settings.maxTimeForTimedRun) + 0.5f) * 10000;
+        float failCal = totalFailedTasks / totalFailedTasks+totalSucceededTasks;
+        float questCal = completedQuests.Count * 1000f;
+        float succCal = totalSucceededTasks * 87.5f;
+        return ( timeCal + life + questCal + succCal)* failCal;
     }
 
     public void SwitchState(GameState newGameState)

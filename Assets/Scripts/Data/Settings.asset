@@ -25,10 +25,10 @@ MonoBehaviour:
   - th: 3
     sceneName: JEV
   allowedThemes: 
-  currentTheme: 000000000100000002000000
+  currentTheme: 00000000
   enableTutorial: 0
   gameMode: 1
-  maxTimeForTimedRun: 200
+  maxTimeForTimedRun: 10
   difficulties:
   - difficultyName: Facile
     maxPente: 35

@@ -7741,8 +7741,8 @@ MonoBehaviour:
   - {fileID: 1571343510}
   - {fileID: 1880428379}
   - {fileID: 2124884576}
-  cowsSpeed: 0.09
-  cowsDuration: 7.02
+  cowsSpeed: 8
+  cowsDuration: 8.09
   screen: {fileID: 590152864}
 --- !u!1 &192910220
 GameObject:

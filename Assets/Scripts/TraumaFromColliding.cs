@@ -15,7 +15,7 @@ public class TraumaFromColliding : MonoBehaviour
     {
         cam = Camera.main;
         impulseSource = GetComponent<CinemachineImpulseSource>();
-        shakeCooldown = 3f;
+        shakeCooldown = 1f;
         cameraDetectionSensivity = 0.57f;
     }
 

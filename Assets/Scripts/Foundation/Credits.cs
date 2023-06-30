@@ -127,7 +127,7 @@ public class Credits : MonoBehaviour
         {
             for (int j = 0; j < cows.Length; j++)
             {
-                cows[j].position += Vector3.left * cowsSpeed * Random.Range(0.9f, 1.1f);
+                cows[j].position += Vector3.left * cowsSpeed * Random.Range(0.9f, 1.1f) * Time.deltaTime;
             }
             
             yield return null;

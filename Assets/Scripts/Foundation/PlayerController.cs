@@ -435,8 +435,10 @@ public class PlayerController : MonoBehaviour
 
     void IsGrounded()
     {
+
         WheelHit hit1;
         WheelHit hit2;
+
         if (!(backLeftWheelCollider.GetGroundHit(out hit1) && frontRightWheelCollider.GetGroundHit(out hit2)))
         {
             groundedTime += Time.deltaTime;
@@ -451,5 +453,6 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.SpawnPlayer(true);
             groundedTime = 0f;
         }
+
     }
 }
