@@ -20,7 +20,13 @@ public class NightTime : MonoBehaviour
         skyboxBlender = GetComponent<SkyboxBlender>();
         skyboxBlender.blend = 0f;
         day = true;
+        Invoke("TurnOffFPSEater", 3f);
         //StartCoroutine("WaitForNight");
+    }
+
+    void TurnOffFPSEater()
+    {
+        skyboxBlender.enabled = false;
     }
     /*
     private void Update()
@@ -56,6 +62,7 @@ public class NightTime : MonoBehaviour
     // aValue = 1 -> transition vers le jour
     IEnumerator ChangeDayTime(float aTime, float aValue)
     {
+        skyboxBlender.enabled = true;
         float currentIntensity = lightSource.intensity;
         float currentBlend = skyboxBlender.blend;
         for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / aTime)
@@ -85,7 +92,7 @@ public class NightTime : MonoBehaviour
             TurnSpotlights(true);
             day = false;
         }
-        
+        skyboxBlender.enabled = false;
     }
 
     public void FadeDayNight(float aTime, float aValue)
