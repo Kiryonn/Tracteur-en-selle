@@ -16,6 +16,7 @@ public class RecupEpareuse : Task
         GameManager.Instance.player.canMove = false;
         GameManager.Instance.GetComponent<TransitionManager>().FadeTransition(1f,3f, 1f);
         Invoke("AttachEpareuse", 3f);
+    
     }
 
     void AttachEpareuse()

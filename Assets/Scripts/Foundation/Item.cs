@@ -22,7 +22,6 @@ public class Item : Interactable
     public override void HideInteractable()
     {
         base.HideInteractable();
-        
     }
 
     protected override void OnStart()

@@ -8,18 +8,22 @@ using System.Linq;
 public enum DropdownType
 {
     Difficulty,
-    GameMode
+    GameMode,
+    PlayerSelection
 }
 
 public class DropDownUpdater : MonoBehaviour
 {
     TMP_Dropdown dropdown;
     [SerializeField]DropdownType dropdownType;
+    [SerializeField] bool clearOptions = true;
     // Start is called before the first frame update
     void Start()
     {
         dropdown = GetComponent<TMP_Dropdown>();
-        dropdown.ClearOptions();
+
+        if (clearOptions) { dropdown.ClearOptions(); }
+        
         TMP_Dropdown.OptionData dropdownOption;
 
         switch (dropdownType)
@@ -46,11 +50,34 @@ public class DropDownUpdater : MonoBehaviour
                 }
                 dropdown.value = 1;
                 break;
+            case DropdownType.PlayerSelection:
+                StartCoroutine(DropDownInitAsync());
+                break;
             default:
                 break;
         }
+    }
 
-        
+
+    IEnumerator DropDownInitAsync(float timeout = 10f)
+    {
+        float i = 0f;
+        TMP_Dropdown.OptionData dropdownOption;
+        while (i < timeout)
+        {
+            i += Time.deltaTime;
+            yield return new WaitForSeconds(1f);
+            if (DataManager.instance.isLoaded)
+            {
+                foreach (var item in DataManager.instance.clientDataList)
+                {
+                    dropdownOption = new TMP_Dropdown.OptionData();
+                    dropdownOption.text = item.ID;
+                    dropdown.options.Add(dropdownOption);
+                }
+                yield break;
+            }
+        }
     }
 
     public void OnDropDownChange()
@@ -63,6 +90,18 @@ public class DropDownUpdater : MonoBehaviour
             case DropdownType.GameMode:
                 GameMode[] tableau = (GameMode[])Enum.GetValues(typeof(GameMode));
                 SettingsManager.instance.settings.gameMode = tableau[dropdown.value];
+                break;
+            case DropdownType.PlayerSelection:
+                if (dropdown.value == 0)
+                {
+                    SettingsManager.instance.scoreDataManager.playerData
+                        .playerNickname = "";
+                }
+                else
+                {
+                    SettingsManager.instance.scoreDataManager.playerData
+                        .playerNickname = dropdown.options[dropdown.value].text;
+                }
                 break;
             default:
                 break;

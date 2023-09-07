@@ -62,7 +62,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Speed: -0.24
+    - _Speed: 0
     - _SrcBlend: 1
     - _Surface: 0
     - _WorkflowMode: 1

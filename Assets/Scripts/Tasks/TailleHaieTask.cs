@@ -9,6 +9,7 @@ public class TailleHaieTask : Task
     [SerializeField] Transform endOfLine;
     PlayerController playerController;
     bool destinationReached;
+    [SerializeField] float timeOut = 10f;
     protected override void OnStart()
     {
         base.OnStart();
@@ -24,47 +25,36 @@ public class TailleHaieTask : Task
         nav.transform.LookAt(endOfLine);
         nav.SetDestination(endOfLine.position);
         Debug.Log(nav.pathStatus);*/
-        playerController.ForceDestination(transform.position,endOfLine.position,1f);
-        StartCoroutine("WaitForDestination");
+        if (!destinationReached)
+        {
+            playerController.ForceDestination(transform.position, endOfLine.position, 1f);
+            StartCoroutine("WaitForDestination");
+        }
+        else
+        {
+            base.Interact();
+        }
+        
     }
 
     IEnumerator WaitForDestination()
     {
-        while (playerController.navState == PlayerController.NavState.Forced)
+        float time = 0f;
+        while (playerController.navState == PlayerController.NavState.Forced && time<timeOut)
         {
+            time += Time.deltaTime;
             yield return null;
         }
-        
-        Complete();
+
+        destinationReached = true;
+        Interact();
     }
 
-    void Complete()
+    protected override void HandleFailedTask()
     {
-        if (CheckNecessaryItem())
-        {
-            quest.CompleteTask(this);
-        }
-        else
-        {
-            int r = Random.Range(0, 100);
-            if (r > sucessChance)
-            {
-                HandleFailedTask();
-                RecapManager.instance.medicalRecap.AddInjurie(Parts.Torse, 2f);
-                RecapManager.instance.medicalRecap.AddInjurie(Parts.Tete, 1f);
-            }
-            else
-            {
-                Debug.Log("Task sucessfully not failed");
-            }
-            quest.CompleteTask(this);
-        }
-
-        if (quest.isFinished() == this)
-        {
-            HideAllNecessaryItems();
-            
-        }
-
+        RecapManager.instance.medicalRecap.AddInjurie(Parts.Torse, 2f);
+        RecapManager.instance.medicalRecap.AddInjurie(Parts.Tete, 1f);
+        base.HandleFailedTask();
     }
+
 }

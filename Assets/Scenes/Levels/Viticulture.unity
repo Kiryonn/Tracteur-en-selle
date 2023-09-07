@@ -22331,6 +22331,7 @@ MonoBehaviour:
   - {fileID: 5481281880941511987}
   - {fileID: 556817219}
   - {fileID: 2108270131}
+  bandDelay: 4
   vision: {fileID: 0}
   arrowPointing: 1
   arrowPrefab: {fileID: 516646376464323638, guid: b05f2eb1ceaad4745959e2ed80d7fc0b, type: 3}
@@ -22529,6 +22530,7 @@ MonoBehaviour:
   - {fileID: 1828267418}
   - {fileID: 1094890361}
   - {fileID: 99698408}
+  bandDelay: 4
   vision: {fileID: 0}
   arrowPointing: 1
   arrowPrefab: {fileID: 516646376464323638, guid: b05f2eb1ceaad4745959e2ed80d7fc0b, type: 3}

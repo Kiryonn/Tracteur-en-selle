@@ -10,11 +10,14 @@ public class CuveQuest : Quest
     bool check;
     [SerializeField] GazZone gazZone;
 
+    
     protected override void OnStart()
     {
         base.OnStart();
         HideTractor();
     }
+    
+
     public override void Interact()
     {
         base.Interact();

@@ -49,14 +49,15 @@ public class PlayerController : MonoBehaviour
     float blendVal = 0f;
     [SerializeField] float smoothAnim;
     public CharacterController characterController { get; private set; }
-    [SerializeField] GameObject charaGraphics;
+    public GameObject charaGraphics;
     public Animator playerAnim;
 
     [Header("Shaders")]
     public Renderer cabin;
 
     // Automatic control values
-
+    [Header("Navmesh values")]
+    [SerializeField] float maxAutoSpeed = 4f;
     Vector3 destinationPoint;
     float minDistance;
     [SerializeField] SpeedSystem uiSpeed;
@@ -82,7 +83,7 @@ public class PlayerController : MonoBehaviour
         processManager = GetComponent<PostProcessManager>();
     }
 
-    public enum NavState 
+    public enum NavState
     {
         PlayerControl,
         Forced,
@@ -102,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
         //arduinoRotationNormalized = -Mathf.Clamp(arduino.qx*7f,-1f,1f);
 
-        arduinoRotationNormalized = ArduinoRotation(arduino.roll,-20f,20f,(-1.5f,1.5f));
+        arduinoRotationNormalized = ArduinoRotation(arduino.roll, -20f, 20f, (-1.5f, 1.5f));
 
 
 
@@ -112,23 +113,23 @@ public class PlayerController : MonoBehaviour
 
         rotation = (Mathf.Abs(Input.GetAxis("Horizontal")) > Mathf.Abs(arduinoRotationNormalized)) ? Input.GetAxis("Horizontal") : arduinoRotationNormalized;
         //rotation = Input.GetAxis("Horizontal");
-        
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("Escape is pressed");
             GameManager.Instance.PauseGame();
         }
-        
+
     }
 
-    float ArduinoRotation(float value, float min, float max, (float,float) deadZone)
+    float ArduinoRotation(float value, float min, float max, (float, float) deadZone)
     {
         if (value >= deadZone.Item1 && value <= deadZone.Item2)
         {
             return 0;
         }
         bool m = (Mathf.Abs(value - max) < Mathf.Abs(value - min));
-        float rapport; 
+        float rapport;
 
         if (m)
         {
@@ -154,7 +155,7 @@ public class PlayerController : MonoBehaviour
             IsGrounded();
             float y = Mathf.InverseLerp(5f, 17f, rb.velocity.magnitude);
             uiSpeed.particleSystem.emissionRate = Mathf.Lerp(0f, uiSpeed.maxParticle, y);
-            processManager.ChangeLensDistord(Mathf.Lerp(0f, -0.5f, y*1.2f));
+            processManager.ChangeLensDistord(Mathf.Lerp(0f, -0.5f, y * 1.2f));
             switch (navState)
             {
                 case NavState.PlayerControl:
@@ -196,7 +197,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             uiSpeed.particleSystem.emissionRate = 0f;
-            playerAnim.SetFloat("AnimSpeed",charaSpeed/3f);
+            playerAnim.SetFloat("AnimSpeed", charaSpeed / 3f);
             if (!characterController.isGrounded)
             {
                 Vector3 velocity = Vector3.zero;
@@ -213,22 +214,22 @@ public class PlayerController : MonoBehaviour
                 playerAnim.SetFloat("Blend", 0f);
             }
         }
-        
-        
-            /*
-        if (canMove && movement.magnitude >=0.1f && resourceController.SuffisantEnergy())
-        {
-            resourceController.UseEnergy(energyRequired);
-            rb.AddForce(movement * speed * 500f * Time.fixedDeltaTime, ForceMode.Force);
-            Quaternion deltaRotation = Quaternion.Euler(0, rotation, 0);
-            rb.MoveRotation(rb.rotation * deltaRotation);
-        }
-        */
+
+
+        /*
+    if (canMove && movement.magnitude >=0.1f && resourceController.SuffisantEnergy())
+    {
+        resourceController.UseEnergy(energyRequired);
+        rb.AddForce(movement * speed * 500f * Time.fixedDeltaTime, ForceMode.Force);
+        Quaternion deltaRotation = Quaternion.Euler(0, rotation, 0);
+        rb.MoveRotation(rb.rotation * deltaRotation);
+    }
+    */
     }
 
     void HandleMovement(Vector3 direction)
     {
-        
+
         if (direction.magnitude >= 0.1f)
         {
             if (movement >= 0)
@@ -242,19 +243,19 @@ public class PlayerController : MonoBehaviour
             {
                 transform.Rotate(Vector3.up * -rotation * turnSpeed * Time.deltaTime);
             }
-            
+
             characterController.Move(characterController.transform.forward * movement * charaSpeed * Time.deltaTime);
         }
-        blendVal = Mathf.MoveTowards(playerAnim.GetFloat("Blend"), movement,smoothAnim);
+        blendVal = Mathf.MoveTowards(playerAnim.GetFloat("Blend"), movement, smoothAnim);
         playerAnim.SetFloat("Blend", blendVal);
-        
+
     }
 
     void HandleRotation(Vector3 direction)
     {
         if (direction.magnitude > 0f)
         {
-            
+
         }
     }
 
@@ -269,7 +270,7 @@ public class PlayerController : MonoBehaviour
     void HandleSteering()
     {
         float turnAngle = rotation * maxAngle;
-;
+        ;
         frontLeftWheelCollider.steerAngle = turnAngle;
         frontRightWheelCollider.steerAngle = turnAngle;
 
@@ -299,22 +300,23 @@ public class PlayerController : MonoBehaviour
 
     void HandleAutomatic()
     {
-        
         float distanceToTarget = Vector3.Distance(transform.position, destinationPoint);
+
+        Vector3 targetDirection = (destinationPoint - transform.position).normalized;
+
+        //Vector3 centerOfWheels = (frontLeftWheel.position + frontRightWheel.position) / 2;
+        //Debug.DrawRay(centerOfWheels, targetDirection, Color.red);
         //Debug.Log("Distance restante : " + distanceToTarget);
+
         if (distanceToTarget > minDistance)
         {
-            /*
-            Vector3 targetDirection = (destinationPoint - transform.position).normalized;
             float steeringAngle = Vector3.Angle(targetDirection, transform.forward);
-            Debug.Log("Angle = " + steeringAngle);
             if (steeringAngle > 15f)
             {
-                float rotationDirection = Vector3.Cross(targetDirection, transform.forward).y;
+                float rotationDirection = -Vector3.Cross(targetDirection, transform.forward).y;
                 float steerDirection = Mathf.Sign(rotationDirection);
                 float steerAmount = Mathf.Clamp(steeringAngle / maxAngle, 0f, 1f) * steerDirection;
-                //float steerAmount = steeringAngle / maxAngle;
-                Debug.Log("Clamp : " + Mathf.Clamp(steeringAngle / maxAngle, 0f, 1f));
+
                 frontLeftWheelCollider.steerAngle = maxAngle * steerAmount;
                 frontRightWheelCollider.steerAngle = maxAngle * steerAmount;
             }
@@ -323,9 +325,10 @@ public class PlayerController : MonoBehaviour
                 frontLeftWheelCollider.steerAngle = 0f;
                 frontRightWheelCollider.steerAngle = 0f;
             }
-            */
-            frontLeftWheelCollider.motorTorque = speed;
-            frontRightWheelCollider.motorTorque = speed;
+
+            frontLeftWheelCollider.motorTorque = Mathf.Lerp(speed, 0f, rb.velocity.magnitude / maxAutoSpeed);
+
+            frontRightWheelCollider.motorTorque = Mathf.Lerp(speed, 0f, rb.velocity.magnitude / maxAutoSpeed);
 
             UpdateWheels();
         }
@@ -405,18 +408,22 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(3f);
             canMove = true;
         }
-        
-        SwitchControl(to,keepGraphic);
+
+        SwitchControl(to, keepGraphic);
     }
 
-    public void SetEquipment(EquipmentRecup _equipment)
+    public void SetEquipment(EquipmentRecup _equipment, bool switchCam = true)
     {
         if (equipment != null)
         {
             equipment.RemoveEquipment();
         }
         equipment = _equipment;
-        GameManager.Instance.SwitchCam(CamTypes.Equipments);
+        if (switchCam)
+        {
+            GameManager.Instance.SwitchCam(CamTypes.Equipments);
+        }
+
     }
 
     public void StopAllMovements(bool yesOrNo)

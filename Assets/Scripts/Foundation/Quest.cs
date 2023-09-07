@@ -5,6 +5,7 @@ using UnityEngine;
 public class Quest : Interactable
 {
     [SerializeField] protected List<Task> requiredTasks;
+    public float bandDelay = 1f;
     public MSAVision vision;
     public bool isStarted { get { return (this == GameManager.Instance.currentQuest); } }
     [SerializeField] bool arrowPointing;

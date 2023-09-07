@@ -6,6 +6,7 @@ public class TailleHaieQuest : Quest
 {
     [SerializeField] RecupEpareuse epareuse;
     [SerializeField] Plots pl;
+
     public override void CompleteTask(Task task)
     {
         base.CompleteTask(task);

@@ -39,6 +39,19 @@ public class UIManager : MonoBehaviour
     [SerializeField] float maxWidth;
     [SerializeField] float minWidth;
     [SerializeField] Image obscurImage;
+
+    [Header("Battery warning")]
+    [SerializeField] CanvasGroup batteryWarning;
+    float sinTimer;
+    [SerializeField] float warnFlashSpeed = 2f;
+
+    [Header("Cadrant")]
+    [SerializeField] RectTransform originCadrant;
+    [SerializeField] float minAngle;
+    [SerializeField] float maxAngle;
+    [SerializeField] float shakeSpeed;
+    [SerializeField] float shakeAmount;
+    Vector3 startCadrantPos;
     private void Awake()
     {
         if (instance == null)
@@ -50,6 +63,7 @@ public class UIManager : MonoBehaviour
         {
             Destroy(this);
         }
+        startCadrantPos = originCadrant.anchoredPosition3D;
         questDico = new Dictionary<Quest, TextMeshProUGUI>();
         questRoot.gameObject.SetActive(true);
         tacheRoot.SetActive(false);
@@ -91,14 +105,27 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.onCompleteQuest.AddListener(UpdateFinishQuest);
     }
 
-    void UpdateEnergy(PlayerUI ui, float amount)
+    void UpdateEnergy(PlayerUI ui, float amount, bool warn)
     {
+        if (warn && amount <= 0)
+        {
+            batteryWarning.alpha = (Mathf.Sin(Time.time * warnFlashSpeed) + 1f) / 2f;
+        }
+        else
+        {
+            batteryWarning.alpha = 0f;
+        }
         ui.energy.fillAmount = amount;
     }
 
     void UpdateSpeed(PlayerUI ui, float amount)
     {
         ui.speed.fillAmount = amount;
+        originCadrant.localRotation = Quaternion.Euler(0,0,Mathf.Lerp(minAngle,maxAngle,amount));
+
+        originCadrant.anchoredPosition3D = new Vector3(startCadrantPos.x + Mathf.Sin(Time.time * shakeSpeed) * amount * shakeAmount,
+                                                        startCadrantPos.x + Mathf.Sin(Time.time * shakeSpeed) * amount * shakeAmount,
+                                                            0f);
     }
 
     void UpdateQuest(Quest q,string txt)
@@ -117,13 +144,13 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void UpdateTabletQuest(Quest q)
+    void UpdateTabletQuest(Quest q,float delay)
     {
         questRoot.gameObject.SetActive(false);
         queteName.text = q._name;
         tacheName.text = q.GetCurrentTask()._name;
         tacheRoot.gameObject.SetActive(true);
-        Invoke("ShowStylishBar", 1f);
+        Invoke("ShowStylishBar", delay);
     }
 
     void UpdateQueteEnCour(Quest q)

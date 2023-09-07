@@ -1,7 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 // Gère les transitions entre des éléments de l'ui comme un flash de dégat, un fondu au noir
 // Gère aussi la phase où le score s'affiche en baissant la luminosité au max
@@ -71,6 +73,11 @@ public class TransitionManager : MonoBehaviour
 
     [Header("Data")]
     [SerializeField] StatistiqueManager statistiqueManager;
+
+    [Header("Leaderboard")]
+    [SerializeField] CanvasGroup scoreRoot;
+    [SerializeField] RectTransform scoreContainer;
+    [SerializeField] GameObject scorePrefab;
 
     [System.Serializable]
     public class UIDataText
@@ -254,7 +261,7 @@ public class TransitionManager : MonoBehaviour
         // Removing the black foreground
         oldUI.SetActive(true);
         StartCoroutine(FadeScreen(0f, fadeDuration, false));
-        
+
     }
 
     void ShowScoreParam()
@@ -557,6 +564,11 @@ public class TransitionManager : MonoBehaviour
                 yield return new WaitForSeconds(3f);
                 StartCoroutine(MakeNextTransition());
                 break;
+            case 8:
+                ShowLeaderboard();
+                transitionIndex++;
+                StartCoroutine(WaitForInputs());
+                break;
             default:
                 ResetScene();
                 break;
@@ -564,6 +576,38 @@ public class TransitionManager : MonoBehaviour
         //if (_continueT) { StartCoroutine(MakeNextTransition()); }
 
         yield return null;
+    }
+
+    void ShowLeaderboard()
+    {
+        LeanTween.value(0f, 1f, 1f).setOnUpdate((float val) =>
+        {
+            scoreRoot.alpha = val;
+        });
+        int i = 1;
+        Dictionary<string, float> myDic = SettingsManager.instance.scoreDataManager.scores.OrderByDescending(x => x.Value)
+            .ToDictionary(x => x.Key, x => x.Value);
+
+        RectTransform temp;
+
+        
+        foreach (KeyValuePair<string, float> entry in myDic)
+        {
+            if (i > 10) return;
+           
+            temp = Instantiate(scorePrefab).GetComponent<RectTransform>();
+            temp.SetParent(scoreContainer);
+            temp.localScale = Vector3.one;
+            temp.anchoredPosition3D = new Vector3(temp.anchoredPosition3D.x, temp.anchoredPosition3D.y, 0f);
+
+            TextMeshProUGUI[] values = temp.GetComponentsInChildren<TextMeshProUGUI>();
+
+            values[0].text = "-" + i + "-";
+            values[1].text = entry.Key;
+            values[2].text = Mathf.RoundToInt(entry.Value) + "";
+
+            i++;
+        }
     }
 
     IEnumerator ShowStats()
@@ -583,18 +627,21 @@ public class TransitionManager : MonoBehaviour
                         schemaHumain.img.color = tempColor;
                     });
 
-        statistiqueManager.filliereToStatsDictionary.TryGetValue(SettingsManager.instance.settings.currentTheme[indexStat], out Statistique st);
+        DataManager.instance
+            .GetComponent<StatistiqueManager>()
+                .filliereToStatsDictionary
+                    .TryGetValue(SettingsManager.instance.settings.currentTheme[indexStat], out Statistique st);
 
         filliereName.txt.text = SettingsManager.instance.settings.currentTheme[indexStat].ToString();
         filliereName.Show();
 
-        coutAn.text = "Coût moyen d'un AT par AN en euros : " + st.CoutAn+" €";
+        coutAn.text = "Coût moyen d'un AT par AN en euros : " + st.CoutAn + " €";
         coutJ.text = "Coût moyen d'un AT par JOUR en euros : " + st.CoutJour + " €";
 
         Color[] colors = PieCreator.CreatePie(pieCreator.gameObject, circleSprite, new int[] { st.ATBT, st.ATFrance });
 
-        coutATBT.text = "Nombre d'AT en région berry-tourainne : "+st.ATBT;
-        coutATF.text = "Nombre d'AT en France : "+st.ATFrance;
+        coutATBT.text = "Nombre d'AT en région berry-tourainne : " + st.ATBT;
+        coutATF.text = "Nombre d'AT en France : " + st.ATFrance;
 
         coutATBT.GetComponentInChildren<Image>().color = colors[0];
         coutATF.GetComponentInChildren<Image>().color = colors[1];
@@ -611,7 +658,7 @@ public class TransitionManager : MonoBehaviour
 
         circonsText.gameObject.SetActive(true);
 
-        for (int i = circonstanceLayout.transform.childCount-1; i > 0 ; i--)
+        for (int i = circonstanceLayout.transform.childCount - 1; i > 0; i--)
         {
             Destroy(circonstanceLayout.transform.GetChild(i).gameObject);
         }
@@ -620,7 +667,7 @@ public class TransitionManager : MonoBehaviour
         {
             TextMeshProUGUI tempText = Instantiate(circonsText, circonsText.rectTransform.parent);
             tempText.text = (st.Circonstance[i].Motif + " : " + st.Circonstance[i].Pourcentage + "%");
-            
+
             //st.Circonstance[i].
         }
 
@@ -652,6 +699,6 @@ public class TransitionManager : MonoBehaviour
                 globalCanva.alpha = value;
             });
         }
-        
+
     }
 }

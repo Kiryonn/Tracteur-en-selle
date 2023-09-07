@@ -10,6 +10,8 @@ public class DataManager : MonoBehaviour
 	public ClientData[] clientData { get; private set; }
 	public List<ClientData> clientDataList;
 	public static DataManager instance;
+
+	public bool isLoaded { get; private set; }
 	void Start()
 	{
 		if (instance == null)
@@ -22,6 +24,29 @@ public class DataManager : MonoBehaviour
         }
 		string json = ReadFromFile("VisiteursData.json");
 		clientData = JsonConvert.DeserializeObject<ClientData[]>(json);
+
+		StartCoroutine(InitList());
+	}
+
+	IEnumerator InitList(float timeOut = 10f, float step = 1f)
+    {
+		isLoaded = false;
+		for (float i = 0f; i < timeOut; i += Time.deltaTime)
+        {
+			yield return new WaitForSeconds(step);
+			try
+			{
+				clientDataList = clientData.ToList<ClientData>();
+				isLoaded = true;
+				yield break;
+			}
+			catch (System.Exception)
+			{
+				// Do nothing
+			}
+		}
+		isLoaded = true;
+		clientDataList = new List<ClientData>();
 	}
 
 	public static string ReadFromFile(string fileName)
@@ -49,6 +74,19 @@ public class DataManager : MonoBehaviour
 		string content = JsonConvert.SerializeObject(clientData);
 		Debug.Log("Content = " + content);
 		File.WriteAllText(path, content);
+	}
+
+	public string GenerateUser()
+    {
+		ClientData client = new ClientData();
+
+		client.ID = System.DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+		client.Age = "Inconnu";
+		client.Categorie = "Inconnu";
+
+		UpdateVisiteurData(client);
+
+		return client.ID;
 	}
 
 	public void UpdateVisiteurData(ClientData data)

@@ -29,7 +29,7 @@ public class EquipmentRecup : Item
         
     }
 
-    public void RemoveEquipment()
+    public virtual void RemoveEquipment()
     {
         //equipment.transform.parent = null;
         //float height = transform.position.y;

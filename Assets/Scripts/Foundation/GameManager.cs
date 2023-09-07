@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
 
     [System.NonSerialized] public UnityEvent<Item> onCollectedItem = new UnityEvent<Item>();
     [System.NonSerialized] public UnityEvent<Quest, string> onCreatedQuest = new UnityEvent<Quest, string>();
-    [System.NonSerialized] public UnityEvent<Quest> onStartQuest = new UnityEvent<Quest>();
+    [System.NonSerialized] public UnityEvent<Quest,float> onStartQuest = new UnityEvent<Quest,float>();
     [System.NonSerialized] public UnityEvent<Quest> onCompleteTask = new UnityEvent<Quest>();
     [System.NonSerialized] public UnityEvent<Quest> onCompleteQuest = new UnityEvent<Quest>();
 
@@ -151,7 +151,6 @@ public class GameManager : MonoBehaviour
         if (limited)
         {
             StartCoroutine(SwitchBackCam(currentCamType, duration));
-
         }
         if (specialCamera && currentCamera != specialCamera)
         {
@@ -266,17 +265,20 @@ public class GameManager : MonoBehaviour
         Debug.Log("Temps passé : " + timer);
         Debug.Log("Tracteur endommagé à :" + (100f - velo.GetComponent<DamageController>().health));
         Debug.Log("Nombre d'échecs : " + totalFailedTasks);
-        Debug.Log("Votre score est de : " + CalculateScore());
         playerData.score = CalculateScore();
+
+        Debug.Log("Votre score est de : " + playerData.score);
+        
         float durabilite = velo.gameObject.GetComponent<DamageController>().health;
-        gameObject.GetComponent<TransitionManager>().SetValues(timer, totalFailedTasks, durabilite, CalculateScore());
+        gameObject.GetComponent<TransitionManager>().SetValues(timer, totalFailedTasks, durabilite, playerData.score);
         currentState = GameState.ScoreState;
+        SettingsManager.instance.scoreDataManager.AddScore(playerData.score);
 
         nTime.SetDayTime(true);
         nTime.dayNightCycle = false;
         totalFailedTasks = 0;
         collectedItems = new List<Item>();
-        SettingsManager.instance.scoreDataManager.AddScore(playerData.score);
+        
         //SettingsManager.instance.LoadNextLevel();
     }
 
@@ -315,24 +317,26 @@ public class GameManager : MonoBehaviour
         Debug.Log("COMPLETING QUEST OF TYPE : " + quest._name);
         if (remainingQuests.Count == 0)
         {
-            WinGame();
+            Invoke("WinGame", 2f);
+            //WinGame();
         }
         else
         {
             ShowQuests();
+            Debug.Log("I am invoking focus on quest");
             Invoke("FocusOnNearestQuest", 4f);
         }
 
     }
 
-    public void CollectItem(Item item)
+    public void CollectItem(Item item, bool noAnim = false)
     {
         if (!collectedItems.Contains(item))
         {
             if (!item.noDroneRequest) drone.SummonDrone(item);
             collectedItems.Add(item);
             onCollectedItem.Invoke(item);
-            if (player.isCharacterControlled)
+            if (player.isCharacterControlled && !noAnim)
             {
                 player.playerAnim.SetTrigger("Take");
             }
@@ -349,7 +353,7 @@ public class GameManager : MonoBehaviour
 
     public void TriggerQuestStart(Quest q)
     {
-        onStartQuest.Invoke(q);
+        onStartQuest.Invoke(q,q.bandDelay);
     }
 
     public void HideAllObjectsOfType(Type type)
@@ -390,10 +394,13 @@ public class GameManager : MonoBehaviour
     {
         float life = velo.GetComponent<DamageController>().health * 10;
         Debug.Log("Score debug 1 : " + (1 - (timer / SettingsManager.instance.settings.maxTimeForTimedRun) + 0.5f));
-        float timeCal = (1 - (timer / SettingsManager.instance.settings.maxTimeForTimedRun) + 0.5f) * 10000;
-        float failCal = 1/(totalFailedTasks+1);
+        float timeCal = (1 - (timer / SettingsManager.instance.settings.maxTimeForTimedRun) /*+ 0.5f*/) * 30000;
+        float failCal = 1f/(totalFailedTasks+1f);
         float questCal = completedQuests.Count * 1000f;
         float succCal = totalSucceededTasks * 87.5f;
+
+        Debug.Log("Here is the detailed score : " +
+            timeCal+" + "+life+" + "+questCal+" + "+succCal+" * "+failCal);
         return ( timeCal + life + questCal + succCal)* failCal;
     }
 
@@ -455,6 +462,7 @@ public class GameManager : MonoBehaviour
 
     public void FocusOnNearestQuest()
     {
+        Debug.Log("Focus is called");
         float dist = 0f;
         float currDist;
         Quest nearestQuest = null;
@@ -471,9 +479,8 @@ public class GameManager : MonoBehaviour
         if (nearestQuest == null) { return; } 
 
         CameraFocus(nearestQuest.transform, 3f);
-        //SwitchCam(CamTypes.LookAt, null, true, 3f, nearestQuest.transform);
     }
-
+    //SwitchCam(CamTypes.LookAt, null, true, 3f, nearestQuest.transform);
     public void SucceedTask(Task t)
     {
         totalSucceededTasks++;

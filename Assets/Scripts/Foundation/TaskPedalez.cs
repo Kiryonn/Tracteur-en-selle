@@ -67,7 +67,6 @@ public class TaskPedalez : Task
         Interact();
         GameManager.Instance.SetPenteScaledWithDmg();
 
-        GameManager.Instance.player.canMove = true;
     }
 
     protected virtual void OnProgessChanged(float p)

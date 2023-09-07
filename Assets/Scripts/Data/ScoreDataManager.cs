@@ -7,16 +7,17 @@ using System.Collections;
 
 public class ScoreDataManager : MonoBehaviour
 {
-    Dictionary<string, float> scores;
+    public Dictionary<string, float> scores { get; private set; }
+    public PlayerData playerData;
     DataScore[] dataFromJSON;
-    string player = "";
     private void Start()
     {
         scores = new Dictionary<string, float>();
         string json = ReadFromFile("ScoreData.json");
         dataFromJSON = JsonConvert.DeserializeObject<DataScore[]>(json);
-
-        StartCoroutine(InitScores(5f));
+        playerData.playerNickname = "";
+        playerData.score = 0f;
+        StartCoroutine(InitScores(3f));
     }
 
     IEnumerator InitScores(float delay)
@@ -30,7 +31,8 @@ public class ScoreDataManager : MonoBehaviour
 
     public void AddPlayer(string id)
     {
-        scores.TryAdd(player, 0f);
+        playerData.playerNickname = id;
+        scores.TryAdd(id, 0f);
     }
 
     string ReadFromFile(string fileName)
@@ -54,14 +56,25 @@ public class ScoreDataManager : MonoBehaviour
 
     public void AddScore(float score)
     {
+        Debug.Log("Trying to add a score of " + score + " to the player : " + playerData.playerNickname);
+
         try
         {
-            scores[player] = score;
-            UpdateScoreData(new DataScore(player, scores[player]));
+            if (playerData.playerNickname == "")
+            {
+                playerData.playerNickname = DataManager.instance.GenerateUser();
+                scores[playerData.playerNickname] = score;
+            }
+            else if(score > scores[playerData.playerNickname])
+            {
+                scores[playerData.playerNickname] = score;
+            }
+
+            UpdateScoreData(new DataScore(playerData.playerNickname, scores[playerData.playerNickname]));
         }
         catch (System.Exception)
         {
-            Debug.Log("Can't change player score of id : " + player);
+            Debug.Log("Can't change player score of id : " + playerData.playerNickname);
         }
     }
 
@@ -73,11 +86,16 @@ public class ScoreDataManager : MonoBehaviour
         File.WriteAllText(path, content);
     }
 
-    
-
     public void UpdateScoreData(DataScore data)
     {
         DataScore[] dataScores = new DataScore[scores.Count];
-        SaveJson("VisiteursData.json",dataScores);
+        int i = 0;
+        foreach (KeyValuePair<string, float> entry in scores)
+        {
+            dataScores[i] = new DataScore(entry.Key, entry.Value);
+            i++;
+        }
+
+        SaveJson("ScoreData.json",dataScores);
     }
 }

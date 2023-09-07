@@ -19,7 +19,7 @@ public class ResourceController : MonoBehaviour
     [SerializeField] float cadenceFillSpeed;
     [SerializeField] float speedDecay;
 
-    [System.NonSerialized] public UnityEvent<PlayerUI, float> energyChangeEvent;
+    [System.NonSerialized] public UnityEvent<PlayerUI, float, bool> energyChangeEvent;
     [System.NonSerialized] public UnityEvent<PlayerUI, float> speedChangeEvent;
 
     [SerializeField] Renderer batteryRenderer;
@@ -42,7 +42,7 @@ public class ResourceController : MonoBehaviour
         playerUI = GetComponent<PlayerUI>();
         if (energyChangeEvent == null)
         {
-            energyChangeEvent = new UnityEvent<PlayerUI, float>();
+            energyChangeEvent = new UnityEvent<PlayerUI, float, bool>();
         }
 
         if (speedChangeEvent == null)
@@ -131,7 +131,7 @@ public class ResourceController : MonoBehaviour
         batteryColor = Color.Lerp(lowBatteryColor, maxBatteryColor, energy / maxEnergy);
         batteryRenderer.material.SetColor("_PowerColor", batteryColor);
 
-        energyChangeEvent.Invoke(playerUI, energy/maxEnergy);
+        energyChangeEvent.Invoke(playerUI, energy/maxEnergy, !GameManager.Instance.player.isCharacterControlled);
     }
 
     public void UseEnergy(float amount)

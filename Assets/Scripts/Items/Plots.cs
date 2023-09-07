@@ -7,6 +7,7 @@ public class Plots : Item
     [SerializeField] Transform[] plotsPosition;
     [SerializeField] GameObject plotPrefab;
     Transform[] plots;
+    bool posed;
 
     protected override void OnStart()
     {
@@ -17,6 +18,7 @@ public class Plots : Item
     public override void Interact()
     {
         base.Interact();
+        posed = true;
         for (int i = 0; i<plotsPosition.Length; i++)
         {
             Debug.Log("i = " + i);
@@ -33,6 +35,14 @@ public class Plots : Item
             {
                 Destroy(plots[i].gameObject, 1.5f);
             }
+        }
+    }
+
+    public override void ShowInteractable()
+    {
+        if (!posed)
+        {
+            base.ShowInteractable();
         }
     }
 }
