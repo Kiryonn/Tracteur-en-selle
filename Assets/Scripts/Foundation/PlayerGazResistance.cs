@@ -17,6 +17,7 @@ public class PlayerGazResistance : MonoBehaviour
 
     public bool insideGaz;
     public bool dead;
+    public bool gotDetector;
     // Update is called once per frame
     void Update()
     {
@@ -25,7 +26,7 @@ public class PlayerGazResistance : MonoBehaviour
             currentGazValue += gazFillSpeed * Time.deltaTime;
             if (currentGazValue > gazResistance) { Die(); }
             currentBipDelay += Time.deltaTime;
-            if (currentBipDelay > Mathf.Lerp(maxBipDelay,minBipDelay,currentGazValue/gazResistance))
+            if (currentBipDelay > Mathf.Lerp(maxBipDelay,minBipDelay,currentGazValue/gazResistance) && gotDetector)
             {
                 bipSource.PlayOneShot(bipClip);
                 currentBipDelay = 0f;

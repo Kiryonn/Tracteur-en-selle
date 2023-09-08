@@ -63,6 +63,9 @@ public class LoopingSound : MonoBehaviour
     }
     public void Stop(bool fade = true)
     {
+        if (!startSource || !loopSource.clip || !endSource)
+            return;
+
         endSource.clip = PickRandomClip(endClips);
 
         if (fade)

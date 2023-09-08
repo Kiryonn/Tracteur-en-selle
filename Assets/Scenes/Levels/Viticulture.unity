@@ -10733,6 +10733,7 @@ MonoBehaviour:
     rotation: {x: 0, y: -90, z: 0}
     scale: {x: 1, y: 1, z: 1}
   co2UI: {fileID: 0}
+  detector: {fileID: 1606815128}
 --- !u!65 &1381682300
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class TaskPedalez : Task
         {
             HandleBeforePedale();
             GameManager.Instance.player.canMove = false;
+            GameManager.Instance.player.characterController.enabled = false;
             Invoke("FunctionToStartListening", delay);
             HideInteractable();
         }
@@ -21,6 +22,7 @@ public class TaskPedalez : Task
         {
             base.Interact();
             GameManager.Instance.player.canMove = true;
+            GameManager.Instance.player.characterController.enabled = true;
             HandleFinishPedale();
         }
     }

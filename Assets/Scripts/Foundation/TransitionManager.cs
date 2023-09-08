@@ -585,13 +585,13 @@ public class TransitionManager : MonoBehaviour
             scoreRoot.alpha = val;
         });
         int i = 1;
-        Dictionary<string, float> myDic = SettingsManager.instance.scoreDataManager.scores.OrderByDescending(x => x.Value)
+        Dictionary<string, (float,float)> myDic = SettingsManager.instance.scoreDataManager.scores.OrderByDescending(x => x.Value)
             .ToDictionary(x => x.Key, x => x.Value);
 
         RectTransform temp;
 
         
-        foreach (KeyValuePair<string, float> entry in myDic)
+        foreach (KeyValuePair<string, (float,float)> entry in myDic)
         {
             if (i > 10) return;
            
@@ -604,7 +604,7 @@ public class TransitionManager : MonoBehaviour
 
             values[0].text = "-" + i + "-";
             values[1].text = entry.Key;
-            values[2].text = Mathf.RoundToInt(entry.Value) + "";
+            values[2].text = Mathf.RoundToInt(entry.Value.Item1) + "";
 
             i++;
         }

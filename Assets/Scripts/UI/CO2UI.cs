@@ -12,6 +12,7 @@ public class CO2UI : MonoBehaviour
     public bool activated;
     TransitionManager transitionManager;
 
+
     private void Start()
     {
         bulb.color = Color.green;

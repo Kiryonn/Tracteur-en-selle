@@ -8,4 +8,6 @@ public class PlayerData : ScriptableObject
     public string playerNickname;
 
     public float score;
+
+    public float time;
 }

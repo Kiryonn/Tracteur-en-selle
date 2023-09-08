@@ -7,12 +7,12 @@ using System.Collections;
 
 public class ScoreDataManager : MonoBehaviour
 {
-    public Dictionary<string, float> scores { get; private set; }
+    public Dictionary<string, (float,float)> scores { get; private set; }
     public PlayerData playerData;
     DataScore[] dataFromJSON;
     private void Start()
     {
-        scores = new Dictionary<string, float>();
+        scores = new Dictionary<string, (float,float)>();
         string json = ReadFromFile("ScoreData.json");
         dataFromJSON = JsonConvert.DeserializeObject<DataScore[]>(json);
         playerData.playerNickname = "";
@@ -25,14 +25,14 @@ public class ScoreDataManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         for (int i = 0; i < dataFromJSON.Length; i++)
         {
-            scores.TryAdd(dataFromJSON[i].ID, dataFromJSON[i].score);
+            scores.TryAdd(dataFromJSON[i].ID, (dataFromJSON[i].score,dataFromJSON[i].time));
         }
     }
 
     public void AddPlayer(string id)
     {
         playerData.playerNickname = id;
-        scores.TryAdd(id, 0f);
+        scores.TryAdd(id, (0f,0f));
     }
 
     string ReadFromFile(string fileName)
@@ -54,23 +54,23 @@ public class ScoreDataManager : MonoBehaviour
         return "";
     }
 
-    public void AddScore(float score)
+    public void AddScore(float score, float time)
     {
         Debug.Log("Trying to add a score of " + score + " to the player : " + playerData.playerNickname);
-
+        playerData.time = (playerData.time + time) / 2f;
         try
         {
             if (playerData.playerNickname == "")
             {
                 playerData.playerNickname = DataManager.instance.GenerateUser();
-                scores[playerData.playerNickname] = score;
+                scores[playerData.playerNickname] = (score, playerData.time);
             }
-            else if(score > scores[playerData.playerNickname])
+            else if(score > scores[playerData.playerNickname].Item1)
             {
-                scores[playerData.playerNickname] = score;
+                scores[playerData.playerNickname] = (score, playerData.time);
             }
 
-            UpdateScoreData(new DataScore(playerData.playerNickname, scores[playerData.playerNickname]));
+            UpdateScoreData(new DataScore(playerData.playerNickname, score, playerData.time));
         }
         catch (System.Exception)
         {
@@ -90,9 +90,9 @@ public class ScoreDataManager : MonoBehaviour
     {
         DataScore[] dataScores = new DataScore[scores.Count];
         int i = 0;
-        foreach (KeyValuePair<string, float> entry in scores)
+        foreach (KeyValuePair<string, (float,float)> entry in scores)
         {
-            dataScores[i] = new DataScore(entry.Key, entry.Value);
+            dataScores[i] = new DataScore(entry.Key, entry.Value.Item1, entry.Value.Item2);
             i++;
         }
 

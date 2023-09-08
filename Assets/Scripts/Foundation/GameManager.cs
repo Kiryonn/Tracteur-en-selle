@@ -170,6 +170,9 @@ public class GameManager : MonoBehaviour
                 if (item.camTypes == camType)
                 {
                     //item.camera.SetActive(true);
+                    if (currentCamera)
+                        currentCamera.SetActive(false);
+
                     currentCamera = item.camera;
                     currentCamType = camType;
                 }
@@ -272,7 +275,7 @@ public class GameManager : MonoBehaviour
         float durabilite = velo.gameObject.GetComponent<DamageController>().health;
         gameObject.GetComponent<TransitionManager>().SetValues(timer, totalFailedTasks, durabilite, playerData.score);
         currentState = GameState.ScoreState;
-        SettingsManager.instance.scoreDataManager.AddScore(playerData.score);
+        SettingsManager.instance.scoreDataManager.AddScore(playerData.score,timer);
 
         nTime.SetDayTime(true);
         nTime.dayNightCycle = false;

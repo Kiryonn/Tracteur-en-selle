@@ -8,9 +8,12 @@ public class PosePiquetTask : Task
 
     [SerializeField] GameObject piquetPrefab;
 
+    [SerializeField] ToolsAnimation mass;
+
     protected override void OnStart()
     {
         base.OnStart();
+        mass.gameObject.SetActive(false);
     }
 
     public override void ShowInteractable()
@@ -28,12 +31,29 @@ public class PosePiquetTask : Task
     {
         GameObject temp = Instantiate(piquetPrefab);
 
+        Vector3 startScale = mass.transform.localScale;
+        mass.transform.localScale = Vector3.zero;
+        mass.gameObject.SetActive(true);
+
+        LeanTween.scale(mass.gameObject, startScale, 0.2f).setEase(LeanTweenType.easeInOutBounce)
+        .setOnComplete(() =>
+        {
+            mass.TriggerAnimation();
+
+            
+        });
+
         Piquet piquet = temp.GetComponent<Piquet>();
         Transform dirt = q.holesPositions.Dequeue();
 
         LeanTween.scale(dirt.gameObject, Vector3.zero, 1f).setOnComplete(() =>
         {
             dirt.gameObject.SetActive(false);
+        });
+
+        LeanTween.scale(mass.gameObject, Vector3.zero, 0.2f).setDelay(1f).setOnComplete(() =>
+        {
+            mass.gameObject.SetActive(false);
         });
 
         temp.transform.position = new Vector3(transform.position.x, piquet.deepness, transform.position.z);
@@ -43,7 +63,7 @@ public class PosePiquetTask : Task
         }
 
         q.lastPique = piquet;
-        
+
         temp.transform.parent = transform;
 
         base.Interact();

@@ -7,10 +7,11 @@ public class DataScore
 {
     public string ID;
     public float score;
-
-    public DataScore(string ID, float score)
+    public float time;
+    public DataScore(string ID, float score, float time)
     {
         this.ID = ID;
         this.score = score;
+        this.time = time;
     }
 }

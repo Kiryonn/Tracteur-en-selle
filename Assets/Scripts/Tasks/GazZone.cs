@@ -14,6 +14,7 @@ public class GazZone : MonoBehaviour
     [SerializeField] Offset spawnPoint;
     [HideInInspector]
     public CO2UI co2UI;
+    [SerializeField] CO2Detector detector;
     bool dying;
     private void Start()
     {
@@ -75,7 +76,7 @@ public class GazZone : MonoBehaviour
         {
             playerInside = true;
             if (co2UI) { StartCoroutine(co2UI.Alarm()); }
-            
+            playerGazResistance.gotDetector = GameManager.Instance.collectedItems.Contains(detector);
         }
     }
 
@@ -84,6 +85,7 @@ public class GazZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInside = false;
+            playerGazResistance.gotDetector = GameManager.Instance.collectedItems.Contains(detector);
         }
     }
 }
