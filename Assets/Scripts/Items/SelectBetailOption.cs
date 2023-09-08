@@ -92,7 +92,7 @@ public class SelectBetailOption : Item
         catch (System.Exception)
         {
 
-            Debug.Log("No hologram. Ignore if the selection is supposed to be empty");
+            MyDebug.Log("No hologram. Ignore if the selection is supposed to be empty");
         }
 
     }

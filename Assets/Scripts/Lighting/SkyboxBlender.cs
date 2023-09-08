@@ -188,14 +188,14 @@ public class SkyboxBlender : MonoBehaviour {
             {
                 if (probeComponent.IsFinishedRendering(renderId))
                 {
-                    //Debug.Log("probeComponent.texture.width = " + probeComponent.texture.width + " blendedCubemap.width = "+ blendedCubemap.width);
-                    //Debug.Log("probeComponent.texture.height = " + probeComponent.texture.height + " blendedCubemap.height = " + blendedCubemap.height);
-                    //Debug.Log("probeComponent.resolution = " + probeComponent.resolution);
+                    //MyDebug.Log("probeComponent.texture.width = " + probeComponent.texture.width + " blendedCubemap.width = "+ blendedCubemap.width);
+                    //MyDebug.Log("probeComponent.texture.height = " + probeComponent.texture.height + " blendedCubemap.height = " + blendedCubemap.height);
+                    //MyDebug.Log("probeComponent.resolution = " + probeComponent.resolution);
                     // After the previous RenderProbe is finished, we copy the probe's texture to the cubemap and set it as a custom reflection in RenderSettings.
                     if (probeComponent.texture.width == blendedCubemap.width && probeComponent.texture.height == blendedCubemap.height)
                     {
                         Graphics.CopyTexture(probeComponent.texture, blendedCubemap as Texture);
-                        //Debug.Log("Copying");
+                        //MyDebug.Log("Copying");
                     }
 
                     RenderSettings.customReflection = blendedCubemap;

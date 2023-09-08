@@ -52,7 +52,7 @@ public class TaskPedalez : Task
         // Change resistance if the player needed items
         if (requireItem && !CheckNecessaryItem())
         {
-            Debug.Log("YOU NEED SMTH AND YOU GET HURT by : "+ (int)SettingsManager.instance.settings.currentDifficulty.maxPente / 2);
+            MyDebug.Log("YOU NEED SMTH AND YOU GET HURT by : "+ (int)SettingsManager.instance.settings.currentDifficulty.maxPente / 2);
             playerVelo.ChangePente((int)SettingsManager.instance.settings.currentDifficulty.maxPente / 2);
         }
 
@@ -73,6 +73,6 @@ public class TaskPedalez : Task
 
     protected virtual void OnProgessChanged(float p)
     {
-        Debug.Log("Progress changed = "+p);
+        MyDebug.Log("Progress changed = "+p);
     }
 }

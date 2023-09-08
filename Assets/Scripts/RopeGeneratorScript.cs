@@ -18,9 +18,9 @@ public class RopeGeneratorScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //Debug.Log("Distance : "+Vector3.Distance(neil.transform.position, thomas.transform.position));
+        //MyDebug.Log("Distance : "+Vector3.Distance(neil.transform.position, thomas.transform.position));
         vertexCount = (((int)Vector3.Distance(neil.transform.position, thomas.transform.position)) * lengthMultiplier) - 1;
-        //Debug.Log("Vertex Count : " + vertexCount);
+        //MyDebug.Log("Vertex Count : " + vertexCount);
         //vertexCount = Vector3.Distance(neil.transform.position, thomas.transform.position);
 
         joints = new List<GameObject>();
@@ -32,7 +32,7 @@ public class RopeGeneratorScript : MonoBehaviour
         Vector3 dir = neil.transform.position - thomas.transform.position;
         dir = dir.normalized;
         float dist = Vector3.Distance(pos, neil.transform.position);
-        //Debug.Log("Vertex Count : " + Vector3.Distance(pos, neil.transform.position) / segments);
+        //MyDebug.Log("Vertex Count : " + Vector3.Distance(pos, neil.transform.position) / segments);
         for (float i = 0f; i < dist; i += dist/segments)
         {
             //pos = transform.TransformPoint(pos);

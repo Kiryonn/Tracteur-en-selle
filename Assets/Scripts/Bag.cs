@@ -24,7 +24,7 @@ public class Bag : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log("Layermask is : " + LayerMask.LayerToName(layerMask));
+        //MyDebug.Log("Layermask is : " + LayerMask.LayerToName(layerMask));
         RaycastHit hit;
         if (Physics.Raycast(bigBagAnchor.transform.position, transform.TransformDirection(Vector3.down), out hit))
         {
@@ -32,7 +32,7 @@ public class Bag : MonoBehaviour
             
             if (hit.distance < minFloorDistance && !onTheGround)
             {
-                Debug.Log("Raycast hit : "+hit.collider.gameObject.name);
+                MyDebug.Log("Raycast hit : "+hit.collider.gameObject.name);
                 onTheGround = true;
                 obj = Instantiate(recupBagInteractable);
                 obj.transform.position = new Vector3(transform.position.x,obj.transform.position.y,transform.position.z);

@@ -39,7 +39,7 @@ public class StatistiqueManager : MonoBehaviour
             filliereToStatsDictionary.Add(Theme.Grande_Culture, statsGC);
             filliereToStatsDictionary.Add(Theme.Elevage, statsEle);
             filliereToStatsDictionary.Add(Theme.JEV, statsJEV);
-            Debug.Log("Dictionary initialized");
+            MyDebug.Log("Dictionary initialized");
         }
         catch (System.Exception)
         {

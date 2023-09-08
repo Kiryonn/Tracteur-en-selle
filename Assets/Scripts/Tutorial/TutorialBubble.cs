@@ -169,7 +169,7 @@ public class TutorialBubble : MonoBehaviour
 
     bool CheckActivation()
     {
-        //Debug.Log(requiredInteractions.Count <= 0 && requiredTuto.Count <= 0);
+        //MyDebug.Log(requiredInteractions.Count <= 0 && requiredTuto.Count <= 0);
         return (requiredInteractions.Count <= 0 && requiredTuto.Count <= 0);
     }
 }

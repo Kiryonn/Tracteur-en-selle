@@ -41,14 +41,14 @@ public class EquipmentRecup : Item
 
     public virtual void Use_1()
     {
-        Debug.Log("First use");
+        MyDebug.Log("First use");
     }
     public virtual void Use_2()
     {
-        Debug.Log("Second use");
+        MyDebug.Log("Second use");
     }
     public virtual void Use_3()
     {
-        Debug.Log("Third use");
+        MyDebug.Log("Third use");
     }
 }

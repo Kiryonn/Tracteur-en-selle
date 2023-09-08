@@ -60,7 +60,7 @@ public class RenderTextureToFile : MonoBehaviour
         // Détruisez la texture 2D pour libérer la mémoire
         Destroy(texture);
 
-        Debug.Log("Render Texture enregistrée en tant qu'image brute : " + filePath);
+        MyDebug.Log("Render Texture enregistrée en tant qu'image brute : " + filePath);
     }
 }
 

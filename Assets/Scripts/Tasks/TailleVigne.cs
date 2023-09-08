@@ -17,7 +17,7 @@ public class TailleVigne : Task
     {
         Vigne v = (Vigne)quest;
         bool b = v.secateur.currentDurability < 5;
-        Debug.Log("Secating !!!");
+        MyDebug.Log("Secating !!!");
         v.secateur.Use(vigneResistance);
         if (b)
         {

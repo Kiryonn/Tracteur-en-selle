@@ -31,7 +31,7 @@ public class ToolsAnimation : MonoBehaviour
         float x = startQuat.eulerAngles.x;
         float y = startQuat.eulerAngles.y;
         float z = startQuat.eulerAngles.z;
-        Debug.Log("Z is " + z);
+        MyDebug.Log("Z is " + z);
         float newZ = 0f;
         for (float i = 0f; i < 1f; i += Time.deltaTime / windupSpeed)
         {

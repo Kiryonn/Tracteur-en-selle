@@ -68,7 +68,7 @@ public class Secateur : Item
 
         if (currentDurability < maxDurability - 5)
         {
-            Debug.Log("Besoin d'affuter");
+            MyDebug.Log("Besoin d'affuter");
             affilage = false;
             GameManager.Instance.GetComponent<TransitionManager>().FadeDamage(0.12f);
         }

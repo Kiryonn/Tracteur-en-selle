@@ -64,7 +64,6 @@ public class SettingsManager : MonoBehaviour
         {
             settings.allowedThemes.Remove(t);
         }
-
     }
 
     void SaveSettings()
@@ -88,7 +87,7 @@ public class SettingsManager : MonoBehaviour
                 }
                 catch (System.Exception)
                 {
-                    Debug.Log("Missing Component");
+                    MyDebug.Log("Missing Component");
                     //throw;
                 }
                 if (settings.enableTutorial)
@@ -112,7 +111,7 @@ public class SettingsManager : MonoBehaviour
                 }
                 catch (System.Exception)
                 {
-                    Debug.Log("Missing Component");
+                    MyDebug.Log("Missing Component");
                     //throw;
                 }
                 if (settings.enableTutorial)
@@ -149,14 +148,16 @@ public class SettingsManager : MonoBehaviour
     {
         if (scenesToLoad == null) { scenesToLoad = new string[] { "Garage" }; }
 
-        AsyncOperation operation = SceneManager.LoadSceneAsync(1);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(1,LoadSceneMode.Additive);
 
         while (!operation.isDone)
         {
             LoadingScreenTips.instance.loadgingBarFill.fillAmount = Mathf.Clamp01(operation.progress / 0.9f);
             yield return null;
         }
-
+        Camera.main.GetComponent<AudioListener>().enabled = false;
+        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(1));
+        yield return new WaitForSeconds(1f);
         AsyncOperation operation2;
         for (int i = 0; i < scenesToLoad.Length; i++)
         {
@@ -172,11 +173,20 @@ public class SettingsManager : MonoBehaviour
 
                 yield return null;
             }
-            Debug.Log("Trying to load " + scenesToLoad[i]);
+            MyDebug.Log("Trying to load " + scenesToLoad[i]);
             
             yield return null;
         }
-        SceneManager.UnloadSceneAsync(0);
+        try
+        {
+            SceneManager.UnloadSceneAsync(0);
+            GameManager.Instance.StartGame();
+        }catch
+        {
+            MyDebug.Log("Could not unload first scene");
+        }
+        
+        
         /*
         
         if (settings.enableTutorial)
@@ -237,7 +247,7 @@ public class SettingsManager : MonoBehaviour
 
         if (settings.allowedThemes.Count <= 0)
         {
-            Debug.Log("No more level");
+            MyDebug.Log("No more level");
             settings.currentTheme.Clear();
         }
         else
@@ -273,7 +283,7 @@ public class SettingsManager : MonoBehaviour
             {
                 settings.allowedThemes.Add(item.th);
             }
-            Debug.Log("Reloading all levels");
+            MyDebug.Log("Reloading all levels");
             SceneManager.LoadScene("Main Menu");
         }
         LoadSettings();
@@ -287,7 +297,7 @@ public class SettingsManager : MonoBehaviour
         {
             settings.allowedThemes.Add(item.th);
         }
-        Debug.Log("Reloading all levels");
+        MyDebug.Log("Reloading all levels");
         SceneManager.LoadScene("Main Menu");
         LoadSettings();
     }

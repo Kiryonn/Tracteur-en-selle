@@ -36,7 +36,7 @@ public class AcceptPosTask : Task
             currentOption = (SelectBetailOption)item;
         }
         
-        Debug.Log("Betail collected");
+        MyDebug.Log("Betail collected");
         foreach (var require in requiredObjects)
         {
             if (require != item)

@@ -28,7 +28,7 @@ public class TestRay : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, 100))
             {
-                Debug.Log(hit.transform.name);
+                MyDebug.Log(hit.transform.name);
                 hit.transform.GetComponent<Renderer>().material.color =
                 Color.red;
             }

@@ -11,7 +11,7 @@ public class PrepareBagTask : Task
         if (state == 1)
         {
             base.Interact();
-            Debug.Log("we interact");
+            MyDebug.Log("we interact");
             state = 2;
         }
         else

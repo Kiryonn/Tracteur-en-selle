@@ -20,6 +20,6 @@ public class ParticleTriggerScript : MonoBehaviour
     private void OnParticleTrigger()
     {
         quest.FillSemoir();
-        //Debug.Log("Particle entering collider");
+        //MyDebug.Log("Particle entering collider");
     }
 }

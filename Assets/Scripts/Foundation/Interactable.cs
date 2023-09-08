@@ -29,7 +29,7 @@ public class Interactable : MonoBehaviour
     }
     public virtual void Interact()
     {
-        //Debug.Log("Interacting with " + _name);
+        //MyDebug.Log("Interacting with " + _name);
         if (pin) HidePin(1.5f);
         OnInteract.Invoke(this);
 
@@ -77,7 +77,7 @@ public class Interactable : MonoBehaviour
 
     protected virtual void ItemDeliveredTrigger(Item item)
     {
-        //Debug.Log("An item got delivered");
+        //MyDebug.Log("An item got delivered");
     }
 
     public void ShowPin(float duration)

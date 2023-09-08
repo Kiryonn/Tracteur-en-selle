@@ -15,6 +15,9 @@ public class SpeedSystem
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
+
+    public GameObject allOfUI;
+
     [SerializeField] TextMeshProUGUI textPrefab;
     [SerializeField] Canvas canva;
     [SerializeField] Transform questRoot;
@@ -79,7 +82,7 @@ public class UIManager : MonoBehaviour
     public void SetProgressListener(AreaOfUse area)
     {
         area.onProgressChanged.AddListener(UpdateProgress);
-        //Debug.Log("Progress is set");
+        //MyDebug.Log("Progress is set");
         StopCoroutine("FadeProgress");
         StartCoroutine(FadeProgress(1f,1f));
     }
@@ -130,7 +133,7 @@ public class UIManager : MonoBehaviour
 
     void UpdateQuest(Quest q,string txt)
     {
-        //Debug.Log("Trying to bind " + q._name);
+        //MyDebug.Log("Trying to bind " + q._name);
         if (questDico.ContainsKey(q))
         {
             questDico[q].gameObject.SetActive(false);
@@ -161,7 +164,7 @@ public class UIManager : MonoBehaviour
         }
         catch
         {
-            Debug.Log("Np");
+            MyDebug.Log("Np");
         }
     }
 

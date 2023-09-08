@@ -13,7 +13,7 @@ public class Piquet : MonoBehaviour
     public float deepness;
     public void AttachPique(Piquet secondPiquet)
     {
-        Debug.Log("Trying to attach 2 piquets");
+        MyDebug.Log("Trying to attach 2 piquets");
         for (int i = 0; i < attachs.Count; i++)
         {
             if (attachs[i] && secondPiquet.attachs[i])
@@ -50,7 +50,7 @@ public class Piquet : MonoBehaviour
 
         boxColl.transform.rotation = Quaternion.LookRotation(rotation);
 
-        Debug.Log("Longueur de la cloture : "+Vector3.Distance(pointA, pointB));
+        MyDebug.Log("Longueur de la cloture : "+Vector3.Distance(pointA, pointB));
 
         boxColl.transform.localScale = new Vector3(colliderWidth,
                                                     1f, 

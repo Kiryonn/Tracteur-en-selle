@@ -36,12 +36,12 @@ public class MachineSecateur : Interactable
         if (affutage)
         {
             vigne.secateur.Affutage();
-            Debug.Log("Affutage du secateur " + vigne.secateur.type.ToString());
+            MyDebug.Log("Affutage du secateur " + vigne.secateur.type.ToString());
         }
         else
         {
             vigne.secateur.Affilage();
-            Debug.Log("Affilage du secateur " + vigne.secateur.type.ToString());
+            MyDebug.Log("Affilage du secateur " + vigne.secateur.type.ToString());
         }
         StartCoroutine(MovePlayerToPosition(transitionDuration, affutage));
     }

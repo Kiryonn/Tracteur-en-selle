@@ -73,7 +73,7 @@ public class MovePlayer : MonoBehaviour
 
         if (Cc.isGrounded)
         {
-            //Debug.Log(Input.GetAxis("Vertical"));
+            //MyDebug.Log(Input.GetAxis("Vertical"));
            
         }
         moveDirection = new Vector3(0, 0, 1);

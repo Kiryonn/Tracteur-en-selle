@@ -38,7 +38,7 @@ public class DropDownUpdater : MonoBehaviour
 
 
                 dropdown.value = SettingsManager.instance.settings.difficulties.IndexOf(SettingsManager.instance.settings.currentDifficulty);
-                Debug.Log(dropdown.value);
+                MyDebug.Log(dropdown.value);
                 break;
             case DropdownType.GameMode:
                 List<GameMode> gameModes = Enum.GetValues(typeof(GameMode)).Cast<GameMode>().ToList();

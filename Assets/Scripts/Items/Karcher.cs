@@ -19,6 +19,9 @@ public class Karcher : CleaningMaterial
     {
         //base.Use(net);
         GameManager.Instance.player.canMove = false;
+
+        GameManager.Instance.player.characterController.enabled = false;
+
         playerOffset.SetOffset(GameManager.Instance.player.transform,Space.Self,true);
         karcherController.UseKarcher();
         StartCoroutine(UsingAnim(5f, net));
@@ -27,6 +30,8 @@ public class Karcher : CleaningMaterial
     {
         yield return new WaitForSeconds(wait);
         GameManager.Instance.player.canMove = true;
+
+        GameManager.Instance.player.characterController.enabled = true;
         used = true;
         n.Interact();
     }

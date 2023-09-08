@@ -46,7 +46,7 @@ public class DebugController : MonoBehaviour
         CALIBRATEGYRO = new DebugCommand("/calibrate", "Calibrate the gyroscope", "/calibrate", () =>
          {
              ArduinoConnector.Instance.Calibrate();
-             Debug.Log("truing to calibrate");
+             MyDebug.Log("truing to calibrate");
          });
 
 
@@ -69,7 +69,7 @@ public class DebugController : MonoBehaviour
         }
         /*if (Input.GetKeyDown(KeyCode.G))
         {
-            Debug.Log("Trying to enter data");
+            MyDebug.Log("Trying to enter data");
             if (showConsole)
             {
                 HandleInput();

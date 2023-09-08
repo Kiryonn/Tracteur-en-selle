@@ -21,7 +21,7 @@ public class Plots : Item
         posed = true;
         for (int i = 0; i<plotsPosition.Length; i++)
         {
-            Debug.Log("i = " + i);
+            MyDebug.Log("i = " + i);
             plots[i] = Instantiate(plotPrefab).transform;
             plots[i].position = plotsPosition[i].position;
         }

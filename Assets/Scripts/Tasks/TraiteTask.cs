@@ -36,7 +36,7 @@ public class TraiteTask : Task
             }
             else
             {
-                Debug.Log("Task sucessfully not failed");
+                MyDebug.Log("Task sucessfully not failed");
             }
             quest.CompleteTask(this);
         }

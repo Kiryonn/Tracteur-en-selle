@@ -62,7 +62,7 @@ public class DataManager : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("No such file");
+			MyDebug.Log("No such file");
 		}
 
 		return "";
@@ -72,7 +72,7 @@ public class DataManager : MonoBehaviour
 	{
 		string path = Application.streamingAssetsPath + "/" + fileName;
 		string content = JsonConvert.SerializeObject(clientData);
-		Debug.Log("Content = " + content);
+		MyDebug.Log("Content = " + content);
 		File.WriteAllText(path, content);
 	}
 

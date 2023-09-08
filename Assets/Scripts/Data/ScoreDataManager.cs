@@ -48,7 +48,7 @@ public class ScoreDataManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("No such file");
+            MyDebug.Log("No such file");
         }
 
         return "";
@@ -56,7 +56,7 @@ public class ScoreDataManager : MonoBehaviour
 
     public void AddScore(float score, float time)
     {
-        Debug.Log("Trying to add a score of " + score + " to the player : " + playerData.playerNickname);
+        MyDebug.Log("Trying to add a score of " + score + " to the player : " + playerData.playerNickname);
         playerData.time = (playerData.time + time) / 2f;
         try
         {
@@ -74,7 +74,7 @@ public class ScoreDataManager : MonoBehaviour
         }
         catch (System.Exception)
         {
-            Debug.Log("Can't change player score of id : " + playerData.playerNickname);
+            MyDebug.Log("Can't change player score of id : " + playerData.playerNickname);
         }
     }
 
@@ -82,7 +82,7 @@ public class ScoreDataManager : MonoBehaviour
     {
         string path = Application.streamingAssetsPath + "/" + fileName;
         string content = JsonConvert.SerializeObject(data);
-        Debug.Log("Content = " + content);
+        MyDebug.Log("Content = " + content);
         File.WriteAllText(path, content);
     }
 

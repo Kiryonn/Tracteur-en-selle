@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Escape is pressed");
+            MyDebug.Log("Escape is pressed");
             GameManager.Instance.PauseGame();
         }
 
@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
         }
 
         float result = Mathf.SmoothStep(-1f, 1f, rapport);
-        //Debug.Log("Rapport : " + rapport + " & Result = " + result);
+        //MyDebug.Log("Rapport : " + rapport + " & Result = " + result);
 
         return result;
     }
@@ -306,7 +306,7 @@ public class PlayerController : MonoBehaviour
 
         //Vector3 centerOfWheels = (frontLeftWheel.position + frontRightWheel.position) / 2;
         //Debug.DrawRay(centerOfWheels, targetDirection, Color.red);
-        //Debug.Log("Distance restante : " + distanceToTarget);
+        //MyDebug.Log("Distance restante : " + distanceToTarget);
 
         if (distanceToTarget > minDistance)
         {
@@ -400,7 +400,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator SwitchControls(string to, bool transition, bool keepGraphic = false)
     {
-        //Debug.Log("Switching player");
+        //MyDebug.Log("Switching player");
         if (transition)
         {
             canMove = false;

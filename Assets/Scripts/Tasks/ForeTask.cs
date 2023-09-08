@@ -56,7 +56,7 @@ public class ForeTask : TaskPedalez
 
         q.holesPositions.Enqueue(dirt.transform);
 
-        Debug.Log("Tried to enqueue an item, there is " + q.holesPositions.Count + " amount of item inside queue");
+        MyDebug.Log("Tried to enqueue an item, there is " + q.holesPositions.Count + " amount of item inside queue");
     }
 
     void RemoveTariere()

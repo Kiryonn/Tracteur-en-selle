@@ -24,7 +24,7 @@ public class TailleHaieTask : Task
         playerController.canMove = false;
         nav.transform.LookAt(endOfLine);
         nav.SetDestination(endOfLine.position);
-        Debug.Log(nav.pathStatus);*/
+        MyDebug.Log(nav.pathStatus);*/
         if (!destinationReached)
         {
             playerController.ForceDestination(transform.position, endOfLine.position, 1f);

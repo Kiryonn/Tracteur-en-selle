@@ -34,7 +34,7 @@ public class AreaOfUse : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" && !interacted)
         {
-            //Debug.Log("Entering zone");
+            //MyDebug.Log("Entering zone");
             if (!dontShowProgressBar) UIManager.instance.SetProgressListener(this);
             
             StartCoroutine("EnterArea");
@@ -46,7 +46,7 @@ public class AreaOfUse : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" && interacted)
         {
-            //Debug.Log("Exiting zone");
+            //MyDebug.Log("Exiting zone");
             if (!dontShowProgressBar) UIManager.instance.RemoveProgressListener(this);
             StopCoroutine("EnterArea");
             onProgressChanged.Invoke(0f);

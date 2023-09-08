@@ -32,7 +32,7 @@ public class MedicalRecap : MonoBehaviour
         
         foreach (KeyValuePair<Parts, float> bDico in bodyDico)
         {
-            Debug.Log("La partie : " + bDico.Key.ToString() + " est endommagé à hauteur de : " + bDico.Value);
+            MyDebug.Log("La partie : " + bDico.Key.ToString() + " est endommagé à hauteur de : " + bDico.Value);
         }
 
         UpdateRecap();
@@ -84,11 +84,11 @@ public class MedicalRecap : MonoBehaviour
         {
             if (bDico.Value > 0)
             {
-                Debug.Log("Injured worker");
+                MyDebug.Log("Injured worker");
                 return true;
             }
         }
-        Debug.Log("Healthy worker");
+        MyDebug.Log("Healthy worker");
         return false;
     }
 

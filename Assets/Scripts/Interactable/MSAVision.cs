@@ -69,7 +69,7 @@ public class MSAVision : Interactable
     }
     void ReturnToStart()
     {
-        Debug.Log("returning to the base : " + startPos);
+        MyDebug.Log("returning to the base : " + startPos);
         foreach (var item in objectsToSee)
         {
             item.ShowPin(2f);

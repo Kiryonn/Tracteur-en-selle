@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     GameState currentState;
     NightTime nTime;
-    public Camera cam { get; private set; }
+    public Camera cam;
 
     [Header("Vélo")]
     public DialogueVelo velo;
@@ -93,14 +93,17 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != null)
         {
+            MyDebug.Log("GAMEMANAGER IS DESTROYED");
             Destroy(this);
         }
         else
         {
             Instance = this;
+            MyDebug.Log("GAMEMANAGER IS INSTANCE");
         }
 
-        cam = Camera.main;
+        if (!cam)
+            cam = Camera.main;
     }
 
     private void Start()
@@ -113,7 +116,16 @@ public class GameManager : MonoBehaviour
         StartCoroutine(InitPente(9f));
         currentState = GameState.QuestState;
         SpawnPlayer();
-        
+
+        currentState = GameState.Pause;
+
+        UIManager.instance.allOfUI.SetActive(false);
+    }
+
+    public void StartGame()
+    {
+        UIManager.instance.allOfUI.SetActive(true);
+        currentState = GameState.QuestState;
     }
     IEnumerator InitPente(float delay)
     {
@@ -214,10 +226,10 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SwitchBackCam(CamTypes cam, float duration)
     {
-        Debug.Log("Switching cam for : " + duration);
-        Debug.Log("The camera that we want to go back to is : " + cam.ToString());
+        MyDebug.Log("Switching cam for : " + duration);
+        MyDebug.Log("The camera that we want to go back to is : " + cam.ToString());
         yield return new WaitForSeconds(duration);
-        Debug.Log("Switching camera back to : " + cam.ToString());
+        MyDebug.Log("Switching camera back to : " + cam.ToString());
         SwitchCam(cam,null,false);
     }
 
@@ -232,7 +244,7 @@ public class GameManager : MonoBehaviour
         player.characterController.enabled = false;
         velo.transform.position = spawnPosition.position;
         velo.transform.rotation = spawnPosition.rotation;
-        //Debug.Log("Setting up player position");
+        //MyDebug.Log("Setting up player position");
 
         
         /*
@@ -264,13 +276,13 @@ public class GameManager : MonoBehaviour
 
     public void WinGame()
     {
-        Debug.Log("You win");
-        Debug.Log("Temps passé : " + timer);
-        Debug.Log("Tracteur endommagé à :" + (100f - velo.GetComponent<DamageController>().health));
-        Debug.Log("Nombre d'échecs : " + totalFailedTasks);
+        MyDebug.Log("You win");
+        MyDebug.Log("Temps passé : " + timer);
+        MyDebug.Log("Tracteur endommagé à :" + (100f - velo.GetComponent<DamageController>().health));
+        MyDebug.Log("Nombre d'échecs : " + totalFailedTasks);
         playerData.score = CalculateScore();
 
-        Debug.Log("Votre score est de : " + playerData.score);
+        MyDebug.Log("Votre score est de : " + playerData.score);
         
         float durabilite = velo.gameObject.GetComponent<DamageController>().health;
         gameObject.GetComponent<TransitionManager>().SetValues(timer, totalFailedTasks, durabilite, playerData.score);
@@ -281,7 +293,6 @@ public class GameManager : MonoBehaviour
         nTime.dayNightCycle = false;
         totalFailedTasks = 0;
         collectedItems = new List<Item>();
-        
         //SettingsManager.instance.LoadNextLevel();
     }
 
@@ -304,7 +315,7 @@ public class GameManager : MonoBehaviour
     public void FailTask()
     {
         totalFailedTasks += 1;
-        Debug.Log("Task is failed, current failure is equal to : " + totalFailedTasks);
+        MyDebug.Log("Task is failed, current failure is equal to : " + totalFailedTasks);
         AudioManager.instance.PlaySFX(AudioManager.instance.soundData.failClip,1,true);
         onCompleteTask.Invoke(currentQuest);
     }
@@ -317,7 +328,7 @@ public class GameManager : MonoBehaviour
         onCreatedQuest.Invoke(quest, "");
         onCompleteQuest.Invoke(quest);
 
-        Debug.Log("COMPLETING QUEST OF TYPE : " + quest._name);
+        MyDebug.Log("COMPLETING QUEST OF TYPE : " + quest._name);
         if (remainingQuests.Count == 0)
         {
             Invoke("WinGame", 2f);
@@ -326,7 +337,7 @@ public class GameManager : MonoBehaviour
         else
         {
             ShowQuests();
-            Debug.Log("I am invoking focus on quest");
+            MyDebug.Log("I am invoking focus on quest");
             Invoke("FocusOnNearestQuest", 4f);
         }
 
@@ -364,21 +375,21 @@ public class GameManager : MonoBehaviour
         switch (type.ToString())
         {
             case "Item":
-                //Debug.Log("hiding an item");
+                //MyDebug.Log("hiding an item");
                 foreach (var item in allItems)
                 {
                     item.HideInteractable();
                 }
                 break;
             case "Task":
-                //Debug.Log("hiding a task");
+                //MyDebug.Log("hiding a task");
                 break;
             case "Quest":
                 foreach (var item in remainingQuests)
                 {
                     item.HideInteractable();
                 }
-                //Debug.Log("hiding a quest");
+                //MyDebug.Log("hiding a quest");
                 break;
             default:
                 break;
@@ -387,7 +398,7 @@ public class GameManager : MonoBehaviour
 
     public void AddQuest(Quest q)
     {
-        //Debug.Log("Addind "+q._name);
+        //MyDebug.Log("Addind "+q._name);
         remainingQuests.Add(q);
         q.ShowInteractable();
         onCreatedQuest.Invoke(q, q._name);
@@ -396,13 +407,13 @@ public class GameManager : MonoBehaviour
     float CalculateScore()
     {
         float life = velo.GetComponent<DamageController>().health * 10;
-        Debug.Log("Score debug 1 : " + (1 - (timer / SettingsManager.instance.settings.maxTimeForTimedRun) + 0.5f));
+        MyDebug.Log("Score debug 1 : " + (1 - (timer / SettingsManager.instance.settings.maxTimeForTimedRun) + 0.5f));
         float timeCal = (1 - (timer / SettingsManager.instance.settings.maxTimeForTimedRun) /*+ 0.5f*/) * 30000;
         float failCal = 1f/(totalFailedTasks+1f);
         float questCal = completedQuests.Count * 1000f;
         float succCal = totalSucceededTasks * 87.5f;
 
-        Debug.Log("Here is the detailed score : " +
+        MyDebug.Log("Here is the detailed score : " +
             timeCal+" + "+life+" + "+questCal+" + "+succCal+" * "+failCal);
         return ( timeCal + life + questCal + succCal)* failCal;
     }
@@ -417,8 +428,8 @@ public class GameManager : MonoBehaviour
 
         DamageController dmg = player.GetComponent<DamageController>();
         float rp = dmg.health / dmg.maxHealth;
-        //Debug.Log("Health with rapport = " + dmg.health);
-        //Debug.Log("Rapport = " + ((1 - rp) * 7));
+        //MyDebug.Log("Health with rapport = " + dmg.health);
+        //MyDebug.Log("Rapport = " + ((1 - rp) * 7));
         Difficulty diff = SettingsManager.instance.settings.currentDifficulty;
         if (value > -1)
         {
@@ -465,7 +476,7 @@ public class GameManager : MonoBehaviour
 
     public void FocusOnNearestQuest()
     {
-        Debug.Log("Focus is called");
+        MyDebug.Log("Focus is called");
         float dist = 0f;
         float currDist;
         Quest nearestQuest = null;
@@ -489,6 +500,6 @@ public class GameManager : MonoBehaviour
         totalSucceededTasks++;
         AudioManager.instance.PlaySFX(AudioManager.instance.soundData.sucessClip, 1,true);
         onCompleteTask.Invoke(currentQuest);
-        Debug.Log("Task is succeeded, current sucess is equal to : " + totalSucceededTasks);
+        MyDebug.Log("Task is succeeded, current sucess is equal to : " + totalSucceededTasks);
     }
 }

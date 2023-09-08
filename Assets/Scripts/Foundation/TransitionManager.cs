@@ -202,7 +202,7 @@ public class TransitionManager : MonoBehaviour
 
     public void RenderBlack()
     {
-        Debug.Log("We are rendering black");
+        MyDebug.Log("We are rendering black");
         bool check = !SettingsManager.instance.isGarageOrTutorial();
 
         // Making the scene black
@@ -364,7 +364,7 @@ public class TransitionManager : MonoBehaviour
 
     void ShowRecap()
     {
-        Debug.Log("We are showing the recap");
+        MyDebug.Log("We are showing the recap");
         Vector3 startPos = schemaHumain.img.rectTransform.position;
         LeanTween.moveX(schemaHumain.img.gameObject, startPos.x - 20, delays.medicalRecapSpeed)
             .setOnComplete(() =>

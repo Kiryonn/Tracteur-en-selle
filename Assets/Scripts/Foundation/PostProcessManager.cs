@@ -13,7 +13,7 @@ public class PostProcessManager : MonoBehaviour
     {
         if (pprocess.profile.TryGet(out lensDistortion))
         {
-            Debug.Log("Lens Distortion effect detected");
+            MyDebug.Log("Lens Distortion effect detected");
         }
     }
 

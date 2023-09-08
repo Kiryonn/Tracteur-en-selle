@@ -16,7 +16,7 @@ public static class ReadDataManager {
         try {
             dataAsJson = new JSONObject (File.ReadAllText (Path.Combine (Application.streamingAssetsPath, configGameplay)));
         } catch {
-            Debug.LogError ($"Fichier {configGameplay} introuvable");
+            MyDebug.LogError ($"Fichier {configGameplay} introuvable");
         }
         return dataAsJson.GetField ("com").str;
     }
@@ -25,7 +25,7 @@ public static class ReadDataManager {
         try {
             dataAsJson = new JSONObject (File.ReadAllText (Path.Combine (Application.streamingAssetsPath, configGameplay)));
         } catch {
-            Debug.LogError ($"Fichier {configGameplay} introuvable");
+            MyDebug.LogError ($"Fichier {configGameplay} introuvable");
         }
         return dataAsJson.GetField ("urlBdd").str;
     }
@@ -34,7 +34,7 @@ public static class ReadDataManager {
         try {
             dataAsJson = new JSONObject (File.ReadAllText (Path.Combine (Application.streamingAssetsPath, configGameplay)));
         } catch {
-            Debug.LogError ($"Fichier {configGameplay} introuvable");
+            MyDebug.LogError ($"Fichier {configGameplay} introuvable");
         }
         return (int) dataAsJson.GetField ("baudrate").n;
     }

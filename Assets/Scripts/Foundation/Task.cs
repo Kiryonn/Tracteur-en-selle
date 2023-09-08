@@ -55,7 +55,7 @@ public class Task : Interactable
             if (CheckNecessaryItem()) // Check if all the necessary items are collected
             {
                 HandleSucceededTask();
-                Debug.Log("All necessary are aquired");
+                MyDebug.Log("All necessary are aquired");
             }
             else
             {
@@ -66,7 +66,7 @@ public class Task : Interactable
                 }
                 else
                 {
-                    Debug.Log("Task sucessfully not failed");
+                    MyDebug.Log("Task sucessfully not failed");
                     HandleSucceededTask();
                 }
                 
@@ -84,7 +84,7 @@ public class Task : Interactable
         succeeded = false;
         quest.CompleteTask(this);
         GameManager.Instance.GetComponent<TransitionManager>().FadeDamage(0.12f);
-        Debug.Log("Task failed");
+        MyDebug.Log("Task failed");
         GameManager.Instance.FailTask();
         //GameManager.Instance.velo.GetComponent<DamageController>().DamageTractor(5f);
     }

@@ -33,7 +33,7 @@ public class DialogueVelo : MonoBehaviour
             }
             catch (System.Exception)
             {
-                Debug.Log("Searching for Fitness");
+                MyDebug.Log("Searching for Fitness");
                 throw;
             }
         }
@@ -84,14 +84,14 @@ public class DialogueVelo : MonoBehaviour
         }
         else
         {
-            Debug.Log("There is no velo");
+            MyDebug.Log("There is no velo");
         }
         
         /*
         StopCoroutine("AsyncSetSlope");
         StartCoroutine(AsyncSetSlope(n, 6));
         */
-        //Debug.Log("La pente est maintenant a : " + n);
+        //MyDebug.Log("La pente est maintenant a : " + n);
     }
 
     IEnumerator AsyncSetSlope(int intensity, int loop)
@@ -99,7 +99,7 @@ public class DialogueVelo : MonoBehaviour
         for (int i = 0; i < loop; i++)
         {
             velo.SetTrainerSlope(intensity);
-            Debug.Log("Setting slope to " + intensity);
+            MyDebug.Log("Setting slope to " + intensity);
             yield return new WaitForSeconds(1f);
         }
         veloPente = intensity;

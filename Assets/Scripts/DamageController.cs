@@ -19,7 +19,7 @@ public class DamageController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log("It's colliding with : "+collision.gameObject.tag);
+        //MyDebug.Log("It's colliding with : "+collision.gameObject.tag);
         float v = Mathf.Lerp(0,maxVolume,
             Mathf.Clamp01(rb.velocity.magnitude/ maxImpactMagnitude));
         AudioManager.instance.PlaySFX(impactSFX,v);
@@ -47,7 +47,7 @@ public class DamageController : MonoBehaviour
             health -= amount * rb.velocity.magnitude;
         }
         if (health < 0)  health = 0;
-        //Debug.Log("Endommagement "+rb.velocity.magnitude);
+        //MyDebug.Log("Endommagement "+rb.velocity.magnitude);
 
         if (amount < 10)
         {
@@ -67,9 +67,9 @@ public class DamageController : MonoBehaviour
     {
         for (int i = 0; i<damageableParts.Length; i++)
         {
-            //Debug.Log("Setting blendshape values to "+ (1 - health / maxHealth) * 100);
+            //MyDebug.Log("Setting blendshape values to "+ (1 - health / maxHealth) * 100);
             damageableParts[i].SetBlendShapeWeight(0, (1 - health / maxHealth) * 100);
-            //Debug.Log("Blendshape values are : " + damageableParts[i].GetBlendShapeWeight(0));
+            //MyDebug.Log("Blendshape values are : " + damageableParts[i].GetBlendShapeWeight(0));
         }
         GameManager.Instance.SetPenteScaledWithDmg();
     }
