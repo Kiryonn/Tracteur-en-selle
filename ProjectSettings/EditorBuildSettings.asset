@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PersistantGameLevel.unity
     guid: 77ab8d31f3f8c4b43bd77b859c0d12d8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Levels/Garage.unity
     guid: 4592b703ffdc5dc4b8989a86a60be705
   - enabled: 1

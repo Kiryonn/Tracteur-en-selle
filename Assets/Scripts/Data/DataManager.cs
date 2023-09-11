@@ -105,4 +105,14 @@ public class DataManager : MonoBehaviour
 		clientData = clientDataList.ToArray();
 		SaveJson("VisiteursData.json");
     }
+
+    public void ResetFile()
+    {
+		clientDataList.Clear();
+		clientData = new ClientData[0];
+		string path = Application.streamingAssetsPath + "/" + "VisiteursData.json";
+		string content = "[]";
+		MyDebug.Log("Content = " + content);
+		File.WriteAllText(path, content);
+	}
 }

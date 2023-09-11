@@ -11,6 +11,9 @@ public class Quest : Interactable
     [SerializeField] bool arrowPointing;
     [SerializeField] GameObject arrowPrefab;
     GameObject arrow;
+
+    protected bool counting;
+    protected float elapsedTime = 0f;
     protected override void OnStart()
     {
         GameManager.Instance.AddQuest(this);
@@ -42,14 +45,26 @@ public class Quest : Interactable
     {
         base.Interact();
         GameManager.Instance.TriggerQuestStart(this);
+        StartCoroutine(StartTimer());
         StartQuest();
+    }
+
+    protected IEnumerator StartTimer()
+    {
+        counting = true;
+        while (counting)
+        {
+            elapsedTime += Time.unscaledTime;
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     protected virtual void StartQuest()
     {
         if (requiredTasks.Count <= 0)
         {
-            GameManager.Instance.CompleteQuest(this);
+            counting = false;
+            GameManager.Instance.CompleteQuest(this,elapsedTime);
             return;
         }
         GameManager.Instance.HideAllObjectsOfType(typeof(Quest));
@@ -111,7 +126,9 @@ public class Quest : Interactable
         {
             vision.HideInteractable();
         }
-        GameManager.Instance.CompleteQuest(this);
+        counting = false;
+        GameManager.Instance.CompleteQuest(this,elapsedTime);
+        
         GameManager.Instance.currentQuest = null;
     }
 }

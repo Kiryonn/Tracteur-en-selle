@@ -10,7 +10,6 @@ using System.Linq;
 
 public class TransitionManager : MonoBehaviour
 {
-    Camera cam;
     public Light globalLight;
     public Light spot;
     public Transform tractorPosition;
@@ -153,7 +152,6 @@ public class TransitionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = Camera.main;
         InitUIData();
 
         // Fade screen from black to white
@@ -207,7 +205,7 @@ public class TransitionManager : MonoBehaviour
 
         // Making the scene black
 
-        cam.enabled = false;
+        Camera.main.enabled = false;
         RenderSettings.reflectionIntensity = 0f;
         RenderSettings.ambientLight = Color.black;
         RenderSettings.ambientIntensity = 0f;
@@ -245,7 +243,7 @@ public class TransitionManager : MonoBehaviour
 
         SettingsManager.instance.LoadNextLevel();
         SettingsManager.instance.LoadMainMenu();
-        cam.enabled = true;
+        //Camera.main.enabled = true;
         RenderSettings.reflectionIntensity = 1f;
         RenderSettings.ambientLight = Color.white;
         RenderSettings.ambientIntensity = 1f;

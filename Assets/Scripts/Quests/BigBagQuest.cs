@@ -35,7 +35,8 @@ public class BigBagQuest : Quest
 
     void DelayComplete()
     {
-        GameManager.Instance.CompleteQuest(this);
+        counting = false;
+        GameManager.Instance.CompleteQuest(this,elapsedTime);
         GameManager.Instance.currentQuest = null;
     }
 }

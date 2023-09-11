@@ -41,7 +41,8 @@ public class TraiteQuete : Quest
         else
         {
             levier.HideInteractable();
-            GameManager.Instance.CompleteQuest(this);
+            counting = false;
+            GameManager.Instance.CompleteQuest(this,elapsedTime);
             StartCoroutine(GameManager.Instance.player.SwitchControls("Tractor",true));
             Invoke("HideTractor", 3f);
             GameManager.Instance.currentQuest = null;

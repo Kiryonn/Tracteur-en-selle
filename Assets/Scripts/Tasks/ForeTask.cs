@@ -78,7 +78,11 @@ public class ForeTask : TaskPedalez
             _Tariere.isDrilling = false;
             LeanTween.scale(_Tariere.gameObject, Vector3.zero, 1f).setEaseInOutBounce();
             Invoke("RemoveTariere", 5f);
-             
+
+            RecapManager.instance.medicalRecap.AddInjurie(Parts.Epaule, 3f);
+            RecapManager.instance.medicalRecap.AddInjurie(Parts.Dos, 2f);
+            RecapManager.instance.medicalRecap.AddInjurie(Parts.Main, 1f);
+
         }
 
         if (lastFore)

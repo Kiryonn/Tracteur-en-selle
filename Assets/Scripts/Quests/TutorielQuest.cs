@@ -27,7 +27,8 @@ public class TutorielQuest : Quest
             {
                 vision.HideInteractable();
             }
-            GameManager.Instance.CompleteQuest(this);
+            counting = false;
+            GameManager.Instance.CompleteQuest(this,elapsedTime);
             GameManager.Instance.currentQuest = null;
 
             DataManager.instance.UpdateVisiteurData(client);

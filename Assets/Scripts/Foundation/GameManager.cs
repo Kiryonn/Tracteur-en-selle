@@ -320,7 +320,7 @@ public class GameManager : MonoBehaviour
         onCompleteTask.Invoke(currentQuest);
     }
 
-    public void CompleteQuest(Quest quest)
+    public void CompleteQuest(Quest quest, float time)
     {
         remainingQuests.Remove(quest);
         completedQuests.Add(quest);

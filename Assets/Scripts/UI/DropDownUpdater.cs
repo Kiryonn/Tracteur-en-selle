@@ -58,11 +58,20 @@ public class DropDownUpdater : MonoBehaviour
         }
     }
 
-
+    public void Refresh()
+    {
+        StartCoroutine(DropDownInitAsync());
+    }
     IEnumerator DropDownInitAsync(float timeout = 10f)
     {
         float i = 0f;
         TMP_Dropdown.OptionData dropdownOption;
+        dropdown.ClearOptions();
+
+        dropdownOption = new TMP_Dropdown.OptionData();
+        dropdownOption.text = "Aucun";
+        dropdown.options.Add(dropdownOption);
+
         while (i < timeout)
         {
             i += Time.deltaTime;
@@ -79,6 +88,8 @@ public class DropDownUpdater : MonoBehaviour
             }
         }
     }
+
+
 
     public void OnDropDownChange()
     {

@@ -40,7 +40,8 @@ public class GarageQuest : Quest
 
         if (requiredTasks.Count <= 0)
         {
-            GameManager.Instance.CompleteQuest(this);
+            counting = false;
+            GameManager.Instance.CompleteQuest(this,elapsedTime);
             GameManager.Instance.currentQuest = null;
             GameManager.Instance.player.isCharacterControlled = false;
 

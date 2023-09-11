@@ -10,10 +10,11 @@ public class ScoreDataManager : MonoBehaviour
     public Dictionary<string, (float,float)> scores { get; private set; }
     public PlayerData playerData;
     DataScore[] dataFromJSON;
+    string json;
     private void Start()
     {
         scores = new Dictionary<string, (float,float)>();
-        string json = ReadFromFile("ScoreData.json");
+        json = ReadFromFile("ScoreData.json");
         dataFromJSON = JsonConvert.DeserializeObject<DataScore[]>(json);
         playerData.playerNickname = "";
         playerData.score = 0f;
@@ -98,4 +99,21 @@ public class ScoreDataManager : MonoBehaviour
 
         SaveJson("ScoreData.json",dataScores);
     }
+
+    public void SaveAndReset()
+    {
+        string path = Application.streamingAssetsPath + "/" + "ScoreData.json";
+        string destPath = Application.streamingAssetsPath + "/Archives/";
+        File.Copy(path, destPath + System.DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + "ScoreData.json");
+
+        path = Application.streamingAssetsPath + "/" + "VisiteursData.json";
+        destPath = Application.streamingAssetsPath + "/Archives/";
+        File.Copy(path, destPath + System.DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + "VisiteursData.json");
+
+        SaveJson("ScoreData.json", new DataScore[0]);
+        scores.Clear();
+        DataManager.instance.ResetFile();
+    }
+
+
 }
