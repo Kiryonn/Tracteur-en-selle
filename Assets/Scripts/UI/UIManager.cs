@@ -55,6 +55,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] float shakeSpeed;
     [SerializeField] float shakeAmount;
     Vector3 startCadrantPos;
+
+    [Header("Pulse")]
+    public PulseUI pulse;
     private void Awake()
     {
         if (instance == null)

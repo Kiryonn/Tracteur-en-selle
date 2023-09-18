@@ -20,11 +20,33 @@ public class TerrainGraphic : MonoBehaviour
 
     void UpdateTerrainGrassDensity(float to)
     {
-        terrain.detailObjectDensity = to;
+        if (terrain)
+        {
+            terrain.detailObjectDensity = to;
+        }
+        else
+        {
+            TryGetComponent<Terrain>(out terrain);
+        }
+
     }
 
     void UpdateTerrainGrassDistance(float to)
     {
-        terrain.detailObjectDistance = to;
+        if (terrain)
+        {
+            terrain.detailObjectDistance = to;
+        }
+        else
+        {
+            TryGetComponent<Terrain>(out terrain);
+        }
+        
+    }
+
+    private void OnDestroy()
+    {
+        _settings.densityEvent -= UpdateTerrainGrassDensity;
+        _settings.distanceEvent -= UpdateTerrainGrassDistance;
     }
 }

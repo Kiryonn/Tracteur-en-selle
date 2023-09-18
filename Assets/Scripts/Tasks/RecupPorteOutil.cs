@@ -19,6 +19,7 @@ public class RecupPorteOutil : EquipmentRecup
         offset.SetOffset(obj.transform);
         ForageQuest forage = (ForageQuest)quest;
         forage.foret = obj.GetComponent<Foret>();
+        forage.isEquipped = true;
         
         GameManager.Instance.player.playerAnim.SetBool("Mount", true);
 
@@ -30,6 +31,8 @@ public class RecupPorteOutil : EquipmentRecup
             item.HideInteractable();
         }
         displayedForet.SetActive(false);
+
+        forage.GetCurrentTask().ShowInteractable();
     }
 
     public override void RemoveEquipment()

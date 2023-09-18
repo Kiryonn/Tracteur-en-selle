@@ -54,7 +54,7 @@ public class Quest : Interactable
         counting = true;
         while (counting)
         {
-            elapsedTime += Time.unscaledTime;
+            elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
     }
@@ -92,8 +92,8 @@ public class Quest : Interactable
     protected virtual void NextTask()
     {
         AudioManager.instance.PlaySFX(AudioManager.instance.soundData.popClip);
-        requiredTasks[0].ShowInteractable();
         requiredTasks[0].SetQuest(this);
+        requiredTasks[0].ShowInteractable();
         if (requiredTasks[0].requireItem)
         {
             foreach (var item in requiredTasks[0].requiredObjects)

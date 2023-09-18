@@ -43,23 +43,29 @@ public class Secateur : Item
         {
             case 10:
                 lameIndex = 0;
+                UIManager.instance.pulse.Pulse(2f,2f);
                 break;
             case 8:
                 lameIndex = 1;
+                UIManager.instance.pulse.Pulse(2f, 2f);
                 break;
             case 6:
                 lameIndex = 2;
+                UIManager.instance.pulse.Pulse(2f, 2f);
                 break;
             case 4:
                 lameIndex = 3;
                 GameManager.Instance.SetPenteScaledWithDmg(0.5f);
+                UIManager.instance.pulse.Pulse(2f, 2f);
                 break;
             case 2:
                 lameIndex = 4;
                 GameManager.Instance.SetPenteScaledWithDmg(0.7f);
+                UIManager.instance.pulse.Pulse(2f, 2f);
                 break;
             case 0:
                 lameIndex = 5;
+                UIManager.instance.pulse.Pulse(2f, 2f);
                 break;
             default:
                 break;

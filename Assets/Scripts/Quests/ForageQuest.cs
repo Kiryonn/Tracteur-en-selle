@@ -8,6 +8,7 @@ public class ForageQuest : Quest
     [SerializeField] GameObject tractorObject;
     public Queue<Transform> holesPositions;
     [HideInInspector] public Piquet lastPique;
+    public bool isEquipped;
 
     protected override void OnStart()
     {

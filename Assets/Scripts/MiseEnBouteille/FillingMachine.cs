@@ -55,7 +55,12 @@ public class FillingMachine : MonoBehaviour
         if (currentBottle)
         {
             Vector3 targetPosition = currentBottle.transform.position;
-
+            if (currentBottle.bottleState == BottleState.Waiting)
+            {
+                currentBottle.bottleState = BottleState.Processing;
+            }
+            
+            currentBottle.fillSpeed = workingSpeed * multiplier;
             targetPosition.y = pot.position.y;
 
             pot.position = targetPosition;

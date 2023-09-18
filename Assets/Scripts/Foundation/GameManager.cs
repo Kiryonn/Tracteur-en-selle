@@ -286,8 +286,10 @@ public class GameManager : MonoBehaviour
         
         float durabilite = velo.gameObject.GetComponent<DamageController>().health;
         gameObject.GetComponent<TransitionManager>().SetValues(timer, totalFailedTasks, durabilite, playerData.score);
+        SettingsManager.instance.scoreDataManager.AddScore(playerData.score, timer);
+
         currentState = GameState.ScoreState;
-        SettingsManager.instance.scoreDataManager.AddScore(playerData.score,timer);
+        
 
         nTime.SetDayTime(true);
         nTime.dayNightCycle = false;
@@ -327,6 +329,8 @@ public class GameManager : MonoBehaviour
         quest.HideInteractable();
         onCreatedQuest.Invoke(quest, "");
         onCompleteQuest.Invoke(quest);
+
+        SettingsManager.instance.scoreDataManager.AddQuest(quest._name, time);
 
         MyDebug.Log("COMPLETING QUEST OF TYPE : " + quest._name);
         if (remainingQuests.Count == 0)

@@ -12,7 +12,7 @@ public enum BottleState
 
 public class Bottle : MonoBehaviour
 {
-    [HideInInspector]
+
     public float distanceTravelled;
     public float speed;
     public bool grabbed;

@@ -10,15 +10,27 @@ public class ScoreDataManager : MonoBehaviour
     public Dictionary<string, (float,float)> scores { get; private set; }
     public PlayerData playerData;
     DataScore[] dataFromJSON;
+    public Dictionary<string,QuestTime> questsStats { get; private set; }
+    QuestTime[] questTimes;
     string json;
     private void Start()
     {
         scores = new Dictionary<string, (float,float)>();
         json = ReadFromFile("ScoreData.json");
+
         dataFromJSON = JsonConvert.DeserializeObject<DataScore[]>(json);
+
         playerData.playerNickname = "";
         playerData.score = 0f;
+
         StartCoroutine(InitScores(3f));
+
+        questsStats = new Dictionary<string, QuestTime>();
+        string json2 = ReadFromFile("Statistiques/Quetes/StatsParQuete.json");
+
+        questTimes = JsonConvert.DeserializeObject<QuestTime[]>(json2);
+
+        StartCoroutine(InitQuetes(2f));
     }
 
     IEnumerator InitScores(float delay)
@@ -28,6 +40,30 @@ public class ScoreDataManager : MonoBehaviour
         {
             scores.TryAdd(dataFromJSON[i].ID, (dataFromJSON[i].score,dataFromJSON[i].time));
         }
+    }
+
+    IEnumerator InitQuetes(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        for (int i = 0; i < questTimes.Length; i++)
+        {
+            questsStats.TryAdd(questTimes[i]._Name,questTimes[i]);
+        }
+    }
+
+    public void AddQuest(string _name, float time)
+    {
+        QuestTime quest = new QuestTime(_name, time);
+        if (questsStats.ContainsKey(_name))
+        {
+            quest._Temps = (questsStats[_name]._Temps + quest._Temps) / 2f;
+            questsStats.TryAdd(_name, quest);
+        }
+        else
+        {
+            questsStats.TryAdd(_name, quest);
+        }
+        UpdateQuestData();
     }
 
     public void AddPlayer(string id)
@@ -71,7 +107,7 @@ public class ScoreDataManager : MonoBehaviour
                 scores[playerData.playerNickname] = (score, playerData.time);
             }
 
-            UpdateScoreData(new DataScore(playerData.playerNickname, score, playerData.time));
+            UpdateScoreData();
         }
         catch (System.Exception)
         {
@@ -79,7 +115,14 @@ public class ScoreDataManager : MonoBehaviour
         }
     }
 
-    void SaveJson(string fileName, DataScore[] data)
+    static void SaveJson(string fileName, DataScore[] data)
+    {
+        string path = Application.streamingAssetsPath + "/" + fileName;
+        string content = JsonConvert.SerializeObject(data);
+        MyDebug.Log("Content = " + content);
+        File.WriteAllText(path, content);
+    }
+    static void SaveJson(string fileName, QuestTime[] data)
     {
         string path = Application.streamingAssetsPath + "/" + fileName;
         string content = JsonConvert.SerializeObject(data);
@@ -87,7 +130,7 @@ public class ScoreDataManager : MonoBehaviour
         File.WriteAllText(path, content);
     }
 
-    public void UpdateScoreData(DataScore data)
+    public void UpdateScoreData()
     {
         DataScore[] dataScores = new DataScore[scores.Count];
         int i = 0;
@@ -98,6 +141,19 @@ public class ScoreDataManager : MonoBehaviour
         }
 
         SaveJson("ScoreData.json",dataScores);
+    }
+
+    public void UpdateQuestData()
+    {
+        QuestTime[] qTime = new QuestTime[questsStats.Count];
+        int i = 0;
+        foreach (KeyValuePair<string,QuestTime> item in questsStats)
+        {
+            qTime[i] = new QuestTime(item.Key, item.Value._Temps);
+            i++;
+        }
+        SaveJson("Statistiques/Quetes/StatsParQuete.json", qTime);
+
     }
 
     public void SaveAndReset()

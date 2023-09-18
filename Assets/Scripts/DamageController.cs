@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class DamageController : MonoBehaviour
 {
@@ -11,10 +12,16 @@ public class DamageController : MonoBehaviour
     [SerializeField] float maxVolume;
     [SerializeField] float maxImpactMagnitude;
     [SerializeField] SkinnedMeshRenderer[] damageableParts;
+
+    [SerializeField] List<VisualEffect> smokeVFX;
     private void Start()
     {
         health = maxHealth;
         rb = GetComponent<Rigidbody>();
+        foreach (var item in smokeVFX)
+        {
+            item.Stop();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -71,6 +78,22 @@ public class DamageController : MonoBehaviour
             damageableParts[i].SetBlendShapeWeight(0, (1 - health / maxHealth) * 100);
             //MyDebug.Log("Blendshape values are : " + damageableParts[i].GetBlendShapeWeight(0));
         }
+
+        switch (health)
+        {
+            case float n when (n<=25f):
+                smokeVFX[0].Play();
+                smokeVFX[1].Play();
+                break;
+            case float n when (n > 25f && n <=50f):
+                smokeVFX[0].Play();
+                break;
+            default:
+                smokeVFX[0].Stop();
+                smokeVFX[1].Stop();
+                break;
+        }
+
         GameManager.Instance.SetPenteScaledWithDmg();
     }
 }

@@ -27,6 +27,7 @@ public class CO2UI : MonoBehaviour
         {
             if (alarming)
             {
+                UIManager.instance.pulse.Pulse(2f, 2f);
                 bulb.color = Color.red;
                 secondCircle.color = Color.black;
 

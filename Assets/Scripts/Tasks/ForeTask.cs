@@ -18,6 +18,18 @@ public class ForeTask : TaskPedalez
 
     [SerializeField] Tariere _Tariere;
 
+   
+
+    public override void ShowInteractable()
+    {
+        if (!forage)
+        {
+            forage = (ForageQuest)quest;
+        }
+        if (forage.isEquipped)
+            base.ShowInteractable();
+    }
+
     protected override void HandleBeforePedale()
     {
         base.HandleBeforePedale();
@@ -97,9 +109,12 @@ public class ForeTask : TaskPedalez
                     pl.RemovePlots();
                 }
             }
-        }else if (!forage.foret)
+            GameManager.Instance.player.transform.LookAt(Vector3.left);
+        }
+        else if (!forage.foret)
         {
             GameManager.Instance.velo.ChangePente(45);
+            GameManager.Instance.player.transform.LookAt(Vector3.right);
         }
 
         dirt.transform.parent = transform;

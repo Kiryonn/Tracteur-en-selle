@@ -119,4 +119,9 @@ public class DropDownUpdater : MonoBehaviour
         }
         
     }
+
+    public void CallResetFunction()
+    {
+        SettingsManager.instance.scoreDataManager.SaveAndReset();
+    }
 }

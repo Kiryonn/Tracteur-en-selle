@@ -57,9 +57,13 @@ public class AudioManager : MonoBehaviour
     }
 
     
-
+    public void ScaryMusic()
+    {
+        music.pitch = -0.81f;
+    }
     public void ChangeBackgroundMusic(AudioClip clip)
     {
+        music.pitch = 1f;
         StartCoroutine(FadeMusic(fadeSpeed, clip, music));
     }
 
