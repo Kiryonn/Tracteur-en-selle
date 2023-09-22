@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float smoothAnim;
     public CharacterController characterController { get; private set; }
     public GameObject charaGraphics;
+
     public Animator playerAnim;
 
     [Header("Shaders")]
@@ -432,11 +433,13 @@ public class PlayerController : MonoBehaviour
         {
             canMove = false;
             rb.isKinematic = true;
+            characterController.enabled = false;
         }
         else
         {
             canMove = true;
             rb.isKinematic = false;
+            characterController.enabled = true;
         }
     }
 
@@ -461,5 +464,49 @@ public class PlayerController : MonoBehaviour
             groundedTime = 0f;
         }
 
+    }
+
+    public Animator PlayAltAnim(string animName)
+    {
+        GameObject normChar = charaGraphics.transform.GetChild(1).gameObject;
+        GameObject altChar = charaGraphics.transform.GetChild(2).gameObject;
+        altChar.SetActive(true);
+        normChar.SetActive(false);
+
+        Animator animator = altChar.GetComponent<Animator>();
+
+        animator.SetTrigger(animName);
+
+        return animator;
+    }
+
+    public void AlternateCharacter(int indexOfChild, string animName)
+    {
+        GameObject normChar = charaGraphics.transform.GetChild(1).gameObject;
+        GameObject altChar = charaGraphics.transform.GetChild(2).gameObject;
+
+        normChar.SetActive(indexOfChild == 1);
+        altChar.SetActive(indexOfChild == 2);
+
+        if (indexOfChild == 2)
+        {
+            altChar.GetComponent<Animator>().Play(animName);
+        }
+        
+    }
+
+    public void AlternateCharacter(bool alt)
+    {
+        GameObject child0 = charaGraphics.transform.GetChild(1).gameObject;
+        if (child0.activeSelf)
+        {
+            child0.SetActive(false);
+            charaGraphics.transform.GetChild(2).gameObject.SetActive(true);
+        }
+        else
+        {
+            child0.SetActive(true);
+            charaGraphics.transform.GetChild(2).gameObject.SetActive(false);
+        }
     }
 }

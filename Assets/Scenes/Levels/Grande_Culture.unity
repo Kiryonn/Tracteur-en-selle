@@ -3789,7 +3789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 830f572d619fa854398f0cdf82a5bef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: "R\xE9cup\xE9rer un l\xE8ve-sac puis allez chercher un big bag"
+  _name: "R\xE9cup\xE9rez un l\xE8ve-sac puis allez chercher un big bag"
   pin: {fileID: 282585852}
   focusOnShow: 1
   customColor: {r: 0, g: 0, b: 0, a: 0}
@@ -10591,6 +10591,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1778445719}
     m_Modifications:
     - target: {fileID: 102020626, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
+      propertyPath: _name
+      value: Semez !
+      objectReference: {fileID: 0}
+    - target: {fileID: 102020626, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: focusOnShow
       value: 1
       objectReference: {fileID: 0}
@@ -10602,6 +10606,10 @@ PrefabInstance:
       propertyPath: dontShowProgressBar
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 117378065, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
+      propertyPath: _name
+      value: Semez !
+      objectReference: {fileID: 0}
     - target: {fileID: 117378066, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
       value: 1
@@ -10609,6 +10617,10 @@ PrefabInstance:
     - target: {fileID: 117378066, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: dontShowProgressBar
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 268204830, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
+      propertyPath: _name
+      value: Semez !
       objectReference: {fileID: 0}
     - target: {fileID: 268204831, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10618,6 +10630,10 @@ PrefabInstance:
       propertyPath: dontShowProgressBar
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 281642673, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
+      propertyPath: _name
+      value: Semez !
+      objectReference: {fileID: 0}
     - target: {fileID: 281642674, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
       value: 1
@@ -10625,6 +10641,10 @@ PrefabInstance:
     - target: {fileID: 281642674, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: dontShowProgressBar
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 632926059, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
+      propertyPath: _name
+      value: Semez !
       objectReference: {fileID: 0}
     - target: {fileID: 632926060, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10652,7 +10672,7 @@ PrefabInstance:
       objectReference: {fileID: 570675047}
     - target: {fileID: 777998973, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: _name
-      value: Terminer de semer
+      value: Terminez de semer
       objectReference: {fileID: 0}
     - target: {fileID: 777998974, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10661,6 +10681,10 @@ PrefabInstance:
     - target: {fileID: 777998974, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: dontShowProgressBar
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 869143282, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
+      propertyPath: _name
+      value: Semez !
       objectReference: {fileID: 0}
     - target: {fileID: 869143283, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10702,6 +10726,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -7.41
       objectReference: {fileID: 0}
+    - target: {fileID: 1533295636, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
+      propertyPath: _name
+      value: Semez !
+      objectReference: {fileID: 0}
     - target: {fileID: 1533295637, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
       value: 1
@@ -10709,6 +10737,10 @@ PrefabInstance:
     - target: {fileID: 1533295637, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: dontShowProgressBar
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2080451379, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
+      propertyPath: _name
+      value: Semez !
       objectReference: {fileID: 0}
     - target: {fileID: 2080451380, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10725,6 +10757,10 @@ PrefabInstance:
     - target: {fileID: 1127870473101554279, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: dontShowProgressBar
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526974181052631354, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
+      propertyPath: _name
+      value: Semez !
       objectReference: {fileID: 0}
     - target: {fileID: 1526974181052631358, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10858,6 +10894,10 @@ PrefabInstance:
       propertyPath: pin
       value: 
       objectReference: {fileID: 2008936534}
+    - target: {fileID: 8536885809440079611, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
+      propertyPath: _name
+      value: Semez !
+      objectReference: {fileID: 0}
     - target: {fileID: 8536885809440079611, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: focusOnShow
       value: 0
@@ -11912,6 +11952,7 @@ MonoBehaviour:
   - {fileID: 719693113}
   - {fileID: 8834186872516148120}
   - {fileID: 7745677664717647070}
+  bandDelay: 1
   vision: {fileID: 0}
   arrowPointing: 1
   arrowPrefab: {fileID: 516646376464323638, guid: b05f2eb1ceaad4745959e2ed80d7fc0b, type: 3}

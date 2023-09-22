@@ -1236,7 +1236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ecc83dbfec8a314898864451a6793a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Retourner au tracteur
+  _name: Retournez au tracteur
   pin: {fileID: 167289075}
   focusOnShow: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
@@ -4252,7 +4252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd379d55da34cd54da163f0e0fd7f985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: "Choisir un \xE9quipement et nettoyer la cuve"
+  _name: "Choisissez un \xE9quipement et nettoyez la cuve"
   pin: {fileID: 1598378939}
   focusOnShow: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
@@ -5546,7 +5546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5248654566241510908, guid: 65e869a45f0a39346b60f11f3f297507, type: 3}
       propertyPath: _name
-      value: Taille de la vigne
+      value: Taillez le pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 5248654566241510909, guid: 65e869a45f0a39346b60f11f3f297507, type: 3}
       propertyPath: m_RootOrder
@@ -6028,7 +6028,7 @@ PrefabInstance:
       objectReference: {fileID: 1484191741}
     - target: {fileID: 5248654566241510908, guid: 65e869a45f0a39346b60f11f3f297507, type: 3}
       propertyPath: _name
-      value: Taille de la vigne
+      value: Taillez le pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 5248654566241510909, guid: 65e869a45f0a39346b60f11f3f297507, type: 3}
       propertyPath: m_RootOrder
@@ -22384,7 +22384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8afff6b19efb3464498b51191c054b79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Ouvrir la cuve
+  _name: Ouvrez la cuve
   pin: {fileID: 1411371880}
   focusOnShow: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
@@ -22580,7 +22580,7 @@ PrefabInstance:
       objectReference: {fileID: 1635129818}
     - target: {fileID: 364988145501026597, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: "Choisir un s\xE9cateur et taillez la vigne"
+      value: "Choisissez un s\xE9cateur et taillez la vigne"
       objectReference: {fileID: 0}
     - target: {fileID: 364988145501026598, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: timeToInteract
@@ -22592,7 +22592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 626762828698982236, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: Taille de la vigne
+      value: Taillez le pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 626762828698982237, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22636,7 +22636,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 749000641569866571, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: Taille de la vigne
+      value: Taillez le pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 2399759886234179226, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22772,7 +22772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6076587257495374046, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: Taille de la vigne
+      value: Taillez le pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 6076587257495374047, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22804,7 +22804,7 @@ PrefabInstance:
       objectReference: {fileID: 537722153}
     - target: {fileID: 6358677716231453521, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: Taille de la vigne
+      value: Taillez le pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 6358677716231453522, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: timeToInteract
@@ -22828,7 +22828,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6523361378637433933, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: Taille de la vigne
+      value: Taillez le pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 6523361378637433934, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: timeToInteract
@@ -22968,7 +22968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7775563407211668851, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: Taille de la vigne
+      value: Taillez le pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 7775563407349228805, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23076,7 +23076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8033133267495540997, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: Taille de la vigne
+      value: Taillez le pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 8033133267495540998, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: timeToInteract

@@ -36,4 +36,6 @@ public class Settings : ScriptableObject
     public float maxTimeForTimedRun;
     public List<Difficulty> difficulties;
     public Difficulty currentDifficulty;
+
+    public bool allowStats;
 }

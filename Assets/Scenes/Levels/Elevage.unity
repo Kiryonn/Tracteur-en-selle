@@ -3148,7 +3148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81bdbd5d92f30e428683072a3cb43e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Mettre de la paille ou laissez vide ?
+  _name: Mettez de la paille ou laissez vide ?
   pin: {fileID: 1845440073}
   focusOnShow: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
@@ -4807,7 +4807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ecc83dbfec8a314898864451a6793a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Retourner au tracteur
+  _name: Retournez au tracteur
   pin: {fileID: 1635129818}
   focusOnShow: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
@@ -9208,6 +9208,7 @@ MonoBehaviour:
   - {fileID: 8828740723187745468}
   - {fileID: 819613388}
   - {fileID: 640422430}
+  bandDelay: 1
   vision: {fileID: 0}
   arrowPointing: 1
   arrowPrefab: {fileID: 516646376464323638, guid: b05f2eb1ceaad4745959e2ed80d7fc0b, type: 3}
@@ -9396,7 +9397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81bdbd5d92f30e428683072a3cb43e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: "Choisir une position pour la b\xE9tailli\xE8re"
+  _name: "Choisissez une position pour la b\xE9tailli\xE8re"
   pin: {fileID: 1411443381}
   focusOnShow: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}

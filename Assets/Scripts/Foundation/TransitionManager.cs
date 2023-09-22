@@ -554,8 +554,17 @@ public class TransitionManager : MonoBehaviour
                 StartCoroutine(MakeNextTransition());
                 break;
             case 6:
-                transitionIndex++;
-                StartCoroutine(ShowStats());
+                if (SettingsManager.instance.settings.allowStats)
+                {
+                    transitionIndex = 8;
+                    StartCoroutine(MakeNextTransition());
+                }
+                else
+                {
+                    transitionIndex++;
+                    StartCoroutine(ShowStats());
+                }
+                
                 break;
             case 7:
                 HideStats();

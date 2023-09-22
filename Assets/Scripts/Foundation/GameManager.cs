@@ -89,6 +89,10 @@ public class GameManager : MonoBehaviour
     [Header("SFX")]
     [SerializeField] AudioClip failSFX;
     [SerializeField] AudioClip successSFX;
+
+    [Header("Raptors")]
+
+    [SerializeField] RaptorSpawner raptorSpawner;
     void Awake()
     {
         if (Instance != null)
@@ -122,10 +126,16 @@ public class GameManager : MonoBehaviour
         UIManager.instance.allOfUI.SetActive(false);
     }
 
+    public void SpawnTheRaptors()
+    {
+        raptorSpawner.SpawnRaptors();
+    }
+
     public void StartGame()
     {
         UIManager.instance.allOfUI.SetActive(true);
         currentState = GameState.QuestState;
+        //SpawnTheRaptors();
     }
     IEnumerator InitPente(float delay)
     {

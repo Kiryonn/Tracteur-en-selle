@@ -12,6 +12,7 @@ public class DebugController : MonoBehaviour
     public static DebugCommand SWITCH_CHARACTER;
     public static DebugCommand<float> SET_PENTE;
     public static DebugCommand CALIBRATEGYRO;
+    public static DebugCommand RAPTOR;
     public List<object> commandList;
     // Start is called before the first frame update
     void Awake()
@@ -49,6 +50,11 @@ public class DebugController : MonoBehaviour
              MyDebug.Log("truing to calibrate");
          });
 
+        RAPTOR = new DebugCommand("/raptor", "Spawn 4 raptors", "/raptor", () =>
+         {
+             GameManager.Instance.SpawnTheRaptors();
+         });
+
 
         commandList = new List<object>
         {
@@ -56,7 +62,8 @@ public class DebugController : MonoBehaviour
             RESPAWN,
             SWITCH_CHARACTER,
             SET_PENTE,
-            CALIBRATEGYRO
+            CALIBRATEGYRO,
+            RAPTOR
         };
     }
 

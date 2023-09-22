@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RecupTariere : Item
 {
+    [SerializeField] GameObject worldObject;
     public override void Interact()
     {
         base.Interact();
@@ -12,5 +13,7 @@ public class RecupTariere : Item
         forage.isEquipped = true;
 
         forage.GetCurrentTask().ShowInteractable();
+
+        worldObject.SetActive(false);
     }
 }
