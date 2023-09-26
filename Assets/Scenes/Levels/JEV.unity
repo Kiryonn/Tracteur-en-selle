@@ -313,9 +313,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ecc83dbfec8a314898864451a6793a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Retournez au tracteur
+  _name: Retourner au tracteur
   pin: {fileID: 829357787}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -1505,9 +1506,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8520107114140a84bbd658f9e9803e45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Posez un piquet
+  _name: Poser un piquet
   pin: {fileID: 268756019}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -1766,15 +1768,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 305185640}
-  m_LocalRotation: {x: 0.7072302, y: 0, z: 0, w: -0.7069834}
-  m_LocalPosition: {x: 22.682983, y: -0.49999905, z: -50.76}
-  m_LocalScale: {x: 3.21, y: 3.21, z: 3.2099998}
+  m_LocalRotation: {x: 0.000174433, y: -0, z: -0, w: -1}
+  m_LocalPosition: {x: 2.2999985, y: -1.7881624, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1433320297}
   - {fileID: 1399135060}
-  m_Father: {fileID: 305272993}
-  m_RootOrder: 4
+  m_Father: {fileID: 7613298592893260001}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -89.98, y: 180, z: 180}
 --- !u!114 &305185642
 MonoBehaviour:
@@ -1788,9 +1790,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 278e966ec7822534daea0121a2afc521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Taillez la haie
+  _name: Tailler la haie
   pin: {fileID: 1399135060}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -1911,10 +1914,6 @@ Transform:
   m_Children:
   - {fileID: 7822062374462667349}
   - {fileID: 7613298592893260001}
-  - {fileID: 6293877744121930101}
-  - {fileID: 8978146759674710878}
-  - {fileID: 305185641}
-  - {fileID: 1133004852}
   - {fileID: 2380942519427131993}
   - {fileID: 8657969991662000085}
   m_Father: {fileID: 1778445719}
@@ -2217,6 +2216,7 @@ MonoBehaviour:
   _name: Test msa vision
   pin: {fileID: 0}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -2576,6 +2576,7 @@ MonoBehaviour:
   _name: Objet 1
   pin: {fileID: 1280724404}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 0
 --- !u!1 &455722674
@@ -2778,9 +2779,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be1a9e8536e702489b38ee529fb9141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Creusez
+  _name: "Choisir un \xE9quipement et creuser"
   pin: {fileID: 1044159118}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -3362,6 +3364,7 @@ MonoBehaviour:
   _name: Objet 1
   pin: {fileID: 231744278}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 0
 --- !u!1001 &616383086
@@ -3720,9 +3723,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8520107114140a84bbd658f9e9803e45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Posez un piquet
+  _name: Poser un piquet
   pin: {fileID: 123318599}
   focusOnShow: 1
+  delayFocus: 2
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -4937,6 +4941,7 @@ MonoBehaviour:
   _name: Objet 1
   pin: {fileID: 155702489}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 0
 --- !u!114 &998483391
@@ -4954,6 +4959,7 @@ MonoBehaviour:
   _name: Protection habitacle
   pin: {fileID: 781366434}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 0
 --- !u!1 &1005115811
@@ -5333,15 +5339,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1133004851}
-  m_LocalRotation: {x: -0.7069834, y: -0, z: -0, w: 0.70723015}
-  m_LocalPosition: {x: 58.39, y: -0.5, z: -50.76}
-  m_LocalScale: {x: 3.21, y: 3.2099998, z: 3.2099998}
+  m_LocalRotation: {x: 0.0001745522, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 13.423675, y: -1.7881624, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 85865420}
   - {fileID: 1238659675}
-  m_Father: {fileID: 305272993}
-  m_RootOrder: 5
+  m_Father: {fileID: 7613298592893260001}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!114 &1133004853
 MonoBehaviour:
@@ -5355,9 +5361,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 278e966ec7822534daea0121a2afc521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Taillez la haie
+  _name: Tailler la haie
   pin: {fileID: 1238659675}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -6396,6 +6403,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 841266468}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 1
   plotsPosition:
@@ -7083,6 +7091,7 @@ MonoBehaviour:
   _name: vision
   pin: {fileID: 0}
   focusOnShow: 0
+  delayFocus: 0
   playerOffset: {x: 0, y: 5.74, z: 0}
   transitionTime: 5
   visionLength: 5
@@ -7138,9 +7147,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8520107114140a84bbd658f9e9803e45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Posez un piquet
+  _name: Poser un piquet
   pin: {fileID: 1099370371}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -7744,9 +7754,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be1a9e8536e702489b38ee529fb9141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Creusez
+  _name: Creuser
   pin: {fileID: 229057512}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -8130,9 +8141,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be1a9e8536e702489b38ee529fb9141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Creusez
+  _name: Creuser
   pin: {fileID: 1948636879}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -8628,9 +8640,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8520107114140a84bbd658f9e9803e45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Posez un piquet
+  _name: Poser un piquet
   pin: {fileID: 1178562016}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -9153,6 +9166,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 202067159}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems:
   - {fileID: 6926303904662910988}
   noDroneRequest: 1
@@ -9210,9 +9224,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be1a9e8536e702489b38ee529fb9141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Creusez
+  _name: Creuser
   pin: {fileID: 976582120}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -10595,7 +10610,7 @@ Transform:
   - {fileID: 5629550619269873486}
   - {fileID: 1744757388591081516}
   m_Father: {fileID: 305272993}
-  m_RootOrder: 6
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2417729847433987988
 MeshFilter:
@@ -10805,6 +10820,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 1992047643084458337}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 1
   plotsPosition:
@@ -11250,6 +11266,7 @@ MonoBehaviour:
   _name: Taille des haies
   pin: {fileID: 792152801}
   focusOnShow: 0
+  delayFocus: 0
   requiredTasks:
   - {fileID: 7144065270561811381}
   - {fileID: 8978146759674710879}
@@ -12166,15 +12183,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6634797148694100943}
-  m_LocalRotation: {x: -0.7069834, y: -0, z: -0, w: 0.70723015}
-  m_LocalPosition: {x: -57.79, y: -0.53, z: 7.22}
-  m_LocalScale: {x: 3.21, y: 3.2099998, z: 3.2099998}
+  m_LocalRotation: {x: 0.0001745522, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -22.769468, y: -19.850466, z: -0.009347791}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1527273856}
   - {fileID: 1340665472}
-  m_Father: {fileID: 305272993}
-  m_RootOrder: 2
+  m_Father: {fileID: 7613298592893260001}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!114 &6328531944171163684
 MonoBehaviour:
@@ -12429,6 +12446,7 @@ MonoBehaviour:
   _name: Forage
   pin: {fileID: 191025128}
   focusOnShow: 0
+  delayFocus: 0
   requiredTasks:
   - {fileID: 488468524}
   - {fileID: 1870774108}
@@ -12491,6 +12509,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 46822172}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems:
   - {fileID: 2073950588}
   noDroneRequest: 1
@@ -12630,9 +12649,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d707a3fdb9a0e3a46b25b2df606eee25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: "\xC9quipez l'\xE9pareuse"
+  _name: "\xC9quiper l'\xE9pareuse"
   pin: {fileID: 1340665472}
   focusOnShow: 1
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -12741,7 +12761,11 @@ Transform:
   m_LocalPosition: {x: 15.299988, y: -0.5, z: -56.5}
   m_LocalScale: {x: 3.21, y: 3.21, z: 3.21}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6293877744121930101}
+  - {fileID: 8978146759674710878}
+  - {fileID: 305185641}
+  - {fileID: 1133004852}
   m_Father: {fileID: 305272993}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13134,7 +13158,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 305272993}
-  m_RootOrder: 7
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8743879008160414932
 MonoBehaviour:
@@ -13151,6 +13175,7 @@ MonoBehaviour:
   _name: Quete vide
   pin: {fileID: 0}
   focusOnShow: 0
+  delayFocus: 0
   requiredTasks:
   - {fileID: 405421144}
   bandDelay: 1
@@ -13228,15 +13253,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8634271592094634468}
-  m_LocalRotation: {x: -0.7069834, y: -0, z: -0, w: 0.70723015}
-  m_LocalPosition: {x: -13.85, y: -0.5, z: -50.76}
-  m_LocalScale: {x: 3.21, y: 3.2099998, z: 3.2099998}
+  m_LocalRotation: {x: 0.0001745522, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.080995, y: -1.7881624, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 61568896}
   - {fileID: 1961126911}
-  m_Father: {fileID: 305272993}
-  m_RootOrder: 3
+  m_Father: {fileID: 7613298592893260001}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!114 &8978146759674710879
 MonoBehaviour:
@@ -13250,9 +13275,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 278e966ec7822534daea0121a2afc521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Taillez la haie
+  _name: Tailler la haie
   pin: {fileID: 1961126911}
   focusOnShow: 1
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1

@@ -23,6 +23,10 @@ public class LoopingSound : MonoBehaviour
         startSource = gameObject.AddComponent<AudioSource>();
         loopSource = gameObject.AddComponent<AudioSource>();
         endSource = gameObject.AddComponent<AudioSource>();
+
+        startSource.playOnAwake = false;
+        loopSource.playOnAwake = false;
+        endSource.playOnAwake = false;
     }
 
     AudioClip PickRandomClip(AudioClip[] clips)

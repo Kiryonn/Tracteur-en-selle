@@ -1569,6 +1569,7 @@ MonoBehaviour:
   _name: Recup Porte Crochet
   pin: {fileID: 1583057004}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 1
   equipmentPrefab: {fileID: 2777437015033672559, guid: 980302d51dda30442964b31fc3d8412d, type: 3}
@@ -3789,9 +3790,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 830f572d619fa854398f0cdf82a5bef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: "R\xE9cup\xE9rez un l\xE8ve-sac puis allez chercher un big bag"
+  _name: "R\xE9cup\xE9rer un l\xE8ve-sac puis aller chercher un big bag"
   pin: {fileID: 282585852}
   focusOnShow: 1
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -4099,6 +4101,7 @@ MonoBehaviour:
   _name: Recup Porte Classic
   pin: {fileID: 140554425}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 1
   equipmentPrefab: {fileID: 8841520726796858321, guid: 4628fd7ebf923fc4e8d8de558ceed90c, type: 3}
@@ -8882,6 +8885,7 @@ MonoBehaviour:
   _name: Recup Porte Classic
   pin: {fileID: 1187608906}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 1
   equipmentPrefab: {fileID: 7530629102228821373, guid: 6542e6c112617734681a47bb2a6b7010, type: 3}
@@ -10592,7 +10596,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 102020626, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: _name
-      value: Semez !
+      value: Semer
       objectReference: {fileID: 0}
     - target: {fileID: 102020626, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: focusOnShow
@@ -10608,7 +10612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 117378065, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: _name
-      value: Semez !
+      value: Semer
       objectReference: {fileID: 0}
     - target: {fileID: 117378066, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10620,7 +10624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 268204830, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: _name
-      value: Semez !
+      value: Semer
       objectReference: {fileID: 0}
     - target: {fileID: 268204831, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10632,7 +10636,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 281642673, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: _name
-      value: Semez !
+      value: Semer
       objectReference: {fileID: 0}
     - target: {fileID: 281642674, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10644,7 +10648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 632926059, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: _name
-      value: Semez !
+      value: Semer
       objectReference: {fileID: 0}
     - target: {fileID: 632926060, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10672,7 +10676,7 @@ PrefabInstance:
       objectReference: {fileID: 570675047}
     - target: {fileID: 777998973, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: _name
-      value: Terminez de semer
+      value: Terminer de semer
       objectReference: {fileID: 0}
     - target: {fileID: 777998974, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10684,7 +10688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 869143282, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: _name
-      value: Semez !
+      value: Semer
       objectReference: {fileID: 0}
     - target: {fileID: 869143283, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10728,7 +10732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1533295636, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: _name
-      value: Semez !
+      value: Semer
       objectReference: {fileID: 0}
     - target: {fileID: 1533295637, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10740,7 +10744,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2080451379, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: _name
-      value: Semez !
+      value: Semer
       objectReference: {fileID: 0}
     - target: {fileID: 2080451380, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10760,7 +10764,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1526974181052631354, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: _name
-      value: Semez !
+      value: Semer
       objectReference: {fileID: 0}
     - target: {fileID: 1526974181052631358, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: timeToInteract
@@ -10872,7 +10876,7 @@ PrefabInstance:
       objectReference: {fileID: 273115344}
     - target: {fileID: 8057515890700410585, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: _name
-      value: Accrochez le semoir au tracteur
+      value: Accrocher le semoir au tracteur
       objectReference: {fileID: 0}
     - target: {fileID: 8057515890700410585, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: equipSFX
@@ -10896,7 +10900,7 @@ PrefabInstance:
       objectReference: {fileID: 2008936534}
     - target: {fileID: 8536885809440079611, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: _name
-      value: Semez !
+      value: Semer
       objectReference: {fileID: 0}
     - target: {fileID: 8536885809440079611, guid: 3ede2930f756ef342ada39007f2df1bc, type: 3}
       propertyPath: focusOnShow
@@ -11948,6 +11952,7 @@ MonoBehaviour:
   _name: Transport des big bag
   pin: {fileID: 315437147}
   focusOnShow: 0
+  delayFocus: 0
   requiredTasks:
   - {fileID: 719693113}
   - {fileID: 8834186872516148120}
@@ -12662,9 +12667,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7834ffe70d22bfe458b3d0b757e6cac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Videz le big bag
+  _name: Vider le big bag
   pin: {fileID: 1089701676}
   focusOnShow: 1
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -13072,9 +13078,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e487dbe89106c0d4885cde5cdd852aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Positionez le tracteur devant le semoir
+  _name: Positioner le tracteur devant le semoir
   pin: {fileID: 500812601}
   focusOnShow: 1
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0

@@ -19,7 +19,7 @@ public class DebugController : MonoBehaviour
     {
         SET_PLAYER_SPEED = new DebugCommand<float>("/set_player_speed", "Set the character speed to x value", "/set_player_speed <value>", (x) =>
         {
-             GameManager.Instance.player.charaSpeed = x;
+            GameManager.Instance.player.charaSpeed = x;
         });
 
         RESPAWN = new DebugCommand("/reset", "Make player respawn at the spawn position", "/reset", () =>
@@ -31,11 +31,11 @@ public class DebugController : MonoBehaviour
         {
             if (GameManager.Instance.player.isCharacterControlled)
             {
-                StartCoroutine(GameManager.Instance.player.SwitchControls("Tractor",false));
+                StartCoroutine(GameManager.Instance.player.SwitchControls("Tractor", false));
             }
             else
             {
-                StartCoroutine(GameManager.Instance.player.SwitchControls("Character",false));
+                StartCoroutine(GameManager.Instance.player.SwitchControls("Character", false));
             }
         });
 
@@ -91,16 +91,25 @@ public class DebugController : MonoBehaviour
 
         float y = 0f;
 
-        GUI.Box(new Rect(0, y, Screen.width, 30), "");
+        GUI.Box(new Rect(0, y, Screen.width, 230f), "");
         GUI.backgroundColor = new Color(0, 0, 0, 0);
-        input = GUI.TextField(new Rect(10f, y + 5f, Screen.width - 20f, 50f), input);
+        input = GUI.TextField(new Rect(10f, y + 5f, Screen.width - 20f, 250f), input);
+        GUI.skin.textField.fontSize = 72;
         if (Event.current.type == EventType.KeyDown && Event.current.character.ToString() == "\n")
         {
-            HandleInput();
+            try
+            {
+                HandleInput();
+            }
+            catch (System.Exception)
+            {
+                MyDebug.Log("Error while reading inputs");
+            }
+
             input = "";
         }
     }
-    
+
     void HandleInput()
     {
         string[] properties = input.Split(' ');
@@ -111,10 +120,11 @@ public class DebugController : MonoBehaviour
 
             if (input.Contains(commandBase.commandId))
             {
-                if(commandList[i] as DebugCommand != null)
+                if (commandList[i] as DebugCommand != null)
                 {
                     (commandList[i] as DebugCommand).Invoke();
-                }else if(commandList[i] as DebugCommand<float> != null)
+                }
+                else if (commandList[i] as DebugCommand<float> != null)
                 {
                     (commandList[i] as DebugCommand<float>).Invoke(float.Parse(properties[1]));
                 }

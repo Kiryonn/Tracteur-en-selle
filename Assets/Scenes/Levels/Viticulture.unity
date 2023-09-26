@@ -1101,6 +1101,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 1781375782}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems:
   - {fileID: 583709825}
   noDroneRequest: 1
@@ -1236,9 +1237,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ecc83dbfec8a314898864451a6793a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Retournez au tracteur
+  _name: Retourner au tracteur
   pin: {fileID: 167289075}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -3015,6 +3017,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 1441337013}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems:
   - {fileID: 991661690}
   noDroneRequest: 1
@@ -4252,9 +4255,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd379d55da34cd54da163f0e0fd7f985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: "Choisissez un \xE9quipement et nettoyez la cuve"
+  _name: "Choisir un \xE9quipement et nettoyer la cuve"
   pin: {fileID: 1598378939}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -4398,6 +4402,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 29781545}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems:
   - {fileID: 89192051}
   noDroneRequest: 1
@@ -5546,7 +5551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5248654566241510908, guid: 65e869a45f0a39346b60f11f3f297507, type: 3}
       propertyPath: _name
-      value: Taillez le pied de vigne
+      value: Tailler un pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 5248654566241510909, guid: 65e869a45f0a39346b60f11f3f297507, type: 3}
       propertyPath: m_RootOrder
@@ -6028,7 +6033,7 @@ PrefabInstance:
       objectReference: {fileID: 1484191741}
     - target: {fileID: 5248654566241510908, guid: 65e869a45f0a39346b60f11f3f297507, type: 3}
       propertyPath: _name
-      value: Taillez le pied de vigne
+      value: Tailler un pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 5248654566241510909, guid: 65e869a45f0a39346b60f11f3f297507, type: 3}
       propertyPath: m_RootOrder
@@ -7168,6 +7173,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 1290227097}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems:
   - {fileID: 354178296}
   noDroneRequest: 1
@@ -8173,9 +8179,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd225052fe826bd4bbe3525b7db94c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Posez les bouteilles sur le tapis
+  _name: Poser les bouteilles sur le tapis
   pin: {fileID: 1982430523}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -10264,6 +10271,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 226380310}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 1
 --- !u!114 &1345171978
@@ -12112,9 +12120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd225052fe826bd4bbe3525b7db94c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Choisissez un transpalette et posez les bouteilles sur le tapis
+  _name: Choisir un transpalette et poser les bouteilles sur le tapis
   pin: {fileID: 500516843}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -13262,6 +13271,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 665212118}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 1
   co2Object: {fileID: 207433487}
@@ -14920,9 +14930,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b391189824c8894419548daa6b6d7890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: "P\xE9dalez pour recharger le g\xE9n\xE9rateur"
+  _name: "P\xE9daler pour recharger le g\xE9n\xE9rateur"
   pin: {fileID: 13923819}
   focusOnShow: 1
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -21293,9 +21304,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ecc83dbfec8a314898864451a6793a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Revenez au tracteur
+  _name: Revener au tracteur
   pin: {fileID: 1832961813}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -22328,6 +22340,7 @@ MonoBehaviour:
   _name: Nettoyage de la cuve
   pin: {fileID: 140554425}
   focusOnShow: 0
+  delayFocus: 0
   requiredTasks:
   - {fileID: 5481281880941511987}
   - {fileID: 556817219}
@@ -22384,9 +22397,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8afff6b19efb3464498b51191c054b79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Ouvrez la cuve
+  _name: Ouvrer la cuve
   pin: {fileID: 1411371880}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -22526,6 +22540,7 @@ MonoBehaviour:
   _name: Mise en bouteille
   pin: {fileID: 2109834333}
   focusOnShow: 0
+  delayFocus: 0
   requiredTasks:
   - {fileID: 1496461989}
   - {fileID: 1828267418}
@@ -22580,7 +22595,7 @@ PrefabInstance:
       objectReference: {fileID: 1635129818}
     - target: {fileID: 364988145501026597, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: "Choisissez un s\xE9cateur et taillez la vigne"
+      value: "Choisir un s\xE9cateur et tailler la vigne"
       objectReference: {fileID: 0}
     - target: {fileID: 364988145501026598, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: timeToInteract
@@ -22592,7 +22607,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 626762828698982236, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: Taillez le pied de vigne
+      value: Tailler un pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 626762828698982237, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22636,7 +22651,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 749000641569866571, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: Taillez le pied de vigne
+      value: Tailler un pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 2399759886234179226, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22772,7 +22787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6076587257495374046, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: Taillez le pied de vigne
+      value: Tailler un pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 6076587257495374047, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22804,7 +22819,7 @@ PrefabInstance:
       objectReference: {fileID: 537722153}
     - target: {fileID: 6358677716231453521, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: Taillez le pied de vigne
+      value: Tailler un pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 6358677716231453522, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: timeToInteract
@@ -22828,7 +22843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6523361378637433933, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: Taillez le pied de vigne
+      value: Tailler un pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 6523361378637433934, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: timeToInteract
@@ -22968,7 +22983,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7775563407211668851, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: Taillez le pied de vigne
+      value: Tailler un pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 7775563407349228805, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23076,7 +23091,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8033133267495540997, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: _name
-      value: Taillez le pied de vigne
+      value: Tailler un pied de vigne
       objectReference: {fileID: 0}
     - target: {fileID: 8033133267495540998, guid: eee6b6170a8d60e4eae4c610f8302814, type: 3}
       propertyPath: timeToInteract

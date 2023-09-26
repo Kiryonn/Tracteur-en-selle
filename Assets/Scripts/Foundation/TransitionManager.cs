@@ -254,7 +254,15 @@ public class TransitionManager : MonoBehaviour
 
         GameObject player = GameManager.Instance.velo.gameObject;
         player.GetComponent<Rigidbody>().isKinematic = false;
-        GameManager.Instance.SpawnPlayer();
+        try
+        {
+            GameManager.Instance.SpawnPlayer();
+        }
+        catch (System.Exception)
+        {
+            MyDebug.Log("Could not load player");
+        }
+        
 
         // Removing the black foreground
         oldUI.SetActive(true);
@@ -554,7 +562,7 @@ public class TransitionManager : MonoBehaviour
                 StartCoroutine(MakeNextTransition());
                 break;
             case 6:
-                if (SettingsManager.instance.settings.allowStats)
+                if (!SettingsManager.instance.settings.allowStats)
                 {
                     transitionIndex = 8;
                     StartCoroutine(MakeNextTransition());

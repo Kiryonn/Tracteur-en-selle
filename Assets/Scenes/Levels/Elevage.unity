@@ -1799,6 +1799,7 @@ MonoBehaviour:
   _name: Traire une vache
   pin: {fileID: 2051979471}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -1939,6 +1940,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 1434295771}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 1
   offset:
@@ -2151,6 +2153,7 @@ MonoBehaviour:
   _name: "Barri\xE8res pleines ou trou\xE9es ?"
   pin: {fileID: 740165798}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -3148,9 +3151,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81bdbd5d92f30e428683072a3cb43e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Mettez de la paille ou laissez vide ?
+  _name: Mettre de la paille ou laisser vide ?
   pin: {fileID: 1845440073}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -3721,6 +3725,7 @@ MonoBehaviour:
   _name: Traire une vache
   pin: {fileID: 1851217443}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -3886,6 +3891,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 2088349818}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 1
   offset:
@@ -4350,6 +4356,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 1698646566}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 1
   offset:
@@ -4492,6 +4499,7 @@ MonoBehaviour:
   _name: Traire une vache
   pin: {fileID: 1030844019}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -4807,9 +4815,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ecc83dbfec8a314898864451a6793a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Retournez au tracteur
+  _name: Retourner au tracteur
   pin: {fileID: 1635129818}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 0
@@ -5675,6 +5684,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 1615757235}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 1
   offset:
@@ -9204,6 +9214,7 @@ MonoBehaviour:
   _name: "Position de la b\xE9tailli\xE8re"
   pin: {fileID: 195665578}
   focusOnShow: 0
+  delayFocus: 0
   requiredTasks:
   - {fileID: 8828740723187745468}
   - {fileID: 819613388}
@@ -9351,6 +9362,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 2143252477}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 1
   offset:
@@ -9397,9 +9409,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81bdbd5d92f30e428683072a3cb43e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: "Choisissez une position pour la b\xE9tailli\xE8re"
+  _name: "Choisir une position pour la b\xE9tailli\xE8re"
   pin: {fileID: 1411443381}
   focusOnShow: 0
+  delayFocus: 0
   customColor: {r: 0, g: 0, b: 0, a: 0}
   customizeColor: 0
   requireItem: 1
@@ -9571,6 +9584,7 @@ MonoBehaviour:
   _name: 
   pin: {fileID: 1175830173}
   focusOnShow: 0
+  delayFocus: 0
   linkedItems: []
   noDroneRequest: 1
   offset:

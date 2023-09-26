@@ -38,6 +38,7 @@ public class Raptor : MonoBehaviour
 
     AIStates currentState;
     AIStates previousState;
+    AIStates nextState;
 
     RaycastHit hit;
 
@@ -55,6 +56,8 @@ public class Raptor : MonoBehaviour
     bool isFleeing; // Prevent the script from calling ChoseAWaypoint() in each update
 
     Vector3 agentDestination;
+
+    bool attacked;
     // Start is called before the first frame update
     void Start()
     {
@@ -68,9 +71,6 @@ public class Raptor : MonoBehaviour
         playerPosition = GameManager.Instance.velo.GetComponent<PlayerController>().transform;
 
         StartCoroutine(LOSChecks(0.2f));
-        //StartCoroutine(UpdateNavMeshPosition(0.2f));
-
-        //StartCoroutine(HandleSleepCoroutine());
     }
 
     public void InitAgentPosition(Vector3 pos)
@@ -81,6 +81,7 @@ public class Raptor : MonoBehaviour
         }
         agent.Warp(pos);
         currentState = AIStates.Sleep;
+        nextState = currentState;
     }
 
     private void Update()
@@ -89,15 +90,12 @@ public class Raptor : MonoBehaviour
         {
             case AIStates.Sleep:
                 HandleSleep();
-                previousState = AIStates.Sleep;
                 break;
             case AIStates.Idle:
                 HandleIdle();
-                previousState = AIStates.Idle;
                 break;
             case AIStates.Search:
                 HandleSearch();
-                previousState = AIStates.Search;
                 break;
             case AIStates.Attacking:
                 HandleAttacking();
@@ -107,13 +105,12 @@ public class Raptor : MonoBehaviour
                 break;
             case AIStates.Chase:
                 HandleChase();
-                previousState = AIStates.Chase;
                 break;
             default:
                 break;
         }
 
-        if (previousState == AIStates.Search || previousState == AIStates.Attacking)
+        if (currentState != AIStates.Chase)
         {
             anim.SetBool("Chase", false);
         }
@@ -130,6 +127,17 @@ public class Raptor : MonoBehaviour
         HandleSpeed();
 
         UpdateAnimationsSpeeds();
+
+        CacheState();
+    }
+
+    void CacheState()
+    {
+        if (currentState != nextState)
+        {
+            previousState = currentState;
+            currentState = nextState;
+        }
     }
 
     void HandleSpeed()
@@ -151,9 +159,19 @@ public class Raptor : MonoBehaviour
 
     void HandleAttacking()
     {
-        GameManager.Instance.player.GetComponent<DamageController>().DamageTractor(10f);
-        anim.SetTrigger("Roar");
-        currentState = AIStates.Flee;
+        if (!attacked)
+        {
+            GameManager.Instance.player.GetComponent<DamageController>().DamageTractor(10f);
+            //agent.isStopped = true;
+            anim.SetTrigger("Roar");
+            this.Invoke(() => {
+                agent.isStopped = false;
+                nextState = AIStates.Flee;
+                attacked = false;
+            }, 1.5f);
+            attacked = true;
+        }
+        
     }
 
     void HandleFlee()
@@ -162,12 +180,14 @@ public class Raptor : MonoBehaviour
         {
             anim.SetBool("Chase", false);
             isFleeing = true;
+            //agent.isStopped = false;
             agent.SetDestination(ChoseAWaypoint());
-            
+
         }
-        else if (agent.remainingDistance <= 1f && agent.remainingDistance != 0f)
+        else if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
         {
-            currentState = AIStates.Sleep;
+            isFleeing = false;
+            nextState = AIStates.Sleep;
         }
     }
 
@@ -175,7 +195,8 @@ public class Raptor : MonoBehaviour
     {
         int r = Random.Range(0, forests.Count);
         MyDebug.Log("int = "+r);
-        return forests[r].position;
+
+        return RandomNavSphere(forests[r].position, 1f, -1);
     }
 
     void HandleIdle()
@@ -194,9 +215,10 @@ public class Raptor : MonoBehaviour
         anim.SetBool("Chase", true);
         agent.SetDestination(lastKnownPosition);
         
-        if (agent.remainingDistance <= raptorStats.attackRange && agent.remainingDistance!=0f)
+        if (agent.remainingDistance <= raptorStats.attackRange && !agent.pathPending)
         {
-            currentState = AIStates.Attacking;
+            agent.isStopped = true;
+            nextState = AIStates.Attacking;
         }
     }
 
@@ -211,7 +233,7 @@ public class Raptor : MonoBehaviour
         {
             sleepTimer = 0f;
 
-            currentState = AIStates.Idle;
+            nextState = AIStates.Idle;
             sleepDuration = Random.Range(raptorStats.sleepDurationRange.x, raptorStats.sleepDurationRange.y);
         }
     }
@@ -220,9 +242,9 @@ public class Raptor : MonoBehaviour
     {
         agent.SetDestination(lastKnownPosition);
 
-        if (agent.remainingDistance <= 1f)
+        if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
         {
-            currentState = AIStates.Sleep;
+            nextState = AIStates.Sleep;
         }
     }
 
@@ -267,18 +289,16 @@ public class Raptor : MonoBehaviour
             {
                 if (hit.collider.gameObject.CompareTag("Player") )
                 {
-                    currentState = AIStates.Chase;
+                    nextState = AIStates.Chase;
                     lastKnownPosition = hit.transform.position;
                 }
                 else if (currentState == AIStates.Chase)
                 {
-                    currentState = AIStates.Search;
+                    nextState = AIStates.Search;
                 }
             }
             
             yield return new WaitForSeconds(interval);
         }
-    }
-
-    
+    } 
 }

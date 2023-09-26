@@ -12,6 +12,7 @@ public class Interactable : MonoBehaviour
     [SerializeField] Transform pin;
     [System.NonSerialized] public UnityEvent<Interactable> OnInteract = new UnityEvent<Interactable>();
     [SerializeField] protected bool focusOnShow;
+    [SerializeField] protected float delayFocus;
 
     Drone drone;
     private void Start()
@@ -49,8 +50,13 @@ public class Interactable : MonoBehaviour
         if (pin) ShowPin(2f);
         if (focusOnShow)
         {
-            GameManager.Instance.CameraFocus(transform,2f);
+            Invoke("InvokeFocus", delayFocus);
         }
+    }
+
+    void InvokeFocus()
+    {
+        GameManager.Instance.CameraFocus(transform, 2f);
     }
     
     IEnumerator Fade(float aTime, float aValue)
