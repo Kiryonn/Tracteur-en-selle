@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class MyDebug
 {
-    //[Conditional("DEVELOPMENT_BUILD")]
+    [Conditional("DEVELOPMENT_BUILD")]
 
     public static void Log(string text)
     {

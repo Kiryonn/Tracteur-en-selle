@@ -34,9 +34,17 @@ public class Bag : MonoBehaviour
             {
                 MyDebug.Log("Raycast hit : "+hit.collider.gameObject.name);
                 onTheGround = true;
-                obj = Instantiate(recupBagInteractable);
-                obj.transform.position = new Vector3(transform.position.x,obj.transform.position.y,transform.position.z);
-                obj.GetComponent<RecupBag>().bag = this;
+                try
+                {
+                    obj = Instantiate(recupBagInteractable);
+                    obj.transform.position = new Vector3(transform.position.x, obj.transform.position.y, transform.position.z);
+                    obj.GetComponent<RecupBag>().bag = this;
+                }
+                catch (System.Exception)
+                {
+                    MyDebug.Log("Bag update problem");
+                }
+                
                 GameManager.Instance.currentQuest.GetCurrentTask().HideInteractable();
             }
         }

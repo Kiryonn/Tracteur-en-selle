@@ -10,7 +10,7 @@ public class LoadingScreenTips : MonoBehaviour
     [SerializeField] float durationPerImage;
     float currentTimer;
     [SerializeField] float fadeSpeed;
-    bool loading;
+    public bool loading { get; private set; }
     [SerializeField] Canvas loadingCanvas;
     public Image loadgingBarFill;
 

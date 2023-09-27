@@ -11949,7 +11949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbb46b408a2b4224aaa9ee2a7901cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Transport des big bag
+  _name: Transport des big bags
   pin: {fileID: 315437147}
   focusOnShow: 0
   delayFocus: 0
@@ -13078,7 +13078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e487dbe89106c0d4885cde5cdd852aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Positioner le tracteur devant le semoir
+  _name: Positionner le tracteur devant le semoir
   pin: {fileID: 500812601}
   focusOnShow: 1
   delayFocus: 0

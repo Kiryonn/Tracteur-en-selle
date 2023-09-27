@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
     public bool isEquipped { get { return equipment != null; } }
     GameObject duplicate;
 
+    bool uiIsHidden;
 
     private void Awake()
     {
@@ -119,6 +120,12 @@ public class PlayerController : MonoBehaviour
         {
             MyDebug.Log("Escape is pressed");
             GameManager.Instance.PauseGame();
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            uiIsHidden = !uiIsHidden;
+            UIManager.instance.allOfUI.SetActive(uiIsHidden);
         }
 
     }

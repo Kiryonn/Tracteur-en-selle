@@ -9,6 +9,7 @@ public class Credits : MonoBehaviour
     [SerializeField] GameObject playButton;
     [SerializeField] GameObject quitButton;
     [SerializeField] GameObject settingsButton;
+    [SerializeField] GameObject wrenchButton;
     [SerializeField] Image creditButton;
     [SerializeField] Button nextButton;
     bool finished = false;
@@ -28,7 +29,7 @@ public class Credits : MonoBehaviour
 
     CinemachineImpulseSource impulseSource;
 
-    bool isStarted = false;
+    public bool isStarted { get; private set; }
 
     private void Start()
     {
@@ -59,6 +60,7 @@ public class Credits : MonoBehaviour
 
         quitButton.SetActive(false);
         settingsButton.SetActive(false);
+        wrenchButton.SetActive(false);
 
         LeanTween.value(creditButton.gameObject, Color.white, Color.red, 1f).
             setOnUpdate((Color c) =>
@@ -146,6 +148,7 @@ public class Credits : MonoBehaviour
         finished = false;
         nextButton.gameObject.SetActive(false);
         playButton.SetActive(true);
+        wrenchButton.SetActive(true);
 
         LeanTween.rotateLocal(screen, new Vector3(0f, 180f, 0f), 1f);
         LeanTween.moveLocalY(screen, screen.transform.localPosition.y - 20f, 2f).setEaseInExpo();

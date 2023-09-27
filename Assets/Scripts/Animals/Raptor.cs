@@ -69,7 +69,8 @@ public class Raptor : MonoBehaviour
 
         hit = new RaycastHit();
         playerPosition = GameManager.Instance.velo.GetComponent<PlayerController>().transform;
-
+        currentState = AIStates.Sleep;
+        nextState = currentState;
         StartCoroutine(LOSChecks(0.2f));
     }
 
