@@ -42,6 +42,20 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &-8347282952819196050
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 93050eaa6967a524b885a9c0e6918c0b
+  m_EffectName: Attenuation
+  m_MixLevel: 2350021adb595b34e9f1e067dee911b0
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &-7085522630024056155
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -170,6 +184,7 @@ AudioMixerController:
     - 93ee9e60de8cab741b55c6c0ce96e953
     - 84ba24b05c2ecdd418d9c90a1605d5c7
     - 9944da6e1fa2d8f40a59cebf61c4466b
+    - 7863a4deed93f274f86273d61b1f5c45
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -222,6 +237,7 @@ AudioMixerSnapshotController:
     f1ac6011809e3bf4baa8c0166d191601: 1
     15d227410c238744899c8197f1e1364a: 0
     233463d1088ef06448fd25081b6023ec: 0.035
+    5517a244c93d64647845e9baf44e458b: 9.925886
     e933d264c384cc84384fb8a0b72d9422: 0
     6dddd04581f99524b83b261096698981: -2936
     101c366519966454b80f48217a0af852: 11.852726
@@ -237,6 +253,25 @@ AudioMixerSnapshotController:
     187452ef53eb1964a9b4adf08335cb0e: 20
     798d1cff61cb1a5489bc2c8082f6b5ab: 13.532477
   m_TransitionOverrides: {}
+--- !u!243 &1233654743163768145
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Raptor
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 7863a4deed93f274f86273d61b1f5c45
+  m_Children: []
+  m_Volume: 5517a244c93d64647845e9baf44e458b
+  m_Pitch: 449c2a29ea8235543aa6e1fe6089822f
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -8347282952819196050}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &1538804368369723649
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -345,6 +380,7 @@ AudioMixerGroupController:
   - {fileID: -2041630655168949460}
   - {fileID: 7065121562033315851}
   - {fileID: 1795391435757710533}
+  - {fileID: 1233654743163768145}
   m_Volume: e933d264c384cc84384fb8a0b72d9422
   m_Pitch: 1bd134d401ed9f340a92acd94a63c12f
   m_Send: 00000000000000000000000000000000

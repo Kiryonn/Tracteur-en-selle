@@ -118,7 +118,7 @@ public class SettingsManager : MonoBehaviour
                 {
                     settings.currentTheme.Add(Theme.Tutorial);
                     //nextIsGarage = true;
-                    StartCoroutine(LoadSceneAsyncScreen(1, new string[] { "Tutorial" }));
+                    StartCoroutine(LoadSceneAsyncScreen(6, new string[] { "Tutorial" }));
                 }
                 else
                 {

@@ -105,8 +105,17 @@ public class ForeTask : TaskPedalez
         fillImage.fillAmount = 1f;
         percentText.text = 100 + "%";
 
-        altCharAnim.GetComponent<AltCharacter>().StopDrill();
-        player.AlternateCharacter(true);
+        try
+        {
+            altCharAnim.GetComponent<AltCharacter>().StopDrill();
+            player.AlternateCharacter(true);
+        }
+        catch (System.Exception)
+        {
+
+            MyDebug.Log("no character");
+        }
+        
 
         if (forage.foret)
         {
@@ -177,7 +186,16 @@ public class ForeTask : TaskPedalez
                 _Tariere.isDrilling = false;
             }
         }
-        altCharAnim.Play("Creuse", 0, p / duration);
+        try
+        {
+            altCharAnim.Play("Creuse", 0, p / duration);
+        }
+        catch (System.Exception)
+        {
+
+            MyDebug.Log("Error while playing animation");
+        }
+        
         //altCharAnim.GetCurrentAnimatorClipInfo(0)[0].clip.
           //  SampleAnimation(altCharAnim.gameObject, p/duration * altCharAnim.GetCurrentAnimatorClipInfo(0)[0].clip.length);
        // MyDebug.Log(altCharAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name);

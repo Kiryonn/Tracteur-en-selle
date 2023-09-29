@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     GameState currentState;
     NightTime nTime;
     public Camera cam;
+    public Camera camSecond;
 
     [Header("Vélo")]
     public DialogueVelo velo;

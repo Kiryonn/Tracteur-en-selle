@@ -205,7 +205,9 @@ public class TransitionManager : MonoBehaviour
 
         // Making the scene black
 
-        Camera.main.enabled = false;
+        GameManager.Instance.cam.enabled = false;
+        GameManager.Instance.camSecond.enabled = false;
+
         RenderSettings.reflectionIntensity = 0f;
         RenderSettings.ambientLight = Color.black;
         RenderSettings.ambientIntensity = 0f;
@@ -243,7 +245,13 @@ public class TransitionManager : MonoBehaviour
 
         SettingsManager.instance.LoadNextLevel();
         SettingsManager.instance.LoadMainMenu();
-        //Camera.main.enabled = true;
+
+        GameManager.Instance.cam.enabled = true;
+        GameManager.Instance.camSecond.enabled = true;
+
+      
+        MyDebug.Log("We are rendering white");
+
         RenderSettings.reflectionIntensity = 1f;
         RenderSettings.ambientLight = Color.white;
         RenderSettings.ambientIntensity = 1f;
