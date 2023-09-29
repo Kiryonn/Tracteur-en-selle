@@ -14,4 +14,6 @@ public class RaptorStats : ScriptableObject
 
     public float chaseSpeed;
     public float normalSpeed;
+
+    public float attackDmg;
 }

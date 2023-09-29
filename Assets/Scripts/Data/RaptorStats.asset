@@ -19,3 +19,4 @@ MonoBehaviour:
   idleRange: 300
   chaseSpeed: 5
   normalSpeed: 3.5
+  attackDmg: 3.5

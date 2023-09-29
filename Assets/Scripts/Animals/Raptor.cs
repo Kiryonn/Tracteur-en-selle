@@ -162,14 +162,14 @@ public class Raptor : MonoBehaviour
     {
         if (!attacked)
         {
-            GameManager.Instance.player.GetComponent<DamageController>().DamageTractor(10f);
+            GameManager.Instance.player.GetComponent<DamageController>().DamageTractor(raptorStats.attackDmg);
             //agent.isStopped = true;
             anim.SetTrigger("Roar");
             this.Invoke(() => {
                 agent.isStopped = false;
                 nextState = AIStates.Flee;
-                attacked = false;
-            }, 1.5f);
+                
+            }, 1f);
             attacked = true;
         }
         
@@ -177,13 +177,14 @@ public class Raptor : MonoBehaviour
 
     void HandleFlee()
     {
+        attacked = false;
         if (!isFleeing)
         {
             anim.SetBool("Chase", false);
             isFleeing = true;
             //agent.isStopped = false;
             agent.SetDestination(ChoseAWaypoint());
-
+            
         }
         else if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
         {
